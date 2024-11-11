@@ -1,0 +1,41 @@
+#version: '3.8'
+services:
+  uks-backend:
+    build: ./backend/uks-backend
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-uks:5432/uks_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - postgres-uks
+    networks:
+      - backend
+
+  postgres-uks:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: uks_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  frontend-uks:
+    build: ./frontend/uks-ui
+    ports:
+      - "4200:80"
+    networks:
+      - frontend
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+  postgres-data:
