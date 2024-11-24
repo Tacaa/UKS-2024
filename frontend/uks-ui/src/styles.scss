@@ -1,0 +1,202 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+@import "/src/variables.css";
+
+$uks-primary-palette: (
+    50 : #e7f0ff,
+    // Lightest shade
+    100 : #c3d9ff,
+    // Very light shade
+    200 : #9bc2ff,
+    // Light shade
+    300 : #74a8ff,
+    // Light-medium shade
+    400 : #5895ff,
+    // Medium shade
+    500 : #4271e7,
+    // Base color
+    600 : #3b66d0,
+    // Slightly darker
+    700 : #3458b8,
+    // Darker
+    800 : #2d4ba0,
+    // Very dark
+    900 : #21337a,
+    // Darkest shade
+    A100 : #9bc2ff,
+    // Accent light shade
+    A200 : #74a8ff,
+    // Accent medium shade
+    A400 : #4271e7,
+    // Accent default
+    A700 : #3458b8,
+    // Accent dark
+    contrast: (50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+/* For use in src/lib/core/theming/_palette.scss */
+$uks-secondary-palette: (
+    50 : #e7f8fd,
+    // Very light shade
+    100 : #c3ecfb,
+    // Light shade
+    200 : #9bdef9,
+    // Lighter aqua
+    300 : #73d1f6,
+    // Medium aqua
+    400 : #58c8f3,
+    // Aqua highlight
+    500 : #42C3E7,
+    // Primary aqua (base color)
+    600 : #3bb0d0,
+    // Slightly darker aqua
+    700 : #349cba,
+    // Dark aqua
+    800 : #2d87a3,
+    // Deeper dark aqua
+    900 : #206676,
+    // Darkest aqua
+    A100 : #d3c7fc,
+    // Light purple (complementary)
+    A200 : #a78ef9,
+    // Medium purple
+    A400 : #6542E7,
+    // Deep purple (base complementary)
+    A700 : #532fd0,
+    // Dark complementary purple
+    contrast: (50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+
+
+
+$my-primary: mat.define-palette($uks-primary-palette, 500);
+$my-accent: mat.define-palette($uks-secondary-palette, 500, A400);
+$my-warn: mat.define-palette(mat.$red-palette);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+// $tnt-frontend-primary: mat.define-palette(mat.$indigo-palette);
+// $tnt-frontend-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+// $tnt-frontend-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$uks-frontend-theme: mat.define-light-theme((color: (primary: $my-primary,
+                accent: $my-accent,
+                warn: $my-warn,
+            )));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($uks-frontend-theme);
+
+/* You can add global styles to this file, and also import other style files */
+// @use "@angular/material" as mat;
+
+:root {
+    --primary-color: #4271e7 !important;
+    --secondary-color: #42C3E7 !important;
+    --accent-color: #6542E7 !important;
+
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto,
+        "Helvetica Neue";
+}
+
+///////////////////////////////////////////////////////////////////
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-icon {
+    color: var(--info-color) !important;
+}
+
+//Classes
+
+//color classes
+.info-color {
+    color: var(--info-color);
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.icon-btn-size-36.mat-mdc-icon-button .mat-mdc-button-touch-target {
+    width: 36px;
+    height: 36px;
+    --mdc-icon-button-state-layer-size: 36px;
+}
+
+.icon-btn-size-36.mat-mdc-icon-button.mat-mdc-button-base {
+    --mdc-icon-button-state-layer-size: 36px;
+    padding: 4px;
+}

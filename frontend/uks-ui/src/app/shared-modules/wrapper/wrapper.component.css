@@ -1,0 +1,155 @@
+@import "/src/variables.css";
+
+mat-toolbar {
+    background: #efefef
+}
+
+.mat-drawer {
+    width: 280px !important;
+}
+
+.drawer-container {
+    height: 100vh;
+}
+
+::ng-deep.mat-drawer-backdrop.mat-drawer-shown {
+    background-color: var(--primary-color) !important;
+    opacity: .3;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.menu-items {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+
+.toolbar-actions>div {
+    display: flex;
+}
+
+.active {
+    font-weight: 700 !important;
+    color: var(--primary-color) !important;
+}
+
+.active>mat-icon {
+    color: var(--primary-color) !important;
+}
+
+.active mat-icon {
+    color: var(--accent-color) !important;
+}
+
+.drawer {
+    padding-inline: 10px;
+}
+
+.menu-container {
+    padding-top: 10px;
+}
+
+.menu-container>button {
+    display: flex;
+    min-height: 40px !important;
+}
+
+.logo {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.logo>img {
+    height: 36px;
+}
+
+.logo-mini {
+    height: 28px;
+}
+
+.username {
+    margin-left: 8px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.mat-mdc-menu-item:not([disabled]):hover {
+    border-radius: 8px !important;
+}
+
+.menu-icon {
+    margin-right: 8px;
+}
+
+.separate {
+    border-bottom: 1px solid #d8d8d8;
+    height: 10px;
+    margin-bottom: 10px;
+}
+
+.repo {
+    padding-left: 10px;
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.search {
+    flex: 1;
+    margin-right: 8px;
+}
+
+.search::ng-deep.mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+
+.search::ng-deep.mat-mdc-icon-button.mat-mdc-button-base {
+    --mdc-icon-button-state-layer-size: 40px;
+}
+
+.search::ng-deep.mat-mdc-icon-button.mat-mdc-button-base {
+    --mdc-icon-button-state-layer-size: 40px;
+}
+
+.search::ng-deep.mat-focused {
+    box-shadow: 0px 0px 0px 4px #38BDF824;
+}
+
+.search-icn {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 24px !important;
+}
+
+::ng-deep.mat-mdc-form-field-icon-prefix>.mat-icon {
+    padding: 0 4px 0 8px !important;
+}
+
+.divider-spacing {
+    margin-block: 8px;
+}
+
+::ng-deep.mat-mdc-form-field-infix {
+    min-height: unset;
+}
+
+::ng-deep.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding-block: 8px !important;
+}
+
+::ng-deep.mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 10px;
+}
