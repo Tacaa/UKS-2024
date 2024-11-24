@@ -1,0 +1,101 @@
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer #rightDrawer class="drawer" position="end" mode="over">
+    <div class="logo">
+      <app-user-avatar [disabled]="true" />
+
+      <button (click)="rightDrawer.toggle()" mat-icon-button>
+        <mat-icon class="info-color">clear</mat-icon>
+      </button>
+    </div>
+
+    <div class="menu-container">
+      <button
+        mat-menu-item
+        routerLink="/features/profile"
+        routerLinkActive="active"
+      >
+        <mat-icon>person</mat-icon>
+        <span>My profile</span>
+      </button>
+      <button
+        mat-menu-item
+        routerLink="/features/account-settings"
+        routerLinkActive="active"
+      >
+        <mat-icon>manage_accounts</mat-icon>
+        <span>Account settings</span>
+      </button>
+      <mat-divider class="divider-spacing" />
+      <button mat-menu-item routerLink="/login" routerLinkActive="active">
+        <span>Sign out</span>
+      </button>
+    </div>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <mat-toolbar color="primary">
+      <div class="">
+        <img
+          class="logo-mini"
+          src="./../../../../assets/images/logo_beli.png"
+          alt=""
+        />
+      </div>
+      <div class="menu-items">
+        <button
+          mat-menu-item
+          routerLink="/features/explore"
+          routerLinkActive="active"
+        >
+          <span>Explore</span>
+        </button>
+        <button
+          mat-menu-item
+          routerLink="/features/repositories"
+          routerLinkActive="active"
+        >
+          <span color="contras">Repositories</span>
+        </button>
+        <button
+          mat-menu-item
+          routerLink="/features/organizations"
+          routerLinkActive="active"
+        >
+          <span>Organizations</span>
+        </button>
+        <button
+          mat-menu-item
+          routerLink="/features/usage"
+          routerLinkActive="active"
+        >
+          <span>Usage</span>
+        </button>
+      </div>
+
+      <span class="spacer"></span>
+
+      <div class="toolbar-actions">
+        <div>
+          <mat-form-field class="search">
+            <mat-icon class="search-icn" matPrefix>search</mat-icon>
+            <input matInput placeholder="Type to search..." />
+          </mat-form-field>
+          <button
+            class="icon-btn-size-36"
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+          >
+            <mat-icon>settings</mat-icon>
+          </button>
+        </div>
+        <app-user-avatar (onAvatarClick)="rightDrawer.toggle()" />
+      </div>
+    </mat-toolbar>
+
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-drawer-container>
+
+<mat-menu #menu="matMenu"></mat-menu>

@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --sidebar-width: 300px;
+
+    /* TODO fill variabels with coresponding colors from material theeme */
+
+    /* Palette colors */
+    --primary-color: #929292;
+    --accent-color: #929292;
+    --warn-color: #929292;
+
+    /* Colors by design */
+    --info-color: #5c5c5c;
+    --border-color: #d9dfe5;
+    --txt-dark: #1b1b1b;
+}
