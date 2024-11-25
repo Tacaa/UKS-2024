@@ -1,1 +1,20 @@
-<p>repositories works!</p>
+<div class="component">
+  <div class="header">
+    <div class="filters">
+      <select name="repo" id="repo">
+        <option *ngFor="let namespace of namespaces" value="{{ namespace }}">
+          {{ namespace }}
+        </option>
+      </select>
+      <input type="text" placeholder="Search repositories by name" />
+      <select name="content" id="content">
+        <option value="1">Da li</option>
+        <option value="2">cemo</option>
+        <option value="3">zdrzati</option>
+        <option value="4">ovo</option>
+        <option value="5">za content</option>
+      </select>
+    </div>
+    <button class="blueButton">Create a repository</button>
+  </div>
+</div>
