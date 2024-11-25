@@ -67,13 +67,20 @@ td {
 
 th {
   padding-bottom: 0.5rem;
+  transition: 200ms;
+  user-select: none;
+}
+
+.sortableTh:hover {
+  background-color: var(--gray6);
+  transition: 200ms;
 }
 
 tbody tr:hover {
   background-color: var(--gray6);
 }
 
-.component span {
+.component > span {
   font-size: 1.2rem;
   display: table;
   margin: 1rem auto;
@@ -83,4 +90,11 @@ table {
   border-collapse: collapse;
   width: 100%;
   white-space: nowrap;
+}
+
+th > span {
+  position: absolute;
+  margin-left: 0.3rem;
+  color: var(--blue-secondary);
+  transition: 200ms;
 }

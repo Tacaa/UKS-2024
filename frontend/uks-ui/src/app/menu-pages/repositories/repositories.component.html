@@ -17,21 +17,43 @@
     </div>
     <button class="blueButton">Create a repository</button>
   </div>
-  <table>
+
+  <table style="border-collapse: collapse; width: 100%">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Last Pushed</th>
+        <th
+          class="sortableTh"
+          (click)="sortTable('name')"
+          style="cursor: pointer"
+        >
+          Name
+          <span *ngIf="sortField === 'name'">
+            {{ sortDirection === "asc" ? "▲" : "▼" }}
+          </span>
+        </th>
+        <th
+          class="sortableTh"
+          (click)="sortTable('updated')"
+          style="cursor: pointer"
+        >
+          Last Pushed
+          <span *ngIf="sortField === 'updated'">
+            {{ sortDirection === "asc" ? "▲" : "▼" }}
+          </span>
+        </th>
         <th>Contains</th>
         <th>Visibility</th>
         <th>Scout</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let repo of repos">
+      <tr
+        *ngFor="let repo of sortedRepos"
+        (click)="openRepo(repo.name)"
+        style="cursor: pointer; border-bottom: 1px solid #ddd"
+      >
         <td>{{ repo.name }}</td>
         <td>
-          <!-- If repo was updated show that date if not show created date-->
           {{
             repo.updated
               ? (repo.updated | date : "mediumDate")
@@ -44,5 +66,6 @@
       </tr>
     </tbody>
   </table>
+
   <span>Loaded {{ loadedRepos }} repositories</span>
 </div>
