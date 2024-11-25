@@ -17,4 +17,32 @@
     </div>
     <button class="blueButton">Create a repository</button>
   </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Last Pushed</th>
+        <th>Contains</th>
+        <th>Visibility</th>
+        <th>Scout</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let repo of repos">
+        <td>{{ repo.name }}</td>
+        <td>
+          <!-- If repo was updated show that date if not show created date-->
+          {{
+            repo.updated
+              ? (repo.updated | date : "mediumDate")
+              : (repo.created | date : "mediumDate")
+          }}
+        </td>
+        <td>Some data</td>
+        <td>{{ repo.visibility ? "Public" : "Private" }}</td>
+        <td>Scout Data</td>
+      </tr>
+    </tbody>
+  </table>
+  <span>Loaded {{ loadedRepos }} repositories</span>
 </div>

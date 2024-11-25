@@ -10,11 +10,14 @@ import { Repository } from 'src/app/shared/models/Repository';
 export class RepositoriesComponent implements OnInit {
   repos: Repository[] = [];
   namespaces: string[] = [];
+  loadedRepos?: number;
 
   constructor(private repositoryService: RepositoryService) {}
 
   ngOnInit(): void {
     this.repos = this.repositoryService.getAll();
+    this.loadedRepos = this.repos.length;
+
     this.namespaces = this.repositoryService.getAllNamespaces();
   }
 }

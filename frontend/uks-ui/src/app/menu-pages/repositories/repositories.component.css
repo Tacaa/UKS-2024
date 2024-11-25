@@ -45,3 +45,42 @@
   background-color: var(--blue-light);
   transition: 200ms;
 }
+
+.component table {
+  margin-top: 2rem;
+}
+
+tbody tr {
+  padding: 1rem 0rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  border-bottom: 1.5px solid #ddd;
+}
+
+thead {
+  border-bottom: 2px solid #ddd;
+}
+
+td {
+  padding: 0.5rem 0;
+}
+
+th {
+  padding-bottom: 0.5rem;
+}
+
+tbody tr:hover {
+  background-color: var(--gray6);
+}
+
+.component span {
+  font-size: 1.2rem;
+  display: table;
+  margin: 1rem auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  white-space: nowrap;
+}
