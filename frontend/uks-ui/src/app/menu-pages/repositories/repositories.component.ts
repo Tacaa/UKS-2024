@@ -54,7 +54,8 @@ export class RepositoriesComponent implements OnInit {
   }
 
   openRepo(repoName: string): void {
-    const url = `https://your-repository-domain.com/${repoName}`; // Replace with your repo URL logic
-    window.open(url, '_blank');
+    // const url = `https://your-repository-domain.com/${repoName}`; // Replace with your repo URL logic
+    // window.open(url, '_blank');
+    console.log('Redirect to ' + repoName);
   }
 }
