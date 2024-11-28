@@ -29,6 +29,7 @@ public class Team {
     private String description;
 
     @Column(name = "team_permission")
+    @Enumerated(EnumType.STRING)
     private TeamPersmission teamPersmission;
 
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH})

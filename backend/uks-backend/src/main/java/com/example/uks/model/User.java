@@ -43,12 +43,14 @@ public class User {
     private Date joinedDate;
 
     @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "password_changed")
     private Boolean passwordChanged;
 
     @Column(name = "user_badge")
+    @Enumerated(EnumType.STRING)
     private UserBadge userBadge;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)

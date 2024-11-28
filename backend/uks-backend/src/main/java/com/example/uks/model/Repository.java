@@ -11,16 +11,22 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import static jakarta.persistence.DiscriminatorType.STRING;
+import static jakarta.persistence.InheritanceType.SINGLE_TABLE;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "repositories")
+@Inheritance(strategy=SINGLE_TABLE)
+@DiscriminatorColumn(name="type", discriminatorType=STRING)
 public class Repository {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "repositorySequence", sequenceName = "repository_sequence", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "repositorySequence")
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
@@ -33,6 +39,7 @@ public class Repository {
     private String description;
 
     @Column(name = "visibility", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Visibility visibility;
 
     @Column(name = "created")
