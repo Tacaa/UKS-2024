@@ -10,6 +10,29 @@
 
 @import "/src/variables.css";
 
+:root {
+  --primary-color: #4271e7 !important;
+  --secondary-color: #42c3e7 !important;
+  --accent-color: #6542e7 !important;
+
+  --off-white: #faf9f6;
+  --blue-primary: #4271e7;
+  --blue-secondary: #5a85f1;
+  --blue-light: #2882fd;
+  --blue-dark: #1657fa;
+  --cancel-button-red: #d20a2e;
+  --submit-button-green: #008000;
+  --text-dark: #1b1b1b;
+
+  --gray1: #43484d;
+  --gray2: #5e6977;
+  --gray3: #86939e;
+  --gray4: #bdc6cf;
+  --gray5: #e1e8ee;
+  --gray6: #ededed;
+  --gray7: #f5f5f5;
+}
+
 $uks-primary-palette: (
   50: #e7f0ff,
   // Lightest shade
@@ -139,29 +162,6 @@ $uks-frontend-theme: mat.define-light-theme(
 
 /* You can add global styles to this file, and also import other style files */
 // @use "@angular/material" as mat;
-
-:root {
-  --primary-color: #4271e7 !important;
-  --secondary-color: #42c3e7 !important;
-  --accent-color: #6542e7 !important;
-
-  --off-white: #faf9f6;
-  --blue-primary: #4271e7;
-  --blue-secondary: #5a85f1;
-  --blue-light: #2882fd;
-  --blue-dark: #1657fa;
-  --cancel-button-red: #d20a2e;
-  --submit-button-green: #008000;
-  --text-dark: #1b1b1b;
-
-  --gray1: #43484d;
-  --gray2: #5e6977;
-  --gray3: #86939e;
-  --gray4: #bdc6cf;
-  --gray5: #e1e8ee;
-  --gray6: #ededed;
-  --gray7: #f5f5f5;
-}
 
 *,
 *::before,

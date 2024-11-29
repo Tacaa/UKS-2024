@@ -92,6 +92,15 @@ table {
   white-space: nowrap;
 }
 
+/* First row should be wider */
+thead tr th:first-child,
+tbody tr td:first-child {
+  width: 60%;
+  min-width: 60%;
+  max-width: 60%;
+  word-break: break-all;
+}
+
 th > span {
   position: absolute;
   margin-left: 0.3rem;
