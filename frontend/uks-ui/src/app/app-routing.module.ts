@@ -1,31 +1,39 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RepositoriesComponent } from './menu-pages/repositories/repositories.component';
+import { CreateRepositoryComponent } from './create-repository/create-repository.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'features',
-    loadComponent: () => import('./shared-modules/wrapper/wrapper.component')
-      .then(c => c.WrapperComponent),
+    loadComponent: () =>
+      import('./shared-modules/wrapper/wrapper.component').then(
+        (c) => c.WrapperComponent
+      ),
     title: 'Home',
     children: [
       {
         path: '',
         redirectTo: 'home',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'home',
         component: RepositoriesComponent,
-        title: 'Home'
+        title: 'Home',
       },
-    ]
-  }
-]; 
+      {
+        path: 'create',
+        component: CreateRepositoryComponent,
+        title: 'create',
+      },
+    ],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
