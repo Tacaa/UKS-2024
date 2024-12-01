@@ -52,4 +52,17 @@ public class Organisation {
         team.setOrganisation(null);
     }
 
+    @OneToMany(mappedBy = "organisation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Repository> repositories = new HashSet<Repository>();
+
+    public void addRepository(Repository repository) {
+        repositories.add(repository);
+        repository.setOrganisation(this);
+    }
+
+    public void removeRepository(Repository repository) {
+        repositories.remove(repository);
+        repository.setOrganisation(null);
+    }
+
 }

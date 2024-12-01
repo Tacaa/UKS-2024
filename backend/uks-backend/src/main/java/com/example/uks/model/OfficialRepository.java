@@ -16,7 +16,7 @@ import lombok.Setter;
 @DiscriminatorValue("Official")
 public class OfficialRepository extends Repository {
 
-    @Column(name = "prefix", nullable = false, unique = true)
+    @Column(name = "prefix", unique = true)
     private String prefix;
 
     @Column(name = "badge")

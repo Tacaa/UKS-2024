@@ -1,5 +1,6 @@
 package com.example.uks.model;
 
+import com.example.uks.enumeration.Category;
 import com.example.uks.enumeration.Visibility;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -54,6 +55,10 @@ public class Repository {
     @Column(name = "personal", nullable = false)
     private Boolean personal;
 
+    @Column(name = "category", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
@@ -71,4 +76,7 @@ public class Repository {
         tag.setRepository(null);
     }
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organisation_id")
+    private Organisation organisation;
 }
