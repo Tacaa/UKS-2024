@@ -31,5 +31,8 @@ import { UserAvatarComponent } from '../components/user-avatar/user-avatar.compo
   styleUrls: ['./wrapper.component.css']
 })
 export class WrapperComponent {
-
+  selectedButton: string = 'explore';
+  setActive(buttonName: string): void {
+    this.selectedButton = buttonName;
+  }
 }
