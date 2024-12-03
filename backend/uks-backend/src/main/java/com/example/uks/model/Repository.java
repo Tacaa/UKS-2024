@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.SoftDelete;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -58,6 +61,9 @@ public class Repository {
     @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")

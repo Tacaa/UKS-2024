@@ -3,6 +3,7 @@ package com.example.uks.controllers;
 
 import com.example.uks.dto.repository.RepositoryDTO;
 import com.example.uks.dto.util.PagedResponse;
+import com.example.uks.exceptions.RepositoryNotFoundException;
 import com.example.uks.model.Repository;
 import com.example.uks.services.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +65,27 @@ public class RepositoryController {
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> deleteRepository(@PathVariable Integer id) {
+        try {
+            repositoryService.deleteRepository(id);
+            return ResponseEntity.ok("Repository deleted successfully!");
+        } catch (RepositoryNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping(value = "soft/{id}")
+    public ResponseEntity<String> deleteLogicallyRepository(@PathVariable Integer id) {
+        try {
+            repositoryService.deleteLogicallyRepository(id);
+            return ResponseEntity.ok("Repository deleted successfully!");
+        } catch (RepositoryNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
 

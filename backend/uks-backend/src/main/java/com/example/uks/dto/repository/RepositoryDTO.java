@@ -28,6 +28,7 @@ public class RepositoryDTO {
     private Integer star;
     private Boolean personal;
     private String category;
+    private Boolean deleted;
     private OwnerDTO owner;
 
 
@@ -41,6 +42,7 @@ public class RepositoryDTO {
         this.updated = repository.getUpdated();
         this.star = repository.getStar();
         this.personal = repository.getPersonal();
+        this.deleted = repository.getDeleted();
 
         if (repository.getCategory() != null) {
             this.category = repository.getCategory().getFormattedName();
