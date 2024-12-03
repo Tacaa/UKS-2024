@@ -46,8 +46,12 @@ public class RepositoryDTO {
             this.category = repository.getCategory().getFormattedName();
         }
 
-        User user = repository.getOwner();
-        this.owner = new OwnerDTO(user.getId(), user.getFirstName(), user.getLastName());
+        if (repository.getOwner() != null) {
+            User user = repository.getOwner();
+            this.owner = new OwnerDTO(user.getId(), user.getFirstName(), user.getLastName());
+        } else {
+            this.owner = null;
+        }
     }
 
 }
