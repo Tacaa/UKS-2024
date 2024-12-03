@@ -41,34 +41,50 @@
           alt=""
         />
       </div>
+
+      <span class="name-first-part">docker</span>
+      <span class="name-second-part">hub</span>
+
       <div class="menu-items">
         <button
+          class="menu-item-button"
           mat-menu-item
           routerLink="/features/explore"
           routerLinkActive="active"
+          [class.clicked]="selectedButton === 'explore'"
+          (click)="setActive('organizations')"
         >
-          <span>Explore</span>
+          <span class="menu-item">Explore</span>
         </button>
         <button
+          class="menu-item-button"
           mat-menu-item
           routerLink="/features/repositories"
           routerLinkActive="active"
+          [class.clicked]="selectedButton === 'repositories'"
+          (click)="setActive('repositories')"
         >
-          <span color="contras">Repositories</span>
+          <span class="menu-item">Repositories</span>
         </button>
         <button
+          class="menu-item-button"
           mat-menu-item
           routerLink="/features/organizations"
           routerLinkActive="active"
+          [class.clicked]="selectedButton === 'organizations'"
+          (click)="setActive('organizations')"
         >
-          <span>Organizations</span>
+          <span class="menu-item">Organizations</span>
         </button>
         <button
+          class="menu-item-button"
           mat-menu-item
           routerLink="/features/usage"
           routerLinkActive="active"
+          [class.clicked]="selectedButton === 'usage'"
+          (click)="setActive('usage')"
         >
-          <span>Usage</span>
+          <span class="menu-item">Usage</span>
         </button>
       </div>
 
@@ -85,7 +101,9 @@
             mat-icon-button
             [matMenuTriggerFor]="menu"
           >
-            <mat-icon>settings</mat-icon>
+            <mat-icon style="color: #ffffff !important; padding-top: 3px"
+              >settings</mat-icon
+            >
           </button>
         </div>
         <app-user-avatar (onAvatarClick)="rightDrawer.toggle()" />
