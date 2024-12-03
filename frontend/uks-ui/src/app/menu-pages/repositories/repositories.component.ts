@@ -18,7 +18,7 @@ export class RepositoriesComponent implements OnInit {
   constructor(private repositoryService: RepositoryService) {}
 
   ngOnInit(): void {
-    this.sortedRepos = this.repositoryService.getAll(); // Initialize with unsorted data
+    this.sortedRepos = this.repositoryService.getAllRepositories(); // Initialize with unsorted data
     this.loadedRepos = this.sortedRepos.length;
 
     this.namespaces = this.repositoryService.getAllNamespaces();

@@ -11,12 +11,16 @@ import { AngularMaterialModule } from './angular_material.module'
 
 import { RepositoriesComponent } from './menu-pages/repositories/repositories.component';
 import { CreateRepositoryComponent } from './create-repository/create-repository.component';
+import { ExploreComponent } from './explore/explore.component';
+import { CardbarComponent } from './cardbar/cardbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RepositoriesComponent,
-    CreateRepositoryComponent
+    CreateRepositoryComponent,
+    ExploreComponent,
+    CardbarComponent
   ],
   imports: [
     BrowserModule,
