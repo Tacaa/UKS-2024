@@ -28,7 +28,7 @@ public class Repository {
     @Id
     @SequenceGenerator(name = "repositorySequence", sequenceName = "repository_sequence", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "repositorySequence")
-    private Long id;
+    private Integer id;
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
