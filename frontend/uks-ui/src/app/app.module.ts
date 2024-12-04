@@ -11,12 +11,18 @@ import { AngularMaterialModule } from './angular_material.module'
 
 import { RepositoriesComponent } from './menu-pages/repositories/repositories.component';
 import { CreateRepositoryComponent } from './create-repository/create-repository.component';
+import { RepositoryPageComponent } from './repository-page/repository-page.component';
+import { RepositoryPageOverviewComponent } from './repository-page-overview/repository-page-overview.component';
+import { RepositoryPageTagsComponent } from './repository-page-tags/repository-page-tags.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RepositoriesComponent,
-    CreateRepositoryComponent
+    CreateRepositoryComponent,
+    RepositoryPageComponent,
+    RepositoryPageOverviewComponent,
+    RepositoryPageTagsComponent
   ],
   imports: [
     BrowserModule,
