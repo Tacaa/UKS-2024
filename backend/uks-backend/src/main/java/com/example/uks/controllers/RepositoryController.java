@@ -2,6 +2,7 @@ package com.example.uks.controllers;
 
 import com.example.uks.dto.repository.CreateRepositoryDTO;
 import com.example.uks.dto.repository.RepositoryDTO;
+import com.example.uks.dto.repository.UpdateRepositoryDTO;
 import com.example.uks.dto.util.PagedResponse;
 import com.example.uks.exceptions.*;
 import com.example.uks.model.Repository;
@@ -73,7 +74,6 @@ public class RepositoryController {
     @PostMapping
     public ResponseEntity<Map<String, Object>> createRepository(@RequestBody CreateRepositoryDTO createRepositoryDTO) {
         try {
-            System.out.println("Tatjana");
             Repository repository = repositoryService.createRepository(createRepositoryDTO);
             Map<String, Object> response = new HashMap<>();
             response.put("message", null);
@@ -88,6 +88,30 @@ public class RepositoryController {
         }
     }
 
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Map<String, Object>> updateRepository(@PathVariable Integer id, @RequestBody UpdateRepositoryDTO updateRepositoryDTO) {
+        try {
+            Repository repository = repositoryService.updateRepository(id, updateRepositoryDTO);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", null);
+            response.put("data", new RepositoryDTO(repository));
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        }catch (RepositoryNotFoundException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+        } catch (AttributeNotUniqueException | AttributeNullException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+    }
 
 
     @DeleteMapping(value = "/{id}")

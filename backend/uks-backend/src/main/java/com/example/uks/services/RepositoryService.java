@@ -1,6 +1,7 @@
 package com.example.uks.services;
 
 import com.example.uks.dto.repository.CreateRepositoryDTO;
+import com.example.uks.dto.repository.UpdateRepositoryDTO;
 import com.example.uks.exceptions.AttributeNullException;
 import com.example.uks.exceptions.OrganisationNullException;
 import com.example.uks.exceptions.OwnerNullException;
@@ -103,6 +104,33 @@ public class RepositoryService {
             repository.setOrganisation(null);
         }
 
+        return repositoryRepository.save(repository);
+    }
+
+    public Repository updateRepository(Integer id, UpdateRepositoryDTO updateRepositoryDTO){
+        Repository repository = repositoryRepository.findById(id).orElse(null);
+
+        if(repository == null){
+            throw new RepositoryNotFoundException("Repository with ID " + id + " does not exist");
+        }
+
+        repository.setNamespace(updateRepositoryDTO.getNamespace());
+        repository.setDescription(updateRepositoryDTO.getDescription());
+        repository.setVisibility(updateRepositoryDTO.getVisibility());
+
+        if(updateRepositoryDTO.getCategory() != null){
+            repository.setCategory(updateRepositoryDTO.getCategory());
+        }else{
+            throw new AttributeNullException("Category could not have value null.");
+        }
+
+        if(updateRepositoryDTO.getPersonal() != null){
+            repository.setPersonal(updateRepositoryDTO.getPersonal());
+        }else{
+            throw new AttributeNullException("Personal could not have value null.");
+        }
+
+        repository.setUpdated(new Date());
         return repositoryRepository.save(repository);
     }
 
