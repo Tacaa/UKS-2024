@@ -8,5 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RepositoryRepository extends JpaRepository<Repository, Integer> {
 
-    public Page<Repository> findAll(Pageable pageable);
+    Page<Repository> findAll(Pageable pageable);
+
+    Repository findByName(String name);
 }

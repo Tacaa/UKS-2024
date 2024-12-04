@@ -1,6 +1,7 @@
 package com.example.uks.services;
 
 import com.example.uks.dto.repository.CreateRepositoryDTO;
+import com.example.uks.exceptions.AttributeNullException;
 import com.example.uks.exceptions.OrganisationNullException;
 import com.example.uks.exceptions.OwnerNullException;
 import com.example.uks.exceptions.RepositoryNotFoundException;
@@ -45,12 +46,36 @@ public class RepositoryService {
 
     public Repository createRepository(CreateRepositoryDTO createRepositoryDTO){
         Repository repository = new Repository();
-        repository.setName(createRepositoryDTO.getName());
+
+        if(createRepositoryDTO.getName() != null){
+            Repository repo = repositoryRepository.findByName(createRepositoryDTO.getName());
+            if(repositoryRepository.findByName(createRepositoryDTO.getName()) ==null){
+                repository.setName(createRepositoryDTO.getName());
+            }else{
+                throw new AttributeNullException("Repository with name " + createRepositoryDTO.getName() + " already exists!");
+            }
+        }else{
+            throw new AttributeNullException("Name could not have value null.");
+        }
+
         repository.setNamespace(createRepositoryDTO.getNamespace());
         repository.setDescription(createRepositoryDTO.getDescription());
-        repository.setCategory(createRepositoryDTO.getCategory());
+
+        if(createRepositoryDTO.getCategory() != null){
+            repository.setCategory(createRepositoryDTO.getCategory());
+        }else{
+            throw new AttributeNullException("Category could not have value null.");
+        }
+
+
         repository.setVisibility(createRepositoryDTO.getVisibility());
-        repository.setPersonal(createRepositoryDTO.getPersonal());
+
+        if(createRepositoryDTO.getPersonal() != null){
+            repository.setPersonal(createRepositoryDTO.getPersonal());
+        }else{
+            throw new AttributeNullException("Personal could not have value null.");
+        }
+
 
         repository.setCreated(new Date());
         repository.setStar(0);
