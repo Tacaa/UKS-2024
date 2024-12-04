@@ -29,8 +29,8 @@ import static jakarta.persistence.InheritanceType.SINGLE_TABLE;
 public class Repository {
 
     @Id
-    @SequenceGenerator(name = "repositorySequence", sequenceName = "repository_sequence", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "repositorySequence")
+    //@SequenceGenerator(name = "repositorySequence", sequenceName = "repository_sequence", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name", nullable = false, unique = true)

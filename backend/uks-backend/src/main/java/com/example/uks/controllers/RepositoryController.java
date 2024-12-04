@@ -1,8 +1,10 @@
 package com.example.uks.controllers;
 
-
+import com.example.uks.dto.repository.CreateRepositoryDTO;
 import com.example.uks.dto.repository.RepositoryDTO;
 import com.example.uks.dto.util.PagedResponse;
+import com.example.uks.exceptions.OrganisationNullException;
+import com.example.uks.exceptions.OwnerNullException;
 import com.example.uks.exceptions.RepositoryNotFoundException;
 import com.example.uks.model.Repository;
 import com.example.uks.services.RepositoryService;
@@ -14,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "api/repositories")
@@ -66,6 +70,31 @@ public class RepositoryController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
+
+    @PostMapping
+    public ResponseEntity<Map<String, Object>> createRepository(@RequestBody CreateRepositoryDTO createRepositoryDTO) {
+        System.out.println("Halo bona");
+
+
+        try {
+            System.out.println("Tatjana");
+            Repository repository = repositoryService.createRepository(createRepositoryDTO);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", null);
+            response.put("data", new RepositoryDTO(repository));
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (OwnerNullException | OrganisationNullException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
 
 
     @DeleteMapping(value = "/{id}")
