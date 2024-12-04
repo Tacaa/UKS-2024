@@ -91,7 +91,6 @@ a:hover {
 
 .desc a {
   margin-left: 0.4rem;
-  text-decoration: underline;
   color: var(--blue-light);
 }
 
@@ -136,9 +135,17 @@ a:hover {
   margin-right: 10px;
 }
 
+.header .nav a:hover {
+  text-decoration: none;
+}
+
+.header .nav a {
+  text-decoration: none;
+  padding: 0 5px;
+}
+
 .header .nav a.active {
-  font-weight: bold;
-  text-decoration: underline;
+  border-bottom: 4px solid var(--blue-primary);
 }
 
 .nav > div {

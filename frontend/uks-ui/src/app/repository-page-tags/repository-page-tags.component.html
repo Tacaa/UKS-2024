@@ -1,1 +1,123 @@
-<p>repository-page-tags works!</p>
+<div class="component">
+  <div class="header">
+    <span>Sort by</span>
+    <select name="sortBy" id="sortBy">
+      <option value="1">Newest</option>
+      <option value="2">Oldest</option>
+      <option value="3">A - Z</option>
+      <option value="4">Z - A</option>
+    </select>
+    <input type="text" placeholder="Filter tags..." />
+  </div>
+  <div class="tagCard" ng-repeat="n in 4">
+    <span>TAG</span>
+    <div class="top">
+      <div class="topleft">
+        <a>?1.4.7full?</a>
+        <span
+          >Last pushed <span class="boldSpan">a year ago </span> by
+          <a>whoPushedIt</a></span
+        >
+      </div>
+      <div class="topright">
+        <div class="terminal">
+          docker pull paketobuildpacks/build:full
+          <button>Copy</button>
+        </div>
+      </div>
+    </div>
+    <div class="table">
+      <table style="border-collapse: collapse; width: 100%">
+        <thead>
+          <tr>
+            <th>Digest</th>
+            <th>OS/ARCH</th>
+            <th>Compressed size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a>randomcode2869</a></td>
+            <td>linux/amd64</td>
+            <td>381.22 MB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--! DELETE FROM HERE -->
+  <div class="tagCard" ng-repeat="n in 4">
+    <span>TAG</span>
+    <div class="top">
+      <div class="topleft">
+        <a>?1.4.7full?</a>
+        <span
+          >Last pushed <span class="boldSpan">a year ago </span> by
+          <a>whoPushedIt</a></span
+        >
+      </div>
+      <div class="topright">
+        <div class="terminal">
+          docker pull paketobuildpacks/build:full
+          <button>Copy</button>
+        </div>
+      </div>
+    </div>
+    <div class="table">
+      <table style="border-collapse: collapse; width: 100%">
+        <thead>
+          <tr>
+            <th>Digest</th>
+            <th>OS/ARCH</th>
+            <th>Compressed size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a>randomcode2869</a></td>
+            <td>linux/amd64</td>
+            <td>381.22 MB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="tagCard" ng-repeat="n in 4">
+    <span>TAG</span>
+    <div class="top">
+      <div class="topleft">
+        <a>?1.4.7full?</a>
+        <span
+          >Last pushed <span class="boldSpan">a year ago </span> by
+          <a>whoPushedIt</a></span
+        >
+      </div>
+      <div class="topright">
+        <div class="terminal">
+          docker pull paketobuildpacks/build:full
+          <button>Copy</button>
+        </div>
+      </div>
+    </div>
+    <div class="table">
+      <table style="border-collapse: collapse; width: 100%">
+        <thead>
+          <tr>
+            <th>Digest</th>
+            <th>OS/ARCH</th>
+            <th>Compressed size</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a>randomcode2869</a></td>
+            <td>linux/amd64</td>
+            <td>381.22 MB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--! DELETE TO HERE -->
+</div>
