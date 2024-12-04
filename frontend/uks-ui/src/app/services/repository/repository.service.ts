@@ -6,11 +6,32 @@ import { Repository } from 'src/app/shared/models/Repository';
 })
 export class RepositoryService {
   getAllNamespaces(): string[] {
-    const namespaces = this.getAll().map((repo) => repo.namespace);
+    const namespaces = this.getAllRepositories().map((repo) => repo.namespace);
     return Array.from(new Set(namespaces));
   }
 
-  getAll(): Repository[] {
+  getAllCategories(): string[] {
+    return [
+      'API Management',
+      'Content Management System',
+      'Data Science',
+      'Databases & Storage',
+      'Languages & Frameworks',
+      'Integration & Delivery',
+      'Internet of Things',
+      'Machine Learning & AI',
+      'Message Queues',
+      'Monitoring & Observability',
+      'Networking',
+      'Operating Systems',
+      'Security',
+      'Web Servers',
+      'Developer Tools',
+      'Web Analytics',
+    ];
+  }
+
+  getAllRepositories(): Repository[] {
     return [
       {
         id: 1,
@@ -55,7 +76,8 @@ export class RepositoryService {
         id: 4,
         name: 'DeltaDocs',
         namespace: 'docs_delta',
-        description: 'Documentation for Delta systems',
+        description:
+          'Documentation for Delta systems and functionalities od delta integration woth other facilities and numbers of coleegues',
         visibility: true,
         created: new Date('2023-03-01'),
         updated: new Date('2024-09-30'),
