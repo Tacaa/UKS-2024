@@ -9,4 +9,5 @@ export class Repository {
   star: number = 0;
   presonal?: boolean;
   public?: boolean;
+  image?: string;
 }

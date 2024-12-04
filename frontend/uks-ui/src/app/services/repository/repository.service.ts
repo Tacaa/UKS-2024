@@ -23,6 +23,7 @@ export class RepositoryService {
         star: 42,
         presonal: false,
         public: true,
+        image: '../../assets/images/logo_crni.png',
       },
       {
         id: 2,
@@ -35,6 +36,7 @@ export class RepositoryService {
         star: 15,
         presonal: true,
         public: false,
+        image: '../../assets/images/logo_crni.png',
       },
       {
         id: 3,
@@ -47,6 +49,7 @@ export class RepositoryService {
         star: 88,
         presonal: false,
         public: true,
+        image: '../../assets/images/logo_crni.png',
       },
       {
         id: 4,
@@ -59,6 +62,7 @@ export class RepositoryService {
         star: 5,
         presonal: true,
         public: true,
+        image: '../../assets/images/logo_crni.png',
       },
       {
         id: 5,
@@ -71,6 +75,7 @@ export class RepositoryService {
         star: 73,
         presonal: false,
         public: false,
+        image: '../../assets/images/logo_crni.png',
       },
       {
         id: 6,
@@ -83,6 +88,7 @@ export class RepositoryService {
         star: 31,
         presonal: true,
         public: true,
+        image: '../../assets/images/logo_crni.png',
       },
       {
         id: 7,
@@ -95,6 +101,7 @@ export class RepositoryService {
         star: 60,
         presonal: false,
         public: true,
+        image: '../../assets/images/logo_crni.png',
       },
       {
         id: 8,
@@ -107,6 +114,7 @@ export class RepositoryService {
         star: 95,
         presonal: false,
         public: false,
+        image: '../../assets/images/logo_crni.png',
       },
     ];
   }
