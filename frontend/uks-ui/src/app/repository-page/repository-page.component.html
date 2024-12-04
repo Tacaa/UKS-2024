@@ -1,0 +1,48 @@
+<div class="component">
+  <div class="header">
+    <div class="information">
+      <img src="../../assets/images/logo_crni.png" alt="" />
+      <div class="details">
+        <div class="top">
+          <span>User/repoName</span>
+          <img src="../../assets/images/logo_crni.png" alt="badge" />
+          <span class="badge">Badge description</span>
+        </div>
+        <div class="desc">
+          By
+          <a>Creator</a>
+          <span>, Uptaded over 1 year ago</span>
+        </div>
+        <div class="tags">
+          <span> IMAGE </span>
+          <span> IMAGE </span>
+        </div>
+        <div class="bottom">
+          <span> <i class="fa fa-star" aria-hidden="true"></i> 77 </span>
+          <span> <i class="fa fa-download" aria-hidden="true"></i> 1.5M+ </span>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <!-- !!! TODO CHANGE ROUTER LINK TO SOMETHING USABLE LATER !!! -->
+      <div>
+        <a
+          routerLink="/features/r/repositoryName/overview"
+          [routerLinkActive]="'active'"
+          [ngClass]="{ active: isActive('/overview') }"
+        >
+          Overview
+        </a>
+      </div>
+      <!-- !!! TODO CHANGE ROUTER LINK TO SOMETHING USABLE LATER  !!! -->
+      <a
+        routerLink="/features/r/repositoryName/tags"
+        [routerLinkActive]="'active'"
+        [ngClass]="{ active: isActive('/tags') }"
+      >
+        Tags
+      </a>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>
