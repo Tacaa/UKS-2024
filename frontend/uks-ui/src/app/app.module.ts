@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HttpClientModule } from '@angular/common/http'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { AngularMaterialModule } from './angular_material.module'
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular_material.module';
 
 import { RepositoriesComponent } from './menu-pages/repositories/repositories.component';
 import { CreateRepositoryComponent } from './create-repository/create-repository.component';
@@ -23,10 +23,10 @@ import { RepositoryPageTagsComponent } from './repository-page-tags/repository-p
     RepositoriesComponent,
     CreateRepositoryComponent,
     ExploreComponent,
-    CardbarComponent
+    CardbarComponent,
     RepositoryPageComponent,
     RepositoryPageOverviewComponent,
-    RepositoryPageTagsComponent
+    RepositoryPageTagsComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,9 +35,9 @@ import { RepositoryPageTagsComponent } from './repository-page-tags/repository-p
     AngularMaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

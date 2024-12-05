@@ -45,7 +45,7 @@ const routes: Routes = [
           { path: 'overview', component: RepositoryPageOverviewComponent },
           { path: 'tags', component: RepositoryPageTagsComponent },
           { path: '', redirectTo: 'overview', pathMatch: 'full' },
-        ]
+        ],
       },
     ],
   },
