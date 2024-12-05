@@ -4,6 +4,7 @@ import com.example.uks.dto.repository.CreateRepositoryDTO;
 import com.example.uks.dto.repository.RepositoryDTO;
 import com.example.uks.dto.repository.UpdateRepositoryDTO;
 import com.example.uks.dto.util.PagedResponse;
+import com.example.uks.enumeration.Category;
 import com.example.uks.exceptions.*;
 import com.example.uks.model.Repository;
 import com.example.uks.services.RepositoryService;
@@ -60,6 +61,28 @@ public class RepositoryController {
         for (Repository repository : repositories) {
             repositoriesContent.add(new RepositoryDTO(repository));
         }
+
+        PagedResponse<RepositoryDTO> response = new PagedResponse<>(
+                repositoriesContent,
+                repositories.getTotalPages(),
+                repositories.getTotalElements()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // /api/repositories/search?page=0&size=10&sort=name,DESC&category=API_MANAGMENT&name=WeatherAPI&ownerId=1
+    @GetMapping(value = "/search")
+    public ResponseEntity<PagedResponse<RepositoryDTO>> filterRepositories(@RequestParam(required = false) String category,
+                                                                           @RequestParam(required = false) String name,
+                                                                           @RequestParam(required = false) Integer ownerId,
+                                                                           Pageable page)
+    {
+        Page<Repository> repositories = repositoryService.findRepositoriesByField(category, name, ownerId, page);
+
+        List<RepositoryDTO> repositoriesContent = repositories.stream()
+                .map(RepositoryDTO::new)
+                .toList();
 
         PagedResponse<RepositoryDTO> response = new PagedResponse<>(
                 repositoriesContent,

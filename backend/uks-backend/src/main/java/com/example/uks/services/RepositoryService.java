@@ -2,6 +2,7 @@ package com.example.uks.services;
 
 import com.example.uks.dto.repository.CreateRepositoryDTO;
 import com.example.uks.dto.repository.UpdateRepositoryDTO;
+import com.example.uks.enumeration.Category;
 import com.example.uks.exceptions.AttributeNullException;
 import com.example.uks.exceptions.OrganisationNullException;
 import com.example.uks.exceptions.OwnerNullException;
@@ -17,8 +18,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 @Service
 public class RepositoryService {
@@ -43,6 +49,24 @@ public class RepositoryService {
 
     public Page<Repository> findAllRepositories(Pageable page) {
         return repositoryRepository.findAll(page);
+    }
+
+    public Page<Repository> findRepositoriesByField(String category, String name, Integer ownerId, Pageable pageable) {
+        return repositoryRepository.findAll((root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (category != null) {
+                predicates.add(criteriaBuilder.equal(root.get("category"), Category.valueOf(category)));
+            }
+            if (name != null) {
+                predicates.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+            }
+            if (ownerId != null) {
+                predicates.add(criteriaBuilder.equal(root.get("owner").get("id"), ownerId));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        }, pageable);
     }
 
     public Repository createRepository(CreateRepositoryDTO createRepositoryDTO){
