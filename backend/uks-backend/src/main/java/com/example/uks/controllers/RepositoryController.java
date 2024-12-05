@@ -1,11 +1,13 @@
 package com.example.uks.controllers;
 
 import com.example.uks.dto.repository.CreateRepositoryDTO;
+import com.example.uks.dto.repository.OfficialRepositoryDTO;
 import com.example.uks.dto.repository.RepositoryDTO;
 import com.example.uks.dto.repository.UpdateRepositoryDTO;
 import com.example.uks.dto.util.PagedResponse;
 import com.example.uks.enumeration.Category;
 import com.example.uks.exceptions.*;
+import com.example.uks.model.OfficialRepository;
 import com.example.uks.model.Repository;
 import com.example.uks.services.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,5 +159,71 @@ public class RepositoryController {
         }
     }
 
+
+    @GetMapping(value = "official/{id}")
+    public ResponseEntity<OfficialRepositoryDTO> getOfficialRepository(@PathVariable Integer id) {
+        OfficialRepository repository = repositoryService.findOfficialRepositoryById(id);
+
+        if (repository == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(new OfficialRepositoryDTO(repository), HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "official/all")
+    public ResponseEntity<List<OfficialRepositoryDTO>> getAllOfficialRepositories() {
+        List<OfficialRepository> repositories = repositoryService.findAllOfficialRepositories();
+
+        List<OfficialRepositoryDTO> repositoriesDTO = new ArrayList<>();
+        for (OfficialRepository repository : repositories) {
+            repositoriesDTO.add(new OfficialRepositoryDTO(repository));
+        }
+
+        return new ResponseEntity<>(repositoriesDTO, HttpStatus.OK);
+    }
+
+
+    // /api/repositories/official?page=0&size=5&sort=name,DESC
+    @GetMapping(value = "official")
+    public ResponseEntity<PagedResponse<OfficialRepositoryDTO>> getOfficialRepositoriesPage(Pageable page) {
+        Page<OfficialRepository> repositories = repositoryService.findAllOfficialRepositories(page);
+
+        List<OfficialRepositoryDTO> repositoriesContent = new ArrayList<>();
+        for (OfficialRepository repository : repositories) {
+            repositoriesContent.add(new OfficialRepositoryDTO(repository));
+        }
+
+        PagedResponse<OfficialRepositoryDTO> response = new PagedResponse<>(
+                repositoriesContent,
+                repositories.getTotalPages(),
+                repositories.getTotalElements()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // /api/repositories/official/search?page=0&size=10&sort=name,DESC&category=API_MANAGMENT&name=WeatherAPI&ownerId=1
+    @GetMapping(value = "official/search")
+    public ResponseEntity<PagedResponse<OfficialRepositoryDTO>> filterOfficialRepositories(@RequestParam(required = false) String category,
+                                                                           @RequestParam(required = false) String name,
+                                                                           @RequestParam(required = false) Integer ownerId,
+                                                                           Pageable page)
+    {
+        PagedResponse<OfficialRepository> repositories = repositoryService.findOfficialRepositoriesByField(category, name, ownerId, page);
+
+        List<OfficialRepositoryDTO> repositoriesContent = repositories.getContent().stream()
+                .map(OfficialRepositoryDTO::new)
+                .toList();
+
+        PagedResponse<OfficialRepositoryDTO> response = new PagedResponse<>(
+                repositoriesContent,
+                repositories.getTotalPages(),
+                repositories.getTotalElements()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 }

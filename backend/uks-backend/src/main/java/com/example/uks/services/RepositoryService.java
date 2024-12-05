@@ -1,21 +1,27 @@
 package com.example.uks.services;
 
 import com.example.uks.dto.repository.CreateRepositoryDTO;
+import com.example.uks.dto.repository.OfficialRepositoryDTO;
 import com.example.uks.dto.repository.UpdateRepositoryDTO;
+import com.example.uks.dto.util.PagedResponse;
 import com.example.uks.enumeration.Category;
 import com.example.uks.exceptions.AttributeNullException;
 import com.example.uks.exceptions.OrganisationNullException;
 import com.example.uks.exceptions.OwnerNullException;
 import com.example.uks.exceptions.RepositoryNotFoundException;
+import com.example.uks.model.OfficialRepository;
 import com.example.uks.model.Organisation;
 import com.example.uks.model.Repository;
 import com.example.uks.model.User;
+import com.example.uks.repositories.OfficialRepositoryRepository;
 import com.example.uks.repositories.OrganisationRepository;
 import com.example.uks.repositories.RepositoryRepository;
 import com.example.uks.repositories.UserRepository;
+import com.example.uks.util.specification.OfficialRepositorySpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,6 +37,9 @@ public class RepositoryService {
 
     @Autowired
     private RepositoryRepository repositoryRepository;
+
+    @Autowired
+    private OfficialRepositoryRepository officialRepositoryRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -179,5 +188,51 @@ public class RepositoryService {
         repositoryRepository.save(repository);
     }
 
+
+    public OfficialRepository findOfficialRepositoryById(Integer id){
+        return repositoryRepository.findOfficialRepositoryById(id).orElse(null);
+    }
+
+    public List<OfficialRepository> findAllOfficialRepositories(){
+        return officialRepositoryRepository.findAll();
+    }
+
+    public Page<OfficialRepository> findAllOfficialRepositories(Pageable page) {
+        return officialRepositoryRepository.findAll(page);
+    }
+
+    public PagedResponse<OfficialRepository> findOfficialRepositoriesByField(
+            String category, String name, Integer ownerId, Pageable pageable) {
+        Page<Repository> repositories = repositoryRepository.findAll((root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (category != null) {
+                predicates.add(criteriaBuilder.equal(root.get("category"), Category.valueOf(category)));
+            }
+            if (name != null) {
+                predicates.add(criteriaBuilder.like(root.get("name"), "%" + name + "%"));
+            }
+            if (ownerId != null) {
+                predicates.add(criteriaBuilder.equal(root.get("owner").get("id"), ownerId));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        }, pageable);
+
+        List<OfficialRepository> officialRepositories = new ArrayList<>() {
+        };
+        for(Repository repository : repositories){
+            if (repository instanceof OfficialRepository) {
+                officialRepositories.add(this.findOfficialRepositoryById(repository.getId()));
+            }
+        }
+
+        return new PagedResponse<>(
+                officialRepositories,
+                officialRepositories.size()/ pageable.getPageSize() + 1,
+                officialRepositories.size()
+        );
+
+    }
 
 }
