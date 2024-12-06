@@ -1,9 +1,6 @@
 package com.example.uks.controllers;
 
-import com.example.uks.dto.repository.CreateRepositoryDTO;
-import com.example.uks.dto.repository.OfficialRepositoryDTO;
-import com.example.uks.dto.repository.RepositoryDTO;
-import com.example.uks.dto.repository.UpdateRepositoryDTO;
+import com.example.uks.dto.repository.*;
 import com.example.uks.dto.util.PagedResponse;
 import com.example.uks.enumeration.Category;
 import com.example.uks.exceptions.*;
@@ -225,5 +222,47 @@ public class RepositoryController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/official")
+    public ResponseEntity<Map<String, Object>> createOfficialRepository(@RequestBody CreateOfficialRepositoryDTO createOfficialRepositoryDTO) {
+        try {
+            OfficialRepository repository = repositoryService.createOfficialRepository(createOfficialRepositoryDTO);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", null);
+            response.put("data", new OfficialRepositoryDTO(repository));
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (OwnerNullException | OrganisationNullException | AttributeNotUniqueException | AttributeNullException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping(value = "official/{id}")
+    public ResponseEntity<Map<String, Object>> updateofficialRepository(@PathVariable Integer id, @RequestBody UpdateRepositoryDTO updateRepositoryDTO) {
+        try {
+            Repository repository = repositoryService.updateRepository(id, updateRepositoryDTO);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", null);
+            response.put("data", new RepositoryDTO(repository));
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        }catch (RepositoryNotFoundException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+        } catch (AttributeNotUniqueException | AttributeNullException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
 }

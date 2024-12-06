@@ -22,6 +22,7 @@ public interface RepositoryRepository extends JpaRepository<Repository, Integer>
     @Query("SELECT o FROM Repository o WHERE o.id = :id ")
     Optional<OfficialRepository> findOfficialRepositoryById(@Param("id") Integer id);
 
-
+    @Query("SELECT o FROM Repository o WHERE o.prefix = :prefix ")
+    Optional<OfficialRepository> findOfficialRepositoryByPrefix(@Param("prefix") String prefix);
 
 }

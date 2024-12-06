@@ -1,5 +1,6 @@
 package com.example.uks.services;
 
+import com.example.uks.dto.repository.CreateOfficialRepositoryDTO;
 import com.example.uks.dto.repository.CreateRepositoryDTO;
 import com.example.uks.dto.repository.OfficialRepositoryDTO;
 import com.example.uks.dto.repository.UpdateRepositoryDTO;
@@ -82,7 +83,7 @@ public class RepositoryService {
         Repository repository = new Repository();
 
         if(createRepositoryDTO.getName() != null){
-            Repository repo = repositoryRepository.findByName(createRepositoryDTO.getName());
+            //Repository repo = repositoryRepository.findByName(createRepositoryDTO.getName());
             if(repositoryRepository.findByName(createRepositoryDTO.getName()) ==null){
                 repository.setName(createRepositoryDTO.getName());
             }else{
@@ -233,6 +234,78 @@ public class RepositoryService {
                 officialRepositories.size()
         );
 
+    }
+
+    public OfficialRepository createOfficialRepository(CreateOfficialRepositoryDTO createOfficialRepositoryDTO){
+        OfficialRepository newOfficialRepository = new OfficialRepository();
+
+        if(createOfficialRepositoryDTO.getPrefix() != null){
+            OfficialRepository repository = repositoryRepository.findOfficialRepositoryByPrefix(createOfficialRepositoryDTO.getPrefix()).orElse(null);
+            if(repository == null){
+                newOfficialRepository.setPrefix(createOfficialRepositoryDTO.getPrefix());
+            }else{
+                throw new AttributeNullException("Repository with prefix " + createOfficialRepositoryDTO.getPrefix() + " already exists!");
+            }
+        }else{
+            throw new AttributeNullException("Prefix could not have value null.");
+        }
+
+        if(createOfficialRepositoryDTO.getCreateRepositoryDTO().getName() != null){
+            if(repositoryRepository.findByName(createOfficialRepositoryDTO.getCreateRepositoryDTO().getName()) == null){
+                newOfficialRepository.setName(createOfficialRepositoryDTO.getCreateRepositoryDTO().getName());
+            }else{
+                throw new AttributeNullException("Repository with name " + createOfficialRepositoryDTO.getCreateRepositoryDTO().getName() + " already exists!");
+            }
+        }else{
+            throw new AttributeNullException("Name could not have value null.");
+        }
+
+        newOfficialRepository.setNamespace(createOfficialRepositoryDTO.getCreateRepositoryDTO().getNamespace());
+        newOfficialRepository.setDescription(createOfficialRepositoryDTO.getCreateRepositoryDTO().getDescription());
+
+        if(createOfficialRepositoryDTO.getCreateRepositoryDTO().getCategory() != null){
+            newOfficialRepository.setCategory(createOfficialRepositoryDTO.getCreateRepositoryDTO().getCategory());
+        }else{
+            throw new AttributeNullException("Category could not have value null.");
+        }
+
+
+        newOfficialRepository.setVisibility(createOfficialRepositoryDTO.getCreateRepositoryDTO().getVisibility());
+
+        if(createOfficialRepositoryDTO.getCreateRepositoryDTO().getPersonal() != null){
+            newOfficialRepository.setPersonal(createOfficialRepositoryDTO.getCreateRepositoryDTO().getPersonal());
+        }else{
+            throw new AttributeNullException("Personal could not have value null.");
+        }
+
+
+        newOfficialRepository.setCreated(new Date());
+        newOfficialRepository.setStar(0);
+        newOfficialRepository.setDeleted(false);
+
+        if(createOfficialRepositoryDTO.getCreateRepositoryDTO().getOwnerId() != null){
+            User user = userRepository.findById(createOfficialRepositoryDTO.getCreateRepositoryDTO().getOwnerId()).orElse(null);
+            if(user != null){
+                newOfficialRepository.setOwner(user);
+            }else{
+                throw new OwnerNullException("Owner with ID " + createOfficialRepositoryDTO.getCreateRepositoryDTO().getOwnerId() + " does not exist");
+            }
+        }else{
+            throw new OwnerNullException("Owner could not have id with value null.");
+        }
+
+        if(createOfficialRepositoryDTO.getCreateRepositoryDTO().getOrganisationId() != null){
+            Organisation organisation = organisationRepository.findById(createOfficialRepositoryDTO.getCreateRepositoryDTO().getOrganisationId()).orElse(null);
+            if(organisation != null){
+                newOfficialRepository.setOrganisation(organisation);
+            }else{
+                throw new OrganisationNullException("Organisation with ID " + createOfficialRepositoryDTO.getCreateRepositoryDTO().getOrganisationId() + " does not exist");
+            }
+        }else{
+            newOfficialRepository.setOrganisation(null);
+        }
+
+        return officialRepositoryRepository.save(newOfficialRepository);
     }
 
 }
