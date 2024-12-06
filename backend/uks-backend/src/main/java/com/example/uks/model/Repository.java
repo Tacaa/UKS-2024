@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.SoftDelete;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -26,9 +29,9 @@ import static jakarta.persistence.InheritanceType.SINGLE_TABLE;
 public class Repository {
 
     @Id
-    @SequenceGenerator(name = "repositorySequence", sequenceName = "repository_sequence", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "repositorySequence")
-    private Long id;
+    //@SequenceGenerator(name = "repositorySequence", sequenceName = "repository_sequence", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
@@ -58,6 +61,9 @@ public class Repository {
     @Column(name = "category", nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
