@@ -25,18 +25,18 @@
     </div>
     <div class="nav">
       <!-- !!! TODO CHANGE ROUTER LINK TO SOMETHING USABLE LATER !!! -->
-      <div>
-        <a
-          routerLink="/features/r/repositoryName/overview"
-          [routerLinkActive]="'active'"
-          [ngClass]="{ active: isActive('/overview') }"
-        >
-          Overview
-        </a>
-      </div>
+
+      <a
+        routerLink="/features/r/:user/:repository/overview"
+        [routerLinkActive]="'active'"
+        [ngClass]="{ active: isActive('/overview') }"
+      >
+        Overview
+      </a>
+
       <!-- !!! TODO CHANGE ROUTER LINK TO SOMETHING USABLE LATER  !!! -->
       <a
-        routerLink="/features/r/repositoryName/tags"
+        routerLink="/features/r/:user/:repository/tags"
         [routerLinkActive]="'active'"
         [ngClass]="{ active: isActive('/tags') }"
       >
