@@ -76,11 +76,10 @@ input {
 }
 
 .terminal {
-  font-size: 1.6rem;
-  padding-left: 1.5rem;
-  padding-right: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-left: 1.2rem;
+  padding-right: 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 .terminal button {

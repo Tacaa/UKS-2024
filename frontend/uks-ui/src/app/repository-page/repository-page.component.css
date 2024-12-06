@@ -147,7 +147,3 @@ a:hover {
 .header .nav a.active {
   border-bottom: 4px solid var(--blue-primary);
 }
-
-.nav > div {
-  width: 10rem;
-}
