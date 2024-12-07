@@ -1,10 +1,12 @@
 package com.example.uks.controllers;
 
-import com.example.uks.dto.repository.RepositoryDTO;
 import com.example.uks.dto.user.BadgeDTO;
+import com.example.uks.dto.user.UpdateUserDTO;
 import com.example.uks.dto.user.UserDTO;
 import com.example.uks.dto.util.PagedResponse;
-import com.example.uks.model.Repository;
+import com.example.uks.exceptions.AttributeNotUniqueException;
+import com.example.uks.exceptions.AttributeNullException;
+import com.example.uks.exceptions.RepositoryNotFoundException;
 import com.example.uks.model.User;
 import com.example.uks.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "api/users")
@@ -102,6 +106,29 @@ public class UserController {
         }
 
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable Integer id, @RequestBody UpdateUserDTO updateUserDTO){
+        try {
+            User user = userService.updateUser(id, updateUserDTO);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", null);
+            response.put("data", new UserDTO(user));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        }catch (RepositoryNotFoundException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+        } catch (AttributeNotUniqueException | AttributeNullException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

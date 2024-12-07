@@ -1,10 +1,11 @@
 package com.example.uks.services;
 
 import com.example.uks.dto.user.BadgeDTO;
-import com.example.uks.enumeration.Category;
+import com.example.uks.dto.user.UpdateUserDTO;
 import com.example.uks.enumeration.Role;
 import com.example.uks.enumeration.UserBadge;
-import com.example.uks.model.Repository;
+import com.example.uks.exceptions.AttributeNullException;
+import com.example.uks.exceptions.UserNotFound;
 import com.example.uks.model.User;
 import com.example.uks.repositories.UserRepository;
 import jakarta.persistence.criteria.Predicate;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +75,48 @@ public class UserService {
         user.setUserBadge(badgeDTO.getUserBadge());
         return userRepository.save(user);
 
+    }
+
+    public User updateUser(Integer id, UpdateUserDTO updateUserDTO){
+        User user = userRepository.findById(id).orElse(null);
+
+        if(user == null){
+            throw new UserNotFound("User with ID " + id + " does not exist");
+        }
+
+        if(updateUserDTO.getFirstName() != null){
+            user.setFirstName(updateUserDTO.getFirstName());
+        }else{
+            throw new AttributeNullException("First name could not have value null.");
+        }
+
+        if(updateUserDTO.getLastName() != null){
+            user.setLastName(updateUserDTO.getLastName());
+        }else{
+            throw new AttributeNullException("Last name could not have value null.");
+        }
+
+        if(updateUserDTO.getUsername() != null){
+            if(userRepository.findByUsername(updateUserDTO.getUsername()) == null){
+                user.setUsername(updateUserDTO.getUsername());
+            }else{
+                throw new AttributeNullException("Username with name " + updateUserDTO.getUsername() + " already exists!");
+            }
+        }else{
+            throw new AttributeNullException("Username could not have value null.");
+        }
+
+        if(updateUserDTO.getEmail() != null){
+            if(userRepository.findByEmail(updateUserDTO.getEmail()) == null){
+                user.setEmail(updateUserDTO.getEmail());
+            }else{
+                throw new AttributeNullException("Email with name " + updateUserDTO.getEmail() + " already exists!");
+            }
+        }else{
+            throw new AttributeNullException("Email could not have value null.");
+        }
+
+        return userRepository.save(user);
     }
 
 
