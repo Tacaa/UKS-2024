@@ -15,28 +15,44 @@
   align-items: center;
 }
 
-.top i {
+.top h2 i {
   margin-left: 15px;
   color: var(--gray4);
   font-size: 3.4rem;
 }
 
-.topleft > span i,
+.descDiv i,
 .categories i {
   color: var(--gray35);
   margin-left: 7px;
   font-size: 2.55rem;
 }
-.topleft > span i:hover,
+.descDiv i:hover,
 .categories i:hover {
   color: var(--gray25);
   cursor: pointer;
+}
+
+.topleft button {
+  margin-left: 1.5rem;
+}
+
+.topleft input {
+  padding-left: 0.5rem;
+  height: 40px;
+  width: 35rem;
+}
+
+.topleft select {
+  padding: 0 0.5rem;
+  height: 30px;
 }
 
 .topleft {
   width: 60%;
   display: flex;
   flex-direction: column;
+  padding-right: 2rem;
 }
 
 .topleft > p {
@@ -44,7 +60,7 @@
   font-size: 1.55rem;
 }
 
-.topleft > span {
+.descDiv span {
   font-size: 1.55rem;
   width: 100%;
   text-wrap: wrap;
@@ -121,6 +137,16 @@
 
 .bot span {
   font-size: 1.55rem;
+  margin-left: 1px;
+}
+
+.bot h3 {
+  margin-bottom: 2rem;
+}
+
+.no-overview {
+  color: var(--gray2);
+  font-style: italic;
 }
 
 .topright .outlinedButton {
@@ -130,4 +156,15 @@
 
 .bot button {
   margin-top: 20px;
+  margin-right: 1.5rem;
+}
+
+.bot textarea {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  padding: 1.5rem;
+  border: 2px solid var(--blue-primary);
+  min-height: 30rem;
+  border-radius: 1rem;
 }
