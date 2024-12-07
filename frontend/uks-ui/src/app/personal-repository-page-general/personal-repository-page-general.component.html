@@ -1,7 +1,13 @@
 <!-- TODO ADD EDITING WINDOWS FOR shortDescription, Categories and Repo Overview -->
 <div class="top">
   <div class="topleft">
-    <h2>Creator/repoName<i class="fa fa-lock" aria-hidden="true"></i></h2>
+    <h2>
+      Creator/repoName<i
+        class="fa fa-lock"
+        aria-hidden="true"
+        matTooltip="Private repository"
+      ></i>
+    </h2>
     <p>Created 27 days ago</p>
 
     <!-- TODO ADD EDITING WINDOW -->
@@ -15,8 +21,13 @@
     </div>
   </div>
   <div class="topright">
-    <h3>Docker commands</h3>
-    <span>To push a new tag to this repository:</span>
+    <div style="display: flex; flex-direction: row">
+      <div>
+        <h3>Docker commands</h3>
+        <span>To push a new tag to this repository:</span>
+      </div>
+      <button class="outlinedButton">Public view</button>
+    </div>
     <div class="terminal">docker push Creator/repoName:tagname</div>
   </div>
 </div>
@@ -37,5 +48,5 @@
     >
   </div>
   <!-- TODO ADD EDITING WINDOW -->
-  <button>Add overview</button>
+  <button class="outlinedButton">Add overview</button>
 </div>

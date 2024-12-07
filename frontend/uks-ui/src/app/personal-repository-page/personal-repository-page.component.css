@@ -11,6 +11,7 @@
   width: 100%;
   border-bottom: 1px var(--gray5) solid;
   margin-bottom: 2.5rem;
+  margin-top: 3rem;
 }
 
 .nav a {
