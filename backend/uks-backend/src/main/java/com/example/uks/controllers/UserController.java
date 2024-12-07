@@ -1,6 +1,7 @@
 package com.example.uks.controllers;
 
 import com.example.uks.dto.repository.RepositoryDTO;
+import com.example.uks.dto.user.BadgeDTO;
 import com.example.uks.dto.user.UserDTO;
 import com.example.uks.dto.util.PagedResponse;
 import com.example.uks.model.Repository;
@@ -90,6 +91,17 @@ public class UserController {
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/badge/{id}")
+    public ResponseEntity<UserDTO> addUserBadge(@PathVariable Integer id, @RequestBody BadgeDTO badge){
+        User user = userService.addBadge(id, badge);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
     }
 
 }

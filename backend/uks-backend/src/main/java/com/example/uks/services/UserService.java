@@ -1,5 +1,6 @@
 package com.example.uks.services;
 
+import com.example.uks.dto.user.BadgeDTO;
 import com.example.uks.enumeration.Category;
 import com.example.uks.enumeration.Role;
 import com.example.uks.enumeration.UserBadge;
@@ -62,4 +63,19 @@ public class UserService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         }, pageable);
     }
+
+    public User addBadge(Integer id, BadgeDTO badgeDTO){
+
+        User user = userRepository.findById(id).orElse(null);
+
+        if(user == null){
+            return null;
+        }
+
+        user.setUserBadge(badgeDTO.getUserBadge());
+        return userRepository.save(user);
+
+    }
+
+
 }
