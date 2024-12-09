@@ -87,16 +87,34 @@ input[type="radio"] {
   padding-left: 5%;
 }
 
+.radioDiv div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: first baseline;
+}
+
 .radioDiv input {
   margin-right: 0.3rem;
   padding-bottom: 2rem;
   padding-top: 1rem;
 }
+
 .radioDiv label {
   padding-bottom: 2rem;
   padding-top: 1rem;
   margin-right: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+
+.radioDiv i {
+  margin-left: 3px;
+  font-size: 2rem;
+  color: var(--gray3);
+}
+
 .radioDiv div :hover {
   cursor: pointer;
 }

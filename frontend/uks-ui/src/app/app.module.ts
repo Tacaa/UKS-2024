@@ -16,6 +16,11 @@ import { CardbarComponent } from './cardbar/cardbar.component';
 import { RepositoryPageComponent } from './repository-page/repository-page.component';
 import { RepositoryPageOverviewComponent } from './repository-page-overview/repository-page-overview.component';
 import { RepositoryPageTagsComponent } from './repository-page-tags/repository-page-tags.component';
+import { PersonalRepositoryPageComponent } from './personal-repository-page/personal-repository-page.component';
+import { PersonalRepositoryPageGeneralComponent } from './personal-repository-page-general/personal-repository-page-general.component';
+import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
+import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
+import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +32,11 @@ import { RepositoryPageTagsComponent } from './repository-page-tags/repository-p
     RepositoryPageComponent,
     RepositoryPageOverviewComponent,
     RepositoryPageTagsComponent,
+    PersonalRepositoryPageComponent,
+    PersonalRepositoryPageGeneralComponent,
+    PersonalRepositoryPageSettingsComponent,
+    PersonalRepositoryPageCollaboratorsComponent,
+    PersonalRepositoryPageTagsComponent,
   ],
   imports: [
     BrowserModule,

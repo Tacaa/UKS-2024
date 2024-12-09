@@ -1,0 +1,44 @@
+.component {
+  width: 100%;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-bottom: 1px var(--gray5) solid;
+  margin-bottom: 2.5rem;
+  margin-top: 3rem;
+}
+
+.nav a {
+  font-size: large;
+  color: black;
+  margin-right: 2rem;
+}
+
+.nav a:hover {
+  cursor: pointer;
+  color: black;
+  opacity: 0.9;
+}
+
+.nav > * {
+  margin-right: 10px;
+}
+
+.nav a:hover {
+  text-decoration: none;
+}
+
+.nav a {
+  text-decoration: none;
+  padding: 0 7px;
+}
+
+.nav a.active {
+  border-bottom: 4px solid var(--blue-primary);
+}
