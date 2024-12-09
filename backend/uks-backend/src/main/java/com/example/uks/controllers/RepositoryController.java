@@ -118,7 +118,7 @@ public class RepositoryController {
             Map<String, Object> response = new HashMap<>();
             response.put("message", null);
             response.put("data", new RepositoryDTO(repository));
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
+            return new ResponseEntity<>(response, HttpStatus.OK);
 
         }catch (RepositoryNotFoundException e) {
             Map<String, Object> response = new HashMap<>();
