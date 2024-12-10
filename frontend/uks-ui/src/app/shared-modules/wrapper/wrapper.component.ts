@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { UserAvatarComponent } from '../components/user-avatar/user-avatar.component';
 
 @Component({
@@ -31,7 +31,7 @@ import { UserAvatarComponent } from '../components/user-avatar/user-avatar.compo
   styleUrls: ['./wrapper.component.css']
 })
 export class WrapperComponent {
-  selectedButton: string = 'explore';
+  selectedButton: string = 'dockerhub/repository';
   setActive(buttonName: string): void {
     this.selectedButton = buttonName;
   }
