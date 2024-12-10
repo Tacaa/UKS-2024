@@ -58,13 +58,25 @@ mat-toolbar {
     display: inline-block;
     line-height: 50px;
     text-align: center;
+    font-weight: normal;
 }
 
-.menu-item-button.clicked{
+.menu-item-button.underline{
     text-decoration: underline;
 }
 
+.mat-item-button.router-link-active {
+    font-weight: normal; /* Reset bold text */
+}
+  
 
+::ng-deep .menu-items .menu-item-button:hover {
+  background-color: transparent !important;
+  color: inherit !important;
+  box-shadow: none !important;
+  text-decoration: underline;
+  opacity: 50%;
+}
 
 .toolbar-actions>div {
     display: flex;

@@ -15,7 +15,7 @@ import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-
 const routes: Routes = [
   { path: '', redirectTo: 'features', pathMatch: 'full' },
   {
-    path: 'features',
+    path: 'dockerhub',
     loadComponent: () =>
       import('./shared-modules/wrapper/wrapper.component').then(
         (c) => c.WrapperComponent
@@ -24,11 +24,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'repository',
         pathMatch: 'full',
       },
       {
-        path: 'home',
+        path: 'repository',
         component: RepositoriesComponent,
         title: 'Home',
       },

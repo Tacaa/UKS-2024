@@ -49,19 +49,19 @@
         <button
           class="menu-item-button"
           mat-menu-item
-          routerLink="/features/explore"
-          routerLinkActive="active"
-          [class.clicked]="selectedButton === 'explore'"
-          (click)="setActive('organizations')"
+          routerLink="/dockerhub/explore"
+          routerLinkActive="router-link-active"
+          [class.underline]="selectedButton === 'explore'"
+          (click)="setActive('explore')"
         >
           <span class="menu-item">Explore</span>
         </button>
         <button
           class="menu-item-button"
           mat-menu-item
-          routerLink="/features/repositories"
-          routerLinkActive="active"
-          [class.clicked]="selectedButton === 'repositories'"
+          routerLink="/dockerhub/repository"
+          routerLinkActive="router-link-active"
+          [class.underline]="selectedButton === 'repositories'"
           (click)="setActive('repositories')"
         >
           <span class="menu-item">Repositories</span>
@@ -69,9 +69,9 @@
         <button
           class="menu-item-button"
           mat-menu-item
-          routerLink="/features/organizations"
-          routerLinkActive="active"
-          [class.clicked]="selectedButton === 'organizations'"
+          routerLink="/dockerhub/organizations"
+          routerLinkActive="router-link-active"
+          [class.underline]="selectedButton === 'organizations'"
           (click)="setActive('organizations')"
         >
           <span class="menu-item">Organizations</span>
@@ -79,9 +79,9 @@
         <button
           class="menu-item-button"
           mat-menu-item
-          routerLink="/features/usage"
-          routerLinkActive="active"
-          [class.clicked]="selectedButton === 'usage'"
+          routerLink="/dockerhub/usage"
+          routerLinkActive="router-link-active"
+          [class.underline]="selectedButton === 'usage'"
           (click)="setActive('usage')"
         >
           <span class="menu-item">Usage</span>
