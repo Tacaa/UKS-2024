@@ -11,9 +11,11 @@ import { PersonalRepositoryPageGeneralComponent } from './personal-repository-pa
 import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
 import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
+import { OrgsPageComponent } from './orgs-page/orgs-page.component';
+import { OrgsPageCreateOrgComponent } from './orgs-page-create-org/orgs-page-create-org.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'features', pathMatch: 'full' },
+  { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
   {
     path: 'dockerhub',
     loadComponent: () =>
@@ -78,6 +80,18 @@ const routes: Routes = [
           },
           { path: '', redirectTo: 'general', pathMatch: 'full' },
         ],
+      },
+
+      {
+        path: 'organizations',
+        component: OrgsPageComponent,
+        title: 'Organizations',
+        children: [],
+      },
+      {
+        path: 'organizations/create',
+        component: OrgsPageCreateOrgComponent,
+        title: 'Create new organization',
       },
     ],
   },
