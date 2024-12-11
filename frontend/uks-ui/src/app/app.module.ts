@@ -21,6 +21,7 @@ import { PersonalRepositoryPageGeneralComponent } from './personal-repository-pa
 import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
 import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
+import { UsagePageComponent } from './usage-page/usage-page.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-
     PersonalRepositoryPageSettingsComponent,
     PersonalRepositoryPageCollaboratorsComponent,
     PersonalRepositoryPageTagsComponent,
+    UsagePageComponent,
   ],
   imports: [
     BrowserModule,

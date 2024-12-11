@@ -1,0 +1,43 @@
+h3 {
+  margin: 0;
+}
+.component {
+  width: 100%;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.component span {
+  color: var(--gray3);
+  margin-bottom: 1.5rem;
+}
+.namespace {
+  margin-bottom: 2.5rem;
+}
+.graph {
+  width: 100%;
+  height: 500px;
+  border: 1px var(--gray5) solid;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  padding: 2.5rem;
+}
+
+.bar {
+  display: flex;
+  flex-direction: row;
+}
+.smallgraph {
+  width: 100%;
+  height: 500px;
+  border: 1px var(--gray5) solid;
+  border-radius: 4px;
+  height: 250px;
+  padding: 2.5rem;
+}
+
+.smallgraph > span {
+  font-size: 1.2rem;
+  color: var(--gray3);
+}

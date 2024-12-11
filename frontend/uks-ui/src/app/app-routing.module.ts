@@ -11,9 +11,10 @@ import { PersonalRepositoryPageGeneralComponent } from './personal-repository-pa
 import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
 import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
+import { UsagePageComponent } from './usage-page/usage-page.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'features', pathMatch: 'full' },
+  { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
   {
     path: 'dockerhub',
     loadComponent: () =>
@@ -78,6 +79,11 @@ const routes: Routes = [
           },
           { path: '', redirectTo: 'general', pathMatch: 'full' },
         ],
+      },
+      {
+        path: 'usage',
+        component: UsagePageComponent,
+        title: 'Usage',
       },
     ],
   },
