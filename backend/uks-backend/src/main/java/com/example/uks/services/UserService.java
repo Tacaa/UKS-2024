@@ -1,17 +1,20 @@
 package com.example.uks.services;
 
+import com.example.uks.dto.auth.UserRequest;
 import com.example.uks.dto.user.BadgeDTO;
 import com.example.uks.dto.user.UpdateUserDTO;
-import com.example.uks.enumeration.Role;
 import com.example.uks.enumeration.UserBadge;
 import com.example.uks.exceptions.AttributeNullException;
 import com.example.uks.exceptions.UserNotFound;
+import com.example.uks.model.Role;
 import com.example.uks.model.User;
 import com.example.uks.repositories.UserRepository;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +25,13 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     public User findUserById(Integer id){
         return userRepository.findById(id).orElse(null);
@@ -51,9 +61,9 @@ public class UserService {
                 predicates.add(criteriaBuilder.like(root.get("username"), "%" + username + "%"));
             }
 
-            if (role != null) {
-                predicates.add(criteriaBuilder.equal(root.get("role"), Role.valueOf(role)));
-            }
+//            if (role != null) {
+//                predicates.add(criteriaBuilder.equal(root.get("role"), Role.valueOf(role)));
+//            }
 
             if (userBadge != null) {
                 System.out.println("Tatjana");
@@ -62,6 +72,10 @@ public class UserService {
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         }, pageable);
+    }
+
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
     }
 
     public User addBadge(Integer id, BadgeDTO badgeDTO){
@@ -119,5 +133,25 @@ public class UserService {
         return userRepository.save(user);
     }
 
+
+    public User save(UserRequest userRequest) {
+        User u = new User();
+        u.setUsername(userRequest.getUsername());
+
+        // pre nego sto postavimo lozinku u atribut hesiramo je kako bi se u bazi nalazila hesirana lozinka
+        // treba voditi racuna da se koristi isi password encoder bean koji je postavljen u AUthenticationManager-u kako bi koristili isti algoritam
+        u.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+
+        u.setFirstName(userRequest.getFirstname());
+        u.setLastName(userRequest.getLastname());
+        u.setEnabled(true);
+        u.setEmail(userRequest.getEmail());
+
+        // u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
+        List<Role> roles = roleService.findByName("ROLE_USER");
+        u.setRoles(roles);
+
+        return this.userRepository.save(u);
+    }
 
 }

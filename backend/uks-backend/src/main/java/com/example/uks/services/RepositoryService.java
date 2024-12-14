@@ -2,7 +2,6 @@ package com.example.uks.services;
 
 import com.example.uks.dto.repository.CreateOfficialRepositoryDTO;
 import com.example.uks.dto.repository.CreateRepositoryDTO;
-import com.example.uks.dto.repository.OfficialRepositoryDTO;
 import com.example.uks.dto.repository.UpdateRepositoryDTO;
 import com.example.uks.dto.util.PagedResponse;
 import com.example.uks.enumeration.Category;
@@ -18,20 +17,16 @@ import com.example.uks.repositories.OfficialRepositoryRepository;
 import com.example.uks.repositories.OrganisationRepository;
 import com.example.uks.repositories.RepositoryRepository;
 import com.example.uks.repositories.UserRepository;
-import com.example.uks.util.specification.OfficialRepositorySpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
+
 import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 
 @Service
 public class RepositoryService {
