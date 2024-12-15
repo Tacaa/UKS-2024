@@ -84,10 +84,9 @@ public class WebSecurityConfig {
         http.exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(restAuthenticationEntryPoint));
         http.authorizeHttpRequests(request -> {
             request.requestMatchers(new AntPathRequestMatcher("/auth/login")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/api/foo")).permitAll()
-                    //Da nam lepsu poruku vrati
+                    .requestMatchers(new AntPathRequestMatcher("/auth/signup")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/error")).permitAll()
-                    //.requestMatchers(new AntPathRequestMatcher("/api/whoami")).hasRole("USER")
+
                     .anyRequest().authenticated();
         });
         http.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userDetailsService()), UsernamePasswordAuthenticationFilter.class);
@@ -102,6 +101,7 @@ public class WebSecurityConfig {
         // Zahtevi koji se mecuju za web.ignoring().antMatchers() nemaju pristup SecurityContext-u
         // Dozvoljena POST metoda na ruti /auth/login, za svaki drugi tip HTTP metode greska je 401 Unauthorized
         return (web) -> web.ignoring().requestMatchers(HttpMethod.POST, "/auth/login")
+                                      .requestMatchers(HttpMethod.POST, "/auth/signup")
 
 
                 // Ovim smo dozvolili pristup statickim resursima aplikacije

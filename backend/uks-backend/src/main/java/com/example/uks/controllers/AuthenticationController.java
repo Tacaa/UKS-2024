@@ -4,6 +4,7 @@ import com.example.uks.dto.auth.JwtAuthenticationRequest;
 import com.example.uks.dto.auth.UserRequest;
 import com.example.uks.dto.auth.UserTokenState;
 import com.example.uks.dto.repository.RepositoryDTO;
+import com.example.uks.dto.user.UserDTO;
 import com.example.uks.exceptions.ResourceConflictException;
 import com.example.uks.model.User;
 import com.example.uks.services.UserService;
@@ -79,16 +80,31 @@ public class AuthenticationController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<User> addUser(@RequestBody UserRequest userRequest, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<Map<String, Object>> addUser(@RequestBody UserRequest userRequest) {
         User existUser = this.userService.findByUsername(userRequest.getUsername());
 
         if (existUser != null) {
-            throw new ResourceConflictException(userRequest.getId(), "Username already exists");
+            throw new ResourceConflictException(existUser.getId(), "User already exists");
         }
 
-        User user = this.userService.save(userRequest);
+        User savedUser =  this.userService.save(userRequest);
 
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                userRequest.getUsername(), userRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Kreiraj token za tog korisnika
+        User user = (User) authentication.getPrincipal();
+        String jwt = tokenUtils.generateToken(user);
+        int expiresIn = tokenUtils.getExpiredIn();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", null);
+        response.put("data", new UserTokenState(jwt, expiresIn));
+        response.put("user_data", new UserDTO(savedUser));
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 
