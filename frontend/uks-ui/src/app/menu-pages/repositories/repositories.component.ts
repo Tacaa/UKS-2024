@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { RepositoryService } from 'src/app/services/repository/repository.service';
 import { Repository } from 'src/app/shared/models/Repository';
 
@@ -11,11 +13,14 @@ export class RepositoriesComponent implements OnInit {
   sortedRepos: Repository[] = [];
   namespaces: string[] = [];
   loadedRepos?: number;
+  testRepository?: Repository;
 
   sortField: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  constructor(private repositoryService: RepositoryService) {}
+  constructor(private repositoryService: RepositoryService, private router: Router,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit(): void {
     this.sortedRepos = this.repositoryService.getAllRepositories(); // Initialize with unsorted data
@@ -57,5 +62,16 @@ export class RepositoriesComponent implements OnInit {
     // const url = `https://your-repository-domain.com/${repoName}`; // Replace with your repo URL logic
     // window.open(url, '_blank');
     console.log('Redirect to ' + repoName);
+  }
+
+  getRepository(){
+    var id = 1;
+    this.repositoryService.getRepository(id).subscribe((result:any)=>{
+      if(result!=null){
+
+        this.testRepository=result;
+        console.log(this.testRepository?.id)
+      }
+    })
   }
 }
