@@ -64,6 +64,7 @@
   border: none;
   border-radius: 0.3rem;
   transition: 200ms;
+  min-width: 75px;
 }
 
 .blueButton:hover {
@@ -80,6 +81,7 @@
   border: 3px solid var(--blue-primary);
   border-radius: 0.3rem;
   transition: 200ms;
+  min-width: 75px;
 }
 
 .outlinedButton:hover {
@@ -99,6 +101,7 @@
   border: 2px solid var(--cancel-button-red);
   border-radius: 0.3rem;
   transition: 200ms;
+  min-width: 75px;
 }
 
 .redButton:hover {

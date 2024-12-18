@@ -1,3 +1,4 @@
+<!-- TODO ADD VARIABLES TO THIS COMPONENT IN ORDER TO BE ABLE TO SHOW WHAT IS NEEDED -->
 <div class="component">
   <div class="header">
     <div class="filters">
@@ -52,7 +53,7 @@
       <tr
         *ngFor="let repo of sortedRepos"
         (click)="openRepo(repo.name)"
-        routerLink="../repository/{{ repo.namespace }}/{{ repo.name }}"
+        routerLink="/dockerhub/repository/{{ repo.namespace }}/{{ repo.name }}"
         style="cursor: pointer; border-bottom: 1px solid #ddd"
       >
         <td>{{ repo.name }}</td>
