@@ -1,9 +1,7 @@
 <div class="component">
   <div class="header">
     <h1>Organizations</h1>
-    <button class="blueButton" routerLink="/dockerhub/organizations/create">
-      Create Organization
-    </button>
+    <button class="blueButton" routerLink="create">Create Organization</button>
   </div>
   <div class="tablediv">
     <table>
@@ -16,7 +14,9 @@
       <tbody>
         <tr>
           <td>
-            <a><i class="fa fa-building-o" aria-hidden="true"></i>namespace</a>
+            <a routerLink="namespace1"
+              ><i class="fa fa-building-o" aria-hidden="true"></i>namespace</a
+            >
           </td>
           <td>name</td>
           <td>role</td>
