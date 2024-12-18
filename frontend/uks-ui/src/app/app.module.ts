@@ -28,6 +28,8 @@ import { OrganizationMembersComponent } from './organization-members/organizatio
 import { OrganizationTeamsComponent } from './organization-teams/organization-teams.component';
 import { OrganizationRepositoriesComponent } from './organization-repositories/organization-repositories.component';
 import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
+import { AddMembersComponent } from './dialogs/add-members/add-members.component';
+import { CreateTeamComponent } from './dialogs/create-team/create-team.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { OrganizationSettingsComponent } from './organization-settings/organizat
     OrganizationTeamsComponent,
     OrganizationRepositoriesComponent,
     OrganizationSettingsComponent,
+    AddMembersComponent,
+    CreateTeamComponent,
   ],
   imports: [
     BrowserModule,

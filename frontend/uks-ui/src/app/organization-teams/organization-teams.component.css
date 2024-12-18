@@ -29,6 +29,7 @@ tr {
 a {
   color: var(--blue-primary);
   text-decoration: underline;
+  font-weight: 600;
 }
 
 a:hover {
