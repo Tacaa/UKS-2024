@@ -22,6 +22,16 @@ import { PersonalRepositoryPageSettingsComponent } from './personal-repository-p
 import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
 import { UsagePageComponent } from './usage-page/usage-page.component';
+import { OrgsPageComponent } from './orgs-page/orgs-page.component';
+import { OrgsPageCreateOrgComponent } from './orgs-page-create-org/orgs-page-create-org.component';
+import { OrganizationComponent } from './organization/organization.component';
+import { OrganizationMembersComponent } from './organization-members/organization-members.component';
+import { OrganizationTeamsComponent } from './organization-teams/organization-teams.component';
+import { OrganizationRepositoriesComponent } from './organization-repositories/organization-repositories.component';
+import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
+import { AddMembersComponent } from './dialogs/add-members/add-members.component';
+import { CreateTeamComponent } from './dialogs/create-team/create-team.component';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +49,15 @@ import { UsagePageComponent } from './usage-page/usage-page.component';
     PersonalRepositoryPageCollaboratorsComponent,
     PersonalRepositoryPageTagsComponent,
     UsagePageComponent,
+    OrgsPageComponent,
+    OrgsPageCreateOrgComponent,
+    OrganizationComponent,
+    OrganizationMembersComponent,
+    OrganizationTeamsComponent,
+    OrganizationRepositoriesComponent,
+    OrganizationSettingsComponent,
+    AddMembersComponent,
+    CreateTeamComponent,
   ],
   imports: [
     BrowserModule,

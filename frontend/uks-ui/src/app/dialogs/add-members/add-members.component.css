@@ -1,0 +1,23 @@
+.component {
+  width: 500px;
+  height: 500px;
+  padding: 2rem;
+}
+
+mat-list-item:hover {
+  background-color: var(--gray6);
+  cursor: pointer;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+}
+
+button {
+  margin-left: 1rem;
+}

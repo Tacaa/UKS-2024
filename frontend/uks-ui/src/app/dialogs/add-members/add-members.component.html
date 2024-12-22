@@ -1,0 +1,24 @@
+<div class="component">
+  <h2>Add member</h2>
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label>Search for a username</mat-label>
+    <input
+      matInput
+      [formControl]="searchControl"
+      placeholder="Start typing..."
+    />
+  </mat-form-field>
+
+  <mat-list>
+    <mat-list-item
+      *ngFor="let username of filteredUsernames | slice : 0 : 4"
+      (click)="setSearch(username)"
+    >
+      {{ username }}
+    </mat-list-item>
+  </mat-list>
+  <div class="footer">
+    <button class="redButton" mat-dialog-close>Cancel</button>
+    <button class="blueButton" (click)="addMember()">Add Member</button>
+  </div>
+</div>
