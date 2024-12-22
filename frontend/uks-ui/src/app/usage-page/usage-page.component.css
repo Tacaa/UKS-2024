@@ -10,6 +10,7 @@ h3 {
 
 .component span {
   color: var(--gray3);
+  font-size: 1.6rem;
   margin-bottom: 1.5rem;
 }
 .namespace {
@@ -40,4 +41,15 @@ h3 {
 .smallgraph > span {
   font-size: 1.2rem;
   color: var(--gray3);
+}
+
+i {
+  font-size: 2.5rem;
+  border-radius: 5px;
+  color: var(--blue-primary);
+  margin-right: 0.7rem;
+}
+
+mat-select {
+  color: var(--gray5);
 }
