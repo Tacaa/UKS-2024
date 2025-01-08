@@ -1,0 +1,14 @@
+.component {
+  width: 500px;
+  padding: 4rem;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+button {
+  margin-left: 1rem;
+}

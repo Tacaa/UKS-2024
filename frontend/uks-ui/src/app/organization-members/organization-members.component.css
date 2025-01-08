@@ -1,0 +1,31 @@
+.component {
+  border: 1px solid var(--gray5);
+  padding: 3rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  padding: 10px;
+}
+
+thead {
+  border-bottom: 2px solid var(--gray55);
+}
+
+tr {
+  border-bottom: 1px solid var(--gray55);
+}
+
+.gray {
+  color: var(--gray3);
+}

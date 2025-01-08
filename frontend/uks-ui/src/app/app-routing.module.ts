@@ -12,9 +12,17 @@ import { PersonalRepositoryPageCollaboratorsComponent } from './personal-reposit
 import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
+import { OrgsPageComponent } from './orgs-page/orgs-page.component';
+import { OrgsPageCreateOrgComponent } from './orgs-page-create-org/orgs-page-create-org.component';
+import { OrganizationComponent } from './organization/organization.component';
+import { OrganizationMembersComponent } from './organization-members/organization-members.component';
+import { OrganizationRepositoriesComponent } from './organization-repositories/organization-repositories.component';
+import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
+import { OrganizationTeamsComponent } from './organization-teams/organization-teams.component';
+
 
 const routes: Routes = [
-  { path: '', redirectTo: 'features', pathMatch: 'full' },
+  { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
   {
     path: 'dockerhub',
     loadComponent: () =>
@@ -83,6 +91,40 @@ const routes: Routes = [
       {
         path: 'accountSettings',
         component: AccountSettingsComponent
+      },
+      {
+        path: 'organizations',
+        component: OrgsPageComponent,
+        title: 'Organizations',
+      },
+      {
+        path: 'organizations/create',
+        component: OrgsPageCreateOrgComponent,
+        title: 'Create new organization',
+      },
+      {
+        path: 'organizations/:orgNamespace',
+        component: OrganizationComponent,
+        title: 'Organization',
+        children: [
+          {
+            path: 'members',
+            component: OrganizationMembersComponent,
+          },
+          {
+            path: 'repositories',
+            component: OrganizationRepositoriesComponent,
+          },
+          {
+            path: 'settings',
+            component: OrganizationSettingsComponent,
+          },
+          {
+            path: 'teams',
+            component: OrganizationTeamsComponent,
+          },
+          { path: '', redirectTo: 'members', pathMatch: 'full' },
+        ],
       }
     ],
   },
