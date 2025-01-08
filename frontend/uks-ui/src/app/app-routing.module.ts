@@ -11,6 +11,7 @@ import { PersonalRepositoryPageGeneralComponent } from './personal-repository-pa
 import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
 import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
+import { UsagePageComponent } from './usage-page/usage-page.component';
 import { OrgsPageComponent } from './orgs-page/orgs-page.component';
 import { OrgsPageCreateOrgComponent } from './orgs-page-create-org/orgs-page-create-org.component';
 import { OrganizationComponent } from './organization/organization.component';
@@ -88,10 +89,17 @@ const routes: Routes = [
       },
 
       {
+        path: 'usage',
+        component: UsagePageComponent,
+        title: 'Usage',
+      },
+  
+      {
         path: 'organizations',
         component: OrgsPageComponent,
         title: 'Organizations',
       },
+  
       {
         path: 'organizations/create',
         component: OrgsPageCreateOrgComponent,
