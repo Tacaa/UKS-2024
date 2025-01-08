@@ -11,6 +11,7 @@ import { PersonalRepositoryPageGeneralComponent } from './personal-repository-pa
 import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
 import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
+import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 import { UsagePageComponent } from './usage-page/usage-page.component';
 import { OrgsPageComponent } from './orgs-page/orgs-page.component';
 import { OrgsPageCreateOrgComponent } from './orgs-page-create-org/orgs-page-create-org.component';
@@ -19,6 +20,7 @@ import { OrganizationMembersComponent } from './organization-members/organizatio
 import { OrganizationRepositoriesComponent } from './organization-repositories/organization-repositories.component';
 import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
 import { OrganizationTeamsComponent } from './organization-teams/organization-teams.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
@@ -87,7 +89,10 @@ const routes: Routes = [
           { path: '', redirectTo: 'general', pathMatch: 'full' },
         ],
       },
-
+      {
+        path: 'accountSettings',
+        component: AccountSettingsComponent
+      },
       {
         path: 'usage',
         component: UsagePageComponent,
@@ -105,7 +110,6 @@ const routes: Routes = [
         component: OrgsPageCreateOrgComponent,
         title: 'Create new organization',
       },
-
       {
         path: 'organizations/:orgNamespace',
         component: OrganizationComponent,
@@ -129,7 +133,7 @@ const routes: Routes = [
           },
           { path: '', redirectTo: 'members', pathMatch: 'full' },
         ],
-      },
+      }
     ],
   },
 ];
