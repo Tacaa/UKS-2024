@@ -1,0 +1,22 @@
+.full-width {
+    width: 51%;
+    opacity: 80%;
+  }
+  
+  .button-container {
+    margin-top: 16px;
+    display: flex;
+    justify-content:left
+  }
+  
+  .deactivate{
+    margin-right: 16px;
+    background-color: red !important;
+  }
+
+  ::ng-deep mat-form-field.mat-form-field-appearance-outline .mat-form-field-label {
+    transform: translateY(5px); /* Adjust vertical position */
+    font-size: 14px; /* Adjust font size */
+    color: blue !important;
+  }
+  

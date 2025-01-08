@@ -198,3 +198,18 @@ mat-toolbar {
 ::ng-deep.mat-mdc-icon-button.mat-mdc-button-base {
     padding: 10px;
 }
+
+a {
+text-decoration: none; /* Remove underline */
+color: inherit;        /* Inherit color from the parent element */
+}
+
+a:hover {
+text-decoration: none; /* No underline on hover */
+color: inherit;        /* No color change on hover */
+}
+
+a:focus {
+    text-decoration: none; /* No underline on hover */
+    color: inherit;        /* No color change on hover */
+    }

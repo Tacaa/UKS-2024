@@ -11,6 +11,7 @@ import { PersonalRepositoryPageGeneralComponent } from './personal-repository-pa
 import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
 import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
+import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'features', pathMatch: 'full' },
@@ -79,6 +80,10 @@ const routes: Routes = [
           { path: '', redirectTo: 'general', pathMatch: 'full' },
         ],
       },
+      {
+        path: 'accountSettings',
+        component: AccountSettingsComponent
+      }
     ],
   },
 ];
