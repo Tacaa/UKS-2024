@@ -1,5 +1,9 @@
 <div class="cardbar">
-  <div class="card" *ngFor="let repo of repos | slice : 0 : 4">
+  <div
+    class="card"
+    routerLink="../r/{{ repo.namespace }}/{{ repo.name }}"
+    *ngFor="let repo of repos | slice : 0 : 4"
+  >
     <div class="header">
       <img src="../../assets/images/logo_beli.png" alt="" />
       <p>{{ repo.name }}/repoTag</p>
