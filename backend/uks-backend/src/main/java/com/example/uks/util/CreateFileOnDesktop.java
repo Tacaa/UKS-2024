@@ -23,8 +23,8 @@ public class CreateFileOnDesktop {
 
     public static String createPasswordFile() {
         String userHome = System.getProperty("user.home");
-        String destopPath = userHome + File.separator + "Desktop";
-        File newFile = new File(destopPath + File.separator + "uks-super-admin.txt");
+        String desktopPath = userHome + File.separator + "Desktop";
+        File newFile = new File(desktopPath + File.separator + "uks-super-admin.txt");
         String firstPass = getRandomString();
         try {
             if (newFile.createNewFile()) {
