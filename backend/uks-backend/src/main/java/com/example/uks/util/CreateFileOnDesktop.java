@@ -1,5 +1,7 @@
 package com.example.uks.util;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.io.*;
 import java.util.Random;
 
@@ -56,6 +58,6 @@ public class CreateFileOnDesktop {
             System.err.println("An error occurred while creating the file.");
             e.printStackTrace();
         }
-        return firstPass;
+        return new BCryptPasswordEncoder().encode(firstPass);
     }
 }
