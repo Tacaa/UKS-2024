@@ -99,18 +99,16 @@ mat-toolbar {
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 60%;
+  width: calc(100% - 8px);
   height: 2px;
   background-color: currentColor;
   border-radius: 1px;
 }
 
-/* Fix for mat-button if using Angular Material */
 .mat-item-button.router-link-active {
   font-weight: 600;
 }
 
-/* Ensure consistent button appearance */
 .menu-item-button:focus {
   outline: 2px solid rgba(255, 255, 255, 0.3);
   outline-offset: 2px;
