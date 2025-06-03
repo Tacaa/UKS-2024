@@ -31,7 +31,8 @@ import { OrganizationRepositoriesComponent } from './organization-repositories/o
 import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
 import { AddMembersComponent } from './dialogs/add-members/add-members.component';
 import { CreateTeamComponent } from './dialogs/create-team/create-team.component';
-
+import { PullsOverTimeComponent } from './usage-page/charts/pulls-over-time/pulls-over-time.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { CreateTeamComponent } from './dialogs/create-team/create-team.component
     OrganizationSettingsComponent,
     AddMembersComponent,
     CreateTeamComponent,
+    PullsOverTimeComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +69,7 @@ import { CreateTeamComponent } from './dialogs/create-team/create-team.component
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
