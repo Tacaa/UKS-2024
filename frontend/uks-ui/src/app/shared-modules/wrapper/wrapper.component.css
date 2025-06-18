@@ -57,7 +57,7 @@ mat-toolbar {
 
 .menu-item-button {
   height: 50px;
-  min-width: 80px;
+  min-width: 100px;
   padding: 0 16px;
   display: inline-flex;
   align-items: center;
