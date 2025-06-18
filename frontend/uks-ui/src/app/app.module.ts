@@ -21,6 +21,7 @@ import { PersonalRepositoryPageGeneralComponent } from './personal-repository-pa
 import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
 import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
+import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 import { UsagePageComponent } from './usage-page/usage-page.component';
 import { OrgsPageComponent } from './orgs-page/orgs-page.component';
 import { OrgsPageCreateOrgComponent } from './orgs-page-create-org/orgs-page-create-org.component';
@@ -49,6 +50,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     PersonalRepositoryPageSettingsComponent,
     PersonalRepositoryPageCollaboratorsComponent,
     PersonalRepositoryPageTagsComponent,
+    AccountSettingsComponent,
     UsagePageComponent,
     OrgsPageComponent,
     OrgsPageCreateOrgComponent,
@@ -59,7 +61,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     OrganizationSettingsComponent,
     AddMembersComponent,
     CreateTeamComponent,
-    PullsOverTimeComponent,
+    PullsOverTimeComponent
   ],
   imports: [
     BrowserModule,
