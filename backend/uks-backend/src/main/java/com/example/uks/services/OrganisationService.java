@@ -1,6 +1,7 @@
 package com.example.uks.services;
 
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
+import com.example.uks.exceptions.AttributeNotUniqueException;
 import com.example.uks.exceptions.UserNotFound;
 import com.example.uks.model.Organisation;
 import com.example.uks.model.User;
@@ -25,11 +26,11 @@ public class OrganisationService {
 
     public Organisation createOrganisation(OrganisationCreateDTO dto) {
         if (organisationRepository.existsByName(dto.getName())) {
-            throw new RuntimeException("Organisation with this name already exists.");
+            throw new AttributeNotUniqueException("Organisation with this name already exists.");
         }
 
         User owner = userRepository.findById(dto.getOwnerId())
-                .orElseThrow(() -> new RuntimeException("Owner not found"));
+                .orElseThrow(() -> new UserNotFound("Owner not found"));
 
         Organisation organisation = new Organisation();
         organisation.setName(dto.getName());

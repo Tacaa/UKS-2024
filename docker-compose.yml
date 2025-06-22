@@ -26,16 +26,16 @@ services:
     networks:
       - backend
 
-  # frontend-uks:
-  #   build: ./frontend/uks-ui
-  #   ports:
-  #     - "4200:80"
-  #   networks:
-  #     - frontend
+  frontend-uks:
+    build: ./frontend/uks-ui
+    ports:
+      - "4200:80"
+    networks:
+      - frontend
 
 networks:
   backend:
-  #frontend:
+  frontend:
 
 volumes:
   postgres-data:

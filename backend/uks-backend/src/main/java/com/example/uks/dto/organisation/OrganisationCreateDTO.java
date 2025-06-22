@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class OrganisationCreateDTO {
+    //all fields must be filled
     private String name;
     private String description;
     private String image;
