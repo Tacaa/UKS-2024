@@ -34,6 +34,9 @@ public class Organisation {
     @Column(name = "deactivated", nullable = false)
     private Boolean deactivated;
 
+    @Column(name = "image", nullable = true)
+    private String image;
+
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH})
     @JoinTable(name = "organisations_members", joinColumns = @JoinColumn(name = "organisation_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id"))
