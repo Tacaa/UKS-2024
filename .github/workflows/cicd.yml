@@ -90,7 +90,7 @@ jobs:
       - name: Tag Docker image
         run: |
           IMAGE_TAG=$(date +'%Y%m%d%H%M%S')
-          docker tag ${{ secrets.DOCKER_USERNAME }}/uks2024:latest ${{ secrets.DOCKER_USERNAME }}/devops-accommodation:${IMAGE_TAG}
+          docker tag ${{ secrets.DOCKER_USERNAME }}/uks2024:latest ${{ secrets.DOCKER_USERNAME }}/uks2024:${IMAGE_TAG}
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: Push Docker image
