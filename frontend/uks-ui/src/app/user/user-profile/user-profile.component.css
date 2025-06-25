@@ -1,0 +1,247 @@
+@import "/src/variables.css";
+
+.container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.image-info {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* malo veći razmak između slike i teksta */
+  margin-bottom: 20px;
+}
+
+.circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--blue-primary); /* plava boja */
+  background-color: var(--blue-primary); /* unutrašnjost plava */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle img {
+  width: 60%;
+  height: 60%;
+  object-fit: cover;
+  border-radius: 50%; /* dodatna sigurnost da slika bude krug */
+}
+
+.image-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 40px
+}
+
+.link {
+  font-size: 13px;
+}
+
+.menu-items {
+  display: flex;
+  gap: 15px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+
+
+mat-menu-items {
+  background: #efefef;
+}
+
+.mat-drawer {
+  width: 280px !important;
+}
+
+.drawer-container {
+  height: 100vh;
+}
+
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.menu-items-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+
+.menu-items {
+  display: flex;
+  gap: 8px;
+  align-items: left;
+  justify-content: left;
+  padding: 0;
+  margin: 0;
+  border: none;
+  padding-bottom: 10px;
+}
+
+
+.menu-item {
+  color: black;
+  list-style: none;
+  font-size: 15px;
+  font-weight: 550;
+}
+
+.menu-items button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 10px 15px;
+  position: relative;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+}
+
+
+.menu-items button.active {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.menu-items button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  height: 3px; /* deblja linija */
+  background-color: transparent;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+/* Hover stanje - siva linija */
+.menu-items button:hover::after {
+  background-color: #cccccc;
+  text-decoration: none;
+}
+
+/* Aktivno dugme - plava linija */
+.menu-items button.active::after {
+  background-color: var(--blue-primary);
+}
+
+.no-repos {
+  font-style: italic;
+  color: #888;
+  padding: 20px;
+  text-align: center;
+}
+
+.filters {
+  height: 3rem;
+}
+.filters > * {
+  margin-right: 1rem;
+  height: 100%;
+  border-radius: 0.3rem;
+  border: 1.5px var(--gray3) solid;
+}
+
+.filters > *:hover {
+  border-color: var(--gray2);
+}
+
+.filters select {
+  width: 15rem;
+  margin-top: 0.3px;
+}
+
+.filters input {
+  width: 23rem;
+  padding-left: 0.5rem;
+}
+
+.component button {
+  border: none;
+  background-color: var(--blue-primary);
+  padding: 0 1.5rem;
+  border-radius: 0.3rem;
+  color: whitesmoke;
+  transition: 200ms;
+}
+
+.component button:hover {
+  background-color: var(--blue-light);
+  transition: 200ms;
+}
+
+.component table {
+  margin-top: 2rem;
+}
+
+tbody tr {
+  padding: 1rem 0rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  border-bottom: 1.5px solid #ddd;
+}
+
+thead {
+  border-bottom: 2px solid #ddd;
+}
+
+td {
+  padding: 0.5rem 0;
+}
+
+th {
+  padding-bottom: 0.5rem;
+  transition: 200ms;
+  user-select: none;
+}
+
+.sortableTh:hover {
+  background-color: var(--gray6);
+  transition: 200ms;
+}
+
+tbody tr:hover {
+  background-color: var(--gray6);
+}
+
+.component > span {
+  font-size: 1.2rem;
+  display: table;
+  margin: 1rem auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  white-space: nowrap;
+}
+
+/* First row should be wider */
+thead tr th:first-child,
+tbody tr td:first-child {
+  width: 60%;
+  min-width: 60%;
+  max-width: 60%;
+  word-break: break-all;
+}
+
+th > span {
+  position: absolute;
+  margin-left: 0.3rem;
+  color: var(--blue-secondary);
+  transition: 200ms;
+}
