@@ -32,15 +32,15 @@ jobs:
             ${{ runner.os }}-m2-
 
       - name: Build with Maven
-        working-directory: ./backend
+        working-directory: ./backend/uks-backend
         run: mvn clean package
 
       - name: Run tests
-        working-directory: ./backend
+        working-directory: ./backend/uks-backend
         run: mvn test
       
       - name: Run integration tests
-        working-directory: ./backend
+        working-directory: ./backend/uks-backend
         run: mvn verify
 
   # Workflow for Push to develop
@@ -66,15 +66,15 @@ jobs:
             ${{ runner.os }}-m2-
 
       - name: Build with Maven
-        working-directory: ./backend
+        working-directory: ./backend/uks-backend
         run: mvn clean package
 
       - name: Run tests
-        working-directory: ./backend
+        working-directory: ./backend/uks-backend
         run: mvn test
 
       - name: Run integration tests
-        working-directory: ./backend
+        working-directory: ./backend/uks-backend
         run: mvn verify
         
       - name: Log in to DockerHub
@@ -84,7 +84,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        working-directory: ./backend
+        working-directory: ./backend/uks-backend
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/uks2024:latest .
 
       - name: Tag Docker image
