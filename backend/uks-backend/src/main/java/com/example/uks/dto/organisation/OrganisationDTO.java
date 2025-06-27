@@ -22,6 +22,7 @@ public class OrganisationDTO {
     private String description;
     private Boolean deactivated;
     private Integer ownerId;
+    private String image;
     private List<Integer> members;
     private List<Integer> teams;
 
@@ -45,6 +46,7 @@ public class OrganisationDTO {
                 .name(organisation.getName())
                 .description(organisation.getDescription())
                 .deactivated(organisation.getDeactivated())
+                .image(organisation.getImage())
                 .ownerId(organisation.getOwner().getId())
                 .members(memberIds)
                 .teams(teamIds)

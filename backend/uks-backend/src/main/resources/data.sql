@@ -29,27 +29,27 @@ INSERT INTO users (first_name, last_name, username, password, email, joined_date
 
 
 -- ORGANISATIONS
-INSERT INTO organisations (id, name, description, owner_id, deactivated) VALUES
-(1, 'Tech Innovators', 'A hub for cutting-edge technology solutions.', 1, false),
-(2, 'Green Earth', 'Promoting eco-friendly practices worldwide.', 1, false),
-(3, 'Health Matters', 'Innovative healthcare solutions for all.', 2, false),
-(4, 'Code Creators', 'Building software for the modern age.', 3, false),
-(5, 'EduFuture', 'Advancing education through technology.', 5, false),
-(6, 'FinTech Pros', 'Financial solutions for the digital era.', 6, false),
-(7, 'Urban Planners', 'Designing smart cities for tomorrow.', 7, false),
-(8, 'Art Visionaries', 'Showcasing contemporary art globally.', 8, true),
-(9, 'Sports Champs', 'Empowering young athletes worldwide.', 11, false),
-(10, 'Food for All', 'Sustainable food distribution initiatives.', 11, true),
-(11, 'Space Explorers', 'Exploring the final frontier.', 12, false),
-(12, 'AI Thinkers', 'Researching and deploying AI technologies.', 12, false),
-(13, 'Civic Builders', 'Community-driven urban development.', 13, true),
-(14, 'Travel Gurus', 'Simplifying global travel experiences.', 14, false),
-(15, 'Clean Energy', 'Developing renewable energy solutions.', 15, false),
-(16, 'Wellness Co.', 'Innovative approaches to mental health.', 1, false),
-(17, 'Game Makers', 'Creating immersive gaming experiences.', 1, false),
-(18, 'Fashion Forward', 'Sustainable fashion for the future.', 2, true),
-(19, 'LegalEase', 'Simplifying legal processes for businesses.', 2, false),
-(20, 'Charity Connect', 'Linking donors with impactful causes.', 3, true);
+INSERT INTO organisations (name, description, owner_id, deactivated) VALUES
+('Tech Innovators', 'A hub for cutting-edge technology solutions.', 1, false),
+('Green Earth', 'Promoting eco-friendly practices worldwide.', 1, false),
+('Health Matters', 'Innovative healthcare solutions for all.', 2, false),
+('Code Creators', 'Building software for the modern age.', 3, false),
+('EduFuture', 'Advancing education through technology.', 5, false),
+('FinTech Pros', 'Financial solutions for the digital era.', 6, false),
+('Urban Planners', 'Designing smart cities for tomorrow.', 7, false),
+('Art Visionaries', 'Showcasing contemporary art globally.', 8, true),
+('Sports Champs', 'Empowering young athletes worldwide.', 11, false),
+('Food for All', 'Sustainable food distribution initiatives.', 11, true),
+('Space Explorers', 'Exploring the final frontier.', 12, false),
+('AI Thinkers', 'Researching and deploying AI technologies.', 12, false),
+('Civic Builders', 'Community-driven urban development.', 13, true),
+('Travel Gurus', 'Simplifying global travel experiences.', 14, false),
+('Clean Energy', 'Developing renewable energy solutions.', 15, false),
+('Wellness Co.', 'Innovative approaches to mental health.', 1, false),
+('Game Makers', 'Creating immersive gaming experiences.', 1, false),
+('Fashion Forward', 'Sustainable fashion for the future.', 2, true),
+('LegalEase', 'Simplifying legal processes for businesses.', 2, false),
+('Charity Connect', 'Linking donors with impactful causes.', 3, true);
 
 
 --TEAMS
