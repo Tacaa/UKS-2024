@@ -1,7 +1,10 @@
 package com.example.uks.controllers;
 
+
 import com.example.uks.dto.organisation.OrganisationDTO;
 import com.example.uks.dto.organisation.OrganisationUpdateDTO;
+import com.example.uks.dto.organisation.OrganisationCreateDTO;
+
 import com.example.uks.dto.repository.RepositoryDTO;
 import com.example.uks.exceptions.AttributeNotUniqueException;
 import com.example.uks.exceptions.OrganisationNotFound;
@@ -24,8 +27,8 @@ public class OrganisationController {
 
     @Autowired
     private OrganisationService organisationService;
-
-    @PutMapping("/{orgId}")
+  
+  @PutMapping("/{orgId}")
     public ResponseEntity<Map<String, Object>> updateOrganisation(@PathVariable Integer orgId, @RequestBody OrganisationUpdateDTO dto) {
         try{
             Organisation updated = organisationService.updateOrganisation(orgId, dto);
@@ -49,6 +52,72 @@ public class OrganisationController {
         }catch (OrganisationNotFound e){
 
             return ResponseEntity.notFound().build();
+        }
+    }
+  
+
+    @PostMapping
+    public ResponseEntity<Map<String, Object>> createOrganisation(@RequestBody OrganisationCreateDTO dto) {
+        try{
+            Organisation organisation = organisationService.createOrganisation(dto);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", null);
+            response.put("data", OrganisationDTO.from(organisation));
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        }catch (AttributeNotUniqueException e){
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }catch (UserNotFound e){
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    } 
+   
+
+    
+  
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Map<String, Object>> getUserOrganisations(@PathVariable Integer userId) {
+        try{
+            List<Organisation> organisations = organisationService.getUserOrganisations(userId);
+
+            List<OrganisationDTO> organisationDTOs = new ArrayList<>();
+            for (Organisation organisation : organisations) {
+                organisationDTOs.add(OrganisationDTO.from(organisation));
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "");
+            response.put("data", organisationDTOs);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (UserNotFound e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "User not found");
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> getOrganisationById(@PathVariable Integer id) {
+        try{
+            Organisation organisation = organisationService.getOrganisationById(id);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "");
+            response.put("data", OrganisationDTO.from(organisation));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (OrganisationNotFound e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Organisation not found");
+            response.put("data", null);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
 
