@@ -24,7 +24,7 @@ public class OrganisationService {
     private UserRepository userRepository;
 
     public Organisation getOrganisationById(Integer id) {
-        return organisationRepository.findById(id)
+        return organisationRepository.findByIdAndDeactivatedFalse(id)
                 .orElseThrow(() -> new OrganisationNotFound("Organisation not found"));
     }
 
@@ -32,8 +32,8 @@ public class OrganisationService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFound("User not found"));
 
-        List<Organisation> owned = organisationRepository.findByOwner(user);
-        List<Organisation> member = organisationRepository.findByMembersContains(user);
+        List<Organisation> owned = organisationRepository.findByOwnerAndDeactivatedFalse(user);
+        List<Organisation> member = organisationRepository.findByMembersContainsAndDeactivatedFalse(user);
 
         Set<Organisation> allOrgs = new HashSet<>();
         allOrgs.addAll(owned);
