@@ -16,4 +16,6 @@ public interface OrganisationRepository extends JpaRepository<Organisation, Inte
     List<Organisation> findByMembersContainsAndDeactivatedFalse(User user);
 
     Optional<Organisation> findByIdAndDeactivatedFalse(Integer id);
+  
+    Optional<Organisation> findByIdAndOwner_Id(Integer orgId, Integer ownerId);
 }

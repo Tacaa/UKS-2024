@@ -1,5 +1,8 @@
 package com.example.uks.services;
 
+import com.example.uks.dto.organisation.OrganisationUpdateDTO;
+import com.example.uks.model.Organisation;
+import com.example.uks.model.Repository;
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
 import com.example.uks.exceptions.AttributeNotUniqueException;
 import com.example.uks.exceptions.OrganisationNotFound;
@@ -10,6 +13,7 @@ import com.example.uks.repositories.OrganisationRepository;
 import com.example.uks.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,6 +28,35 @@ public class OrganisationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    public Organisation updateOrganisation(Integer orgId, OrganisationUpdateDTO dto) {
+        Organisation organisation = organisationRepository.findByIdAndOwner_Id(orgId, dto.getOwnerId())
+                .orElseThrow(() -> new OrganisationNotFound("Organisation not found."));
+
+        if (dto.getDescription() != null) {
+            organisation.setDescription(dto.getDescription());
+        }
+
+        if (dto.getImage() != null) {
+            organisation.setImage(dto.getImage());
+        }
+
+       return organisation;
+    }
+
+    public void deactivateOrganisation(Integer orgId, Integer ownerId) {
+        Organisation organisation = organisationRepository.findByIdAndOwner_Id(orgId, ownerId)
+                .orElseThrow(() -> new OrganisationNotFound("Organisation not found."));
+
+        organisation.setDeactivated(true);
+        organisation.getMembers().clear();
+
+        for (Repository repo : organisation.getRepositories()) {
+            repo.setDeleted(true);
+        }
+
+        organisationRepository.save(organisation);
+    }
 
     public Organisation createOrganisation(OrganisationCreateDTO dto) {
         if (organisationRepository.existsByName(dto.getName())) {
