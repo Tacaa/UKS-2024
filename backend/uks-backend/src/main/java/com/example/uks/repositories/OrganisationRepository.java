@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrganisationRepository extends JpaRepository<Organisation, Integer> {
-    List<Organisation> findByOwner(User owner);
-
-    List<Organisation> findByMembersContains(User user);
-
-    Optional<Organisation> findById(Integer id);
 
     boolean existsByName(String name);
+  
+    List<Organisation> findByOwnerAndDeactivatedFalse(User owner);
+
+    List<Organisation> findByMembersContainsAndDeactivatedFalse(User user);
+
+    Optional<Organisation> findByIdAndDeactivatedFalse(Integer id);
 }

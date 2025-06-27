@@ -2,6 +2,7 @@ package com.example.uks.services;
 
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
 import com.example.uks.exceptions.AttributeNotUniqueException;
+import com.example.uks.exceptions.OrganisationNotFound;
 import com.example.uks.exceptions.UserNotFound;
 import com.example.uks.model.Organisation;
 import com.example.uks.model.User;
@@ -41,5 +42,24 @@ public class OrganisationService {
         organisation.getMembers().add(owner);
 
         return organisationRepository.save(organisation);
+    }
+  
+    public Organisation getOrganisationById(Integer id) {
+        return organisationRepository.findByIdAndDeactivatedFalse(id)
+                .orElseThrow(() -> new OrganisationNotFound("Organisation not found"));
+    }
+
+    public List<Organisation> getUserOrganisations(Integer userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFound("User not found"));
+
+        List<Organisation> owned = organisationRepository.findByOwnerAndDeactivatedFalse(user);
+        List<Organisation> member = organisationRepository.findByMembersContainsAndDeactivatedFalse(user);
+
+        Set<Organisation> allOrgs = new HashSet<>();
+        allOrgs.addAll(owned);
+        allOrgs.addAll(member);
+
+        return new ArrayList<>(allOrgs);
     }
 }
