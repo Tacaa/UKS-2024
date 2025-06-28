@@ -1,6 +1,7 @@
 package com.example.uks.services;
 
 import com.example.uks.dto.organisation.OrganisationUpdateDTO;
+import com.example.uks.exceptions.AccessDeniedException;
 import com.example.uks.model.Organisation;
 import com.example.uks.model.Repository;
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
@@ -95,4 +96,24 @@ public class OrganisationService {
 
         return new ArrayList<>(allOrgs);
     }
+
+    public void addMember(Integer orgId, Integer ownerId, Integer userIdToAdd) {
+        Organisation organisation = organisationRepository.findByIdAndDeactivatedFalse(orgId)
+                .orElseThrow(() -> new OrganisationNotFound("Organisation not found"));
+
+        if (!organisation.getOwner().getId().equals(ownerId)) {
+            throw new AccessDeniedException("Only the owner can add members.");
+        }
+
+        User userToAdd = userRepository.findById(userIdToAdd)
+                .orElseThrow(() -> new UserNotFound("User to add not found"));
+
+        if (organisation.getMembers().contains(userToAdd)) {
+            throw new IllegalArgumentException("User is already a member.");
+        }
+
+        organisation.getMembers().add(userToAdd);
+        organisationRepository.save(organisation);
+    }
+
 }
