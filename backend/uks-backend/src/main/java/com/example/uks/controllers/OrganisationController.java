@@ -1,18 +1,21 @@
 package com.example.uks.controllers;
 
 
+import com.example.uks.dto.organisation.AddMemberDTO;
 import com.example.uks.dto.organisation.OrganisationDTO;
 import com.example.uks.dto.organisation.OrganisationUpdateDTO;
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
 
 import com.example.uks.dto.repository.RepositoryDTO;
 import com.example.uks.dto.team.TeamDTO;
+import com.example.uks.dto.user.MemberDTO;
 import com.example.uks.exceptions.AccessDeniedException;
 import com.example.uks.exceptions.AttributeNotUniqueException;
 import com.example.uks.exceptions.OrganisationNotFound;
 import com.example.uks.exceptions.UserNotFound;
 import com.example.uks.model.Organisation;
 import com.example.uks.model.Team;
+import com.example.uks.model.User;
 import com.example.uks.services.OrganisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,10 +85,7 @@ public class OrganisationController {
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     } 
-   
 
-    
-  
     @GetMapping("/user/{userId}")
     public ResponseEntity<Map<String, Object>> getUserOrganisations(@PathVariable Integer userId) {
         try{
@@ -125,6 +125,68 @@ public class OrganisationController {
         }
     }
 
+  @PostMapping("/{orgId}/members")
+    public ResponseEntity<Map<String, Object>> addMemberToOrganisation(
+            @PathVariable Integer orgId,
+            @RequestBody AddMemberDTO addMemberDTO) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            organisationService.addMember(orgId, addMemberDTO.getOwnerId(), addMemberDTO.getMemberId());
+
+            response.put("message", "User successfully added to organisation.");
+            return ResponseEntity.ok(response);
+
+        } catch (OrganisationNotFound e) {
+            response.put("message", "Organisation not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (UserNotFound e) {
+            response.put("message", "User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (AccessDeniedException e) {
+            response.put("message", "Only the owner can add members.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+
+        } catch (IllegalArgumentException e) {
+            response.put("message", e.getMessage()); // e.g. "User is already a member."
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+        } catch (Exception e) {
+            // fallback for unexpected errors
+            response.put("message", "Unexpected server error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @GetMapping("/{orgId}/members")
+    public ResponseEntity<Map<String, Object>> getOrganisationMembers(
+            @PathVariable Integer orgId,
+            @RequestParam Integer userId
+    ) {
+        try {
+            List<MemberDTO> members = organisationService.getOrganisationMembers(orgId, userId);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "");
+            response.put("data", members);
+            return ResponseEntity.ok(response);
+
+        } catch (OrganisationNotFound e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (AccessDeniedException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
+    }
+  
     @GetMapping("/{orgId}/teams")
     public ResponseEntity<Map<String, Object>> getOrganisationTeams(
             @PathVariable Integer orgId,
@@ -154,5 +216,4 @@ public class OrganisationController {
 
         }
     }
-
 }

@@ -4,6 +4,7 @@ import com.example.uks.dto.organisation.OrganisationUpdateDTO;
 import com.example.uks.exceptions.AccessDeniedException;
 import com.example.uks.model.*;
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
+import com.example.uks.dto.user.MemberDTO;
 import com.example.uks.exceptions.AttributeNotUniqueException;
 import com.example.uks.exceptions.OrganisationNotFound;
 import com.example.uks.exceptions.UserNotFound;
@@ -96,7 +97,48 @@ public class OrganisationService {
         return new ArrayList<>(allOrgs);
     }
 
+     public void addMember(Integer orgId, Integer ownerId, Integer userIdToAdd) {
+        Organisation organisation = organisationRepository.findByIdAndDeactivatedFalse(orgId)
+                .orElseThrow(() -> new OrganisationNotFound("Organisation not found"));
 
+        if (!organisation.getOwner().getId().equals(ownerId)) {
+            throw new AccessDeniedException("Only the owner can add members.");
+        }
+
+        User userToAdd = userRepository.findById(userIdToAdd)
+                .orElseThrow(() -> new UserNotFound("User to add not found"));
+
+        if (organisation.getMembers().contains(userToAdd)) {
+            throw new IllegalArgumentException("User is already a member.");
+        }
+
+        organisation.getMembers().add(userToAdd);
+        organisationRepository.save(organisation);
+    }
+
+
+    public List<MemberDTO> getOrganisationMembers(Integer orgId, Integer userId) {
+        Organisation organisation = organisationRepository.findByIdAndDeactivatedFalse(orgId)
+                .orElseThrow(() -> new OrganisationNotFound("Organisation not found"));
+
+        boolean isMember = organisation.getMembers().stream()
+                .anyMatch(user -> user.getId().equals(userId));
+        boolean isOwner = organisation.getOwner().getId().equals(userId);
+
+        if (!isMember && !isOwner) {
+            throw new AccessDeniedException("User is not a member of this organisation.");
+        }
+
+        Set<User> allMembers = new HashSet<>(organisation.getMembers());
+        allMembers.add(organisation.getOwner());
+
+        return allMembers.stream()
+                .map(user -> new MemberDTO(user, user.getId().equals(organisation.getOwner().getId())))
+                .collect(Collectors.toList());
+
+    }
+  
+  
     public List<Team> getTeamsForMember(Integer orgId, Integer userId) {
         Organisation organisation = organisationRepository.findByIdAndDeactivatedFalse(orgId)
                 .orElseThrow(() -> new OrganisationNotFound("Organisation not found"));
