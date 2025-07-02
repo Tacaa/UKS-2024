@@ -6,10 +6,13 @@ import com.example.uks.dto.organisation.OrganisationUpdateDTO;
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
 
 import com.example.uks.dto.repository.RepositoryDTO;
+import com.example.uks.dto.user.MemberDTO;
+import com.example.uks.exceptions.AccessDeniedException;
 import com.example.uks.exceptions.AttributeNotUniqueException;
 import com.example.uks.exceptions.OrganisationNotFound;
 import com.example.uks.exceptions.UserNotFound;
 import com.example.uks.model.Organisation;
+import com.example.uks.model.User;
 import com.example.uks.services.OrganisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +31,7 @@ public class OrganisationController {
     @Autowired
     private OrganisationService organisationService;
   
-  @PutMapping("/{orgId}")
+    @PutMapping("/{orgId}")
     public ResponseEntity<Map<String, Object>> updateOrganisation(@PathVariable Integer orgId, @RequestBody OrganisationUpdateDTO dto) {
         try{
             Organisation updated = organisationService.updateOrganisation(orgId, dto);
@@ -78,10 +81,7 @@ public class OrganisationController {
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     } 
-   
 
-    
-  
     @GetMapping("/user/{userId}")
     public ResponseEntity<Map<String, Object>> getUserOrganisations(@PathVariable Integer userId) {
         try{
@@ -121,4 +121,30 @@ public class OrganisationController {
         }
     }
 
+
+    @GetMapping("/{orgId}/members")
+    public ResponseEntity<Map<String, Object>> getOrganisationMembers(
+            @PathVariable Integer orgId,
+            @RequestParam Integer userId
+    ) {
+        try {
+            List<MemberDTO> members = organisationService.getOrganisationMembers(orgId, userId);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "");
+            response.put("data", members);
+            return ResponseEntity.ok(response);
+
+        } catch (OrganisationNotFound e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (AccessDeniedException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
+    }
 }
