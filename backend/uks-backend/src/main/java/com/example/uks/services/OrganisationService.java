@@ -99,6 +99,25 @@ public class OrganisationService {
         return new ArrayList<>(allOrgs);
     }
 
+    public void addMember(Integer orgId, Integer ownerId, Integer userIdToAdd) {
+        Organisation organisation = organisationRepository.findByIdAndDeactivatedFalse(orgId)
+                .orElseThrow(() -> new OrganisationNotFound("Organisation not found"));
+
+        if (!organisation.getOwner().getId().equals(ownerId)) {
+            throw new AccessDeniedException("Only the owner can add members.");
+        }
+
+        User userToAdd = userRepository.findById(userIdToAdd)
+                .orElseThrow(() -> new UserNotFound("User to add not found"));
+
+        if (organisation.getMembers().contains(userToAdd)) {
+            throw new IllegalArgumentException("User is already a member.");
+        }
+
+        organisation.getMembers().add(userToAdd);
+        organisationRepository.save(organisation);
+    }
+
 
     public List<MemberDTO> getOrganisationMembers(Integer orgId, Integer userId) {
         Organisation organisation = organisationRepository.findByIdAndDeactivatedFalse(orgId)

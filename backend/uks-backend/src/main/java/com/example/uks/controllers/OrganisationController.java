@@ -1,6 +1,7 @@
 package com.example.uks.controllers;
 
 
+import com.example.uks.dto.organisation.AddMemberDTO;
 import com.example.uks.dto.organisation.OrganisationDTO;
 import com.example.uks.dto.organisation.OrganisationUpdateDTO;
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
@@ -121,6 +122,41 @@ public class OrganisationController {
         }
     }
 
+    @PostMapping("/{orgId}/members")
+    public ResponseEntity<Map<String, Object>> addMemberToOrganisation(
+            @PathVariable Integer orgId,
+            @RequestBody AddMemberDTO addMemberDTO) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            organisationService.addMember(orgId, addMemberDTO.getOwnerId(), addMemberDTO.getMemberId());
+
+            response.put("message", "User successfully added to organisation.");
+            return ResponseEntity.ok(response);
+
+        } catch (OrganisationNotFound e) {
+            response.put("message", "Organisation not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (UserNotFound e) {
+            response.put("message", "User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (AccessDeniedException e) {
+            response.put("message", "Only the owner can add members.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+
+        } catch (IllegalArgumentException e) {
+            response.put("message", e.getMessage()); // e.g. "User is already a member."
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+        } catch (Exception e) {
+            // fallback for unexpected errors
+            response.put("message", "Unexpected server error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
 
     @GetMapping("/{orgId}/members")
     public ResponseEntity<Map<String, Object>> getOrganisationMembers(
