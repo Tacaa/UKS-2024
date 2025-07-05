@@ -1,6 +1,8 @@
 package com.example.uks.services;
 
 import com.example.uks.dto.organisation.OrganisationUpdateDTO;
+import com.example.uks.dto.team.CreateTeamDTO;
+import com.example.uks.enumeration.TeamPersmission;
 import com.example.uks.exceptions.AccessDeniedException;
 import com.example.uks.model.*;
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
@@ -10,6 +12,7 @@ import com.example.uks.exceptions.OrganisationNotFound;
 import com.example.uks.exceptions.UserNotFound;
 import com.example.uks.model.Organisation;
 import com.example.uks.repositories.OrganisationRepository;
+import com.example.uks.repositories.TeamRepository;
 import com.example.uks.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,9 @@ public class OrganisationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
 
     public Organisation updateOrganisation(Integer orgId, OrganisationUpdateDTO dto) {
         Organisation organisation = organisationRepository.findByIdAndOwner_Id(orgId, dto.getOwnerId())
@@ -152,6 +158,24 @@ public class OrganisationService {
         }
 
         return organisation.getTeams().stream().toList();
+    }
+
+
+    public Team createTeam(CreateTeamDTO dto) {
+        Organisation organisation = organisationRepository.findByIdAndDeactivatedFalse(dto.getOrganisationId())
+                .orElseThrow(() -> new OrganisationNotFound("Organisation not found"));
+
+        if (!organisation.getOwner().getId().equals(dto.getOwnerId())) {
+            throw new AccessDeniedException("Only the organisation owner can create teams.");
+        }
+
+        Team team = new Team();
+        team.setName(dto.getName());
+        team.setDescription(dto.getDescription());
+        team.setTeamPersmission(dto.getTeamPersmission());
+        team.setOrganisation(organisation);
+
+        return teamRepository.save(team);
     }
 
 }
