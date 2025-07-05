@@ -217,4 +217,34 @@ public class OrganisationController {
 
         }
     }
+
+    @PostMapping("/team")
+    public ResponseEntity<Map<String, Object>> createTeam(
+            @RequestBody CreateTeamDTO dto) {
+
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Team team = organisationService.createTeam(dto);
+            response.put("message", "Team successfully created");
+            response.put("data", TeamDTO.from(team));
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+        } catch (OrganisationNotFound e) {
+            response.put("message", "Organisation not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (AccessDeniedException e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+
+        } catch (IllegalArgumentException e) {
+            response.put("message", "Invalid team permission: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+        } catch (Exception e) {
+            response.put("message", "Unexpected server error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
 }
