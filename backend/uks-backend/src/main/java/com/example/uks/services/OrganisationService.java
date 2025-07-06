@@ -1,6 +1,7 @@
 package com.example.uks.services;
 
 import com.example.uks.dto.organisation.OrganisationUpdateDTO;
+import com.example.uks.dto.organisation.UpdateTeamDTO;
 import com.example.uks.dto.team.CreateTeamDTO;
 import com.example.uks.enumeration.TeamPersmission;
 import com.example.uks.exceptions.*;
@@ -185,5 +186,20 @@ public class OrganisationService {
         team.getMembers().add(member);
         teamRepository.save(team);
     }
+
+    public void updateTeam(Integer teamId, UpdateTeamDTO dto) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new TeamNotFoundException("Team not found"));
+
+        if (dto.getName() != null) {
+            team.setName(dto.getName());
+        }
+        if (dto.getDescription() != null) {
+            team.setDescription(dto.getDescription());
+        }
+
+        teamRepository.save(team);
+    }
+
 
 }

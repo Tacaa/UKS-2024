@@ -1,10 +1,7 @@
 package com.example.uks.controllers;
 
 
-import com.example.uks.dto.organisation.AddMemberDTO;
-import com.example.uks.dto.organisation.OrganisationDTO;
-import com.example.uks.dto.organisation.OrganisationUpdateDTO;
-import com.example.uks.dto.organisation.OrganisationCreateDTO;
+import com.example.uks.dto.organisation.*;
 
 import com.example.uks.dto.repository.RepositoryDTO;
 import com.example.uks.dto.team.AddTeamMemberDTO;
@@ -258,5 +255,18 @@ public class OrganisationController {
         response.put("message", "Member added to team");
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/team/{teamId}")
+    public ResponseEntity<Map<String, Object>> updateTeam(
+            @PathVariable Integer teamId,
+            @RequestBody UpdateTeamDTO dto) {
+
+        organisationService.updateTeam(teamId, dto);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Team updated successfully");
+        return ResponseEntity.ok(response);
+    }
+
 
 }
