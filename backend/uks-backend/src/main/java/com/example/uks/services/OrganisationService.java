@@ -3,13 +3,10 @@ package com.example.uks.services;
 import com.example.uks.dto.organisation.OrganisationUpdateDTO;
 import com.example.uks.dto.team.CreateTeamDTO;
 import com.example.uks.enumeration.TeamPersmission;
-import com.example.uks.exceptions.AccessDeniedException;
+import com.example.uks.exceptions.*;
 import com.example.uks.model.*;
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
 import com.example.uks.dto.user.MemberDTO;
-import com.example.uks.exceptions.AttributeNotUniqueException;
-import com.example.uks.exceptions.OrganisationNotFound;
-import com.example.uks.exceptions.UserNotFound;
 import com.example.uks.model.Organisation;
 import com.example.uks.repositories.OrganisationRepository;
 import com.example.uks.repositories.TeamRepository;
@@ -176,6 +173,17 @@ public class OrganisationService {
         team.setOrganisation(organisation);
 
         return teamRepository.save(team);
+    }
+
+    public void addMemberToTeam(Integer teamId, Integer memberId) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new TeamNotFoundException("Team not found"));
+
+        User member = userRepository.findById(memberId)
+                .orElseThrow(() -> new UserNotFound("User not found"));
+
+        team.getMembers().add(member);
+        teamRepository.save(team);
     }
 
 }
