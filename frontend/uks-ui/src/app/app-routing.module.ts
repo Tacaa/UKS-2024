@@ -20,6 +20,7 @@ import { OrganizationMembersComponent } from './organization-members/organizatio
 import { OrganizationRepositoriesComponent } from './organization-repositories/organization-repositories.component';
 import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
 import { OrganizationTeamsComponent } from './organization-teams/organization-teams.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
 
 const routes: Routes = [
@@ -92,6 +93,10 @@ const routes: Routes = [
       {
         path: 'accountSettings',
         component: AccountSettingsComponent
+      },
+      {
+        path: 'profile',
+        component: UserProfileComponent
       },
       {
         path: 'usage',
