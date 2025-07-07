@@ -52,77 +52,77 @@ INSERT INTO organisations (name, description, owner_id, deactivated) VALUES
 ('Charity Connect', 'Linking donors with impactful causes.', 3, true);
 
 
---TEAMS
-INSERT INTO teams (id, name, description, team_permission, organisation_id) VALUES
+-- TEAMS
+INSERT INTO teams (name, description, team_permission, organisation_id) VALUES
 -- Teams for "Tech Innovators"
-(1, 'Development Team', 'Responsible for software development and maintenance.', 'READ_WRITE', 1),
-(2, 'Research Team', 'Focuses on innovation and exploring new technologies.', 'READ_ONLY', 1),
-(3, 'Admin Team', 'Manages organizational operations and permissions.', 'ADMIN', 1),
+('Development Team', 'Responsible for software development and maintenance.', 'READ_WRITE', 1),
+('Research Team', 'Focuses on innovation and exploring new technologies.', 'READ_ONLY', 1),
+('Admin Team', 'Manages organizational operations and permissions.', 'ADMIN', 1),
 
 -- Teams for "Green Earth"
-(4, 'Eco Research Team', 'Conducts research on sustainable practices.', 'READ_ONLY', 2),
-(5, 'Campaign Team', 'Organizes eco-awareness campaigns.', 'READ_WRITE', 2),
-(6, 'Green Admin Team', 'Manages overall organizational operations.', 'ADMIN', 2),
+('Eco Research Team', 'Conducts research on sustainable practices.', 'READ_ONLY', 2),
+('Campaign Team', 'Organizes eco-awareness campaigns.', 'READ_WRITE', 2),
+('Green Admin Team', 'Manages overall organizational operations.', 'ADMIN', 2),
 
 -- Teams for "Health Matters"
-(7, 'Medical Innovation Team', 'Focuses on innovative healthcare solutions.', 'READ_WRITE', 3),
-(8, 'Outreach Team', 'Handles healthcare campaigns and outreach.', 'READ_ONLY', 3),
-(9, 'Health Admin Team', 'Oversees operations and resource allocation.', 'ADMIN', 3),
+('Medical Innovation Team', 'Focuses on innovative healthcare solutions.', 'READ_WRITE', 3),
+('Outreach Team', 'Handles healthcare campaigns and outreach.', 'READ_ONLY', 3),
+('Health Admin Team', 'Oversees operations and resource allocation.', 'ADMIN', 3),
 
 -- Teams for "Code Creators"
-(10, 'Frontend Developers', 'Develops user-facing components of software.', 'READ_WRITE', 4),
-(11, 'Backend Developers', 'Manages backend systems and APIs.', 'READ_WRITE', 4),
-(12, 'DevOps Team', 'Ensures seamless deployment and maintenance.', 'ADMIN', 4),
+('Frontend Developers', 'Develops user-facing components of software.', 'READ_WRITE', 4),
+('Backend Developers', 'Manages backend systems and APIs.', 'READ_WRITE', 4),
+('DevOps Team', 'Ensures seamless deployment and maintenance.', 'ADMIN', 4),
 
 -- Teams for "EduFuture"
-(13, 'EdTech Developers', 'Creates educational technology products.', 'READ_WRITE', 5),
-(14, 'Teacher Liaison Team', 'Connects with educators to gather feedback.', 'READ_ONLY', 5),
-(15, 'Edu Admin Team', 'Oversees team coordination and permissions.', 'ADMIN', 5),
+('EdTech Developers', 'Creates educational technology products.', 'READ_WRITE', 5),
+('Teacher Liaison Team', 'Connects with educators to gather feedback.', 'READ_ONLY', 5),
+('Edu Admin Team', 'Oversees team coordination and permissions.', 'ADMIN', 5),
 
 -- Teams for "FinTech Pros"
-(16, 'Product Development Team', 'Develops financial products for clients.', 'READ_WRITE', 6),
-(17, 'Risk Assessment Team', 'Analyzes financial risks and mitigations.', 'READ_ONLY', 6),
-(18, 'FinTech Admin Team', 'Manages permissions and organizational resources.', 'ADMIN', 6),
+('Product Development Team', 'Develops financial products for clients.', 'READ_WRITE', 6),
+('Risk Assessment Team', 'Analyzes financial risks and mitigations.', 'READ_ONLY', 6),
+('FinTech Admin Team', 'Manages permissions and organizational resources.', 'ADMIN', 6),
 
 -- Teams for "Urban Planners"
-(19, 'City Design Team', 'Designs urban layouts and infrastructure.', 'READ_WRITE', 7),
-(20, 'Sustainability Team', 'Ensures sustainable urban planning practices.', 'READ_ONLY', 7),
-(21, 'Urban Admin Team', 'Manages overall operations and permissions.', 'ADMIN', 7),
+('City Design Team', 'Designs urban layouts and infrastructure.', 'READ_WRITE', 7),
+('Sustainability Team', 'Ensures sustainable urban planning practices.', 'READ_ONLY', 7),
+('Urban Admin Team', 'Manages overall operations and permissions.', 'ADMIN', 7),
 
 -- Teams for "Art Visionaries"
-(22, 'Curators', 'Curates contemporary art collections.', 'READ_WRITE', 8),
-(23, 'Event Planners', 'Plans and organizes art exhibitions.', 'READ_ONLY', 8),
-(24, 'Art Admin Team', 'Handles administrative tasks for events.', 'ADMIN', 8),
+('Curators', 'Curates contemporary art collections.', 'READ_WRITE', 8),
+('Event Planners', 'Plans and organizes art exhibitions.', 'READ_ONLY', 8),
+('Art Admin Team', 'Handles administrative tasks for events.', 'ADMIN', 8),
 
 -- Teams for "Sports Champs"
-(25, 'Athlete Support Team', 'Supports young athletes with training resources.', 'READ_ONLY', 9),
-(26, 'Event Management Team', 'Organizes sports tournaments and events.', 'READ_WRITE', 9),
-(27, 'Sports Admin Team', 'Oversees operations and logistics.', 'ADMIN', 9),
+('Athlete Support Team', 'Supports young athletes with training resources.', 'READ_ONLY', 9),
+('Event Management Team', 'Organizes sports tournaments and events.', 'READ_WRITE', 9),
+('Sports Admin Team', 'Oversees operations and logistics.', 'ADMIN', 9),
 
 -- Teams for "Food for All"
-(28, 'Distribution Team', 'Manages sustainable food distribution.', 'READ_WRITE', 10),
-(29, 'Community Outreach Team', 'Collaborates with local communities.', 'READ_ONLY', 10),
-(30, 'Food Admin Team', 'Supervises logistics and team operations.', 'ADMIN', 10),
+('Distribution Team', 'Manages sustainable food distribution.', 'READ_WRITE', 10),
+('Community Outreach Team', 'Collaborates with local communities.', 'READ_ONLY', 10),
+('Food Admin Team', 'Supervises logistics and team operations.', 'ADMIN', 10),
 
 -- Teams for "Space Explorers"
-(31, 'Mission Control', 'Manages space exploration missions.', 'READ_WRITE', 11),
-(32, 'Research Team of Space', 'Conducts research on space technologies.', 'READ_ONLY', 11),
-(33, 'Space Admin Team', 'Handles administrative operations.', 'ADMIN', 11),
+('Mission Control', 'Manages space exploration missions.', 'READ_WRITE', 11),
+('Research Team of Space', 'Conducts research on space technologies.', 'READ_ONLY', 11),
+('Space Admin Team', 'Handles administrative operations.', 'ADMIN', 11),
 
 -- Teams for "AI Thinkers"
-(34, 'AI Research Team', 'Explores AI algorithms and solutions.', 'READ_WRITE', 12),
-(35, 'Data Collection Team', 'Prepares datasets for AI research.', 'READ_ONLY', 12),
-(36, 'AI Admin Team', 'Supervises project coordination.', 'ADMIN', 12),
+('AI Research Team', 'Explores AI algorithms and solutions.', 'READ_WRITE', 12),
+('Data Collection Team', 'Prepares datasets for AI research.', 'READ_ONLY', 12),
+('AI Admin Team', 'Supervises project coordination.', 'ADMIN', 12),
 
 -- Teams for "Civic Builders"
-(37, 'Urban Development Team', 'Manages urban construction projects.', 'READ_WRITE', 13),
-(38, 'Community Relations Team', 'Engages with local communities for feedback.', 'READ_ONLY', 13),
-(39, 'Civic Admin Team', 'Handles organizational operations and strategy.', 'ADMIN', 13),
+('Urban Development Team', 'Manages urban construction projects.', 'READ_WRITE', 13),
+('Community Relations Team', 'Engages with local communities for feedback.', 'READ_ONLY', 13),
+('Civic Admin Team', 'Handles organizational operations and strategy.', 'ADMIN', 13),
 
 -- Teams for "Travel Gurus"
-(40, 'Customer Support Team', 'Provides support to travelers globally.', 'READ_ONLY', 14),
-(41, 'Product Development Team of Travel', 'Builds tools for seamless travel experiences.', 'READ_WRITE', 14),
-(42, 'Travel Admin Team', 'Oversees travel operations and management.', 'ADMIN', 14);
+('Customer Support Team', 'Provides support to travelers globally.', 'READ_ONLY', 14),
+('Product Development Team of Travel', 'Builds tools for seamless travel experiences.', 'READ_WRITE', 14),
+('Travel Admin Team', 'Oversees travel operations and management.', 'ADMIN', 14);
 
 
 
