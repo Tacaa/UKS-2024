@@ -1,12 +1,10 @@
 package com.example.uks.controllers;
 
 
-import com.example.uks.dto.organisation.AddMemberDTO;
-import com.example.uks.dto.organisation.OrganisationDTO;
-import com.example.uks.dto.organisation.OrganisationUpdateDTO;
-import com.example.uks.dto.organisation.OrganisationCreateDTO;
+import com.example.uks.dto.organisation.*;
 
 import com.example.uks.dto.repository.RepositoryDTO;
+import com.example.uks.dto.team.AddTeamMemberDTO;
 import com.example.uks.dto.team.CreateTeamDTO;
 import com.example.uks.dto.team.TeamDTO;
 import com.example.uks.dto.user.MemberDTO;
@@ -246,5 +244,29 @@ public class OrganisationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+    @PostMapping("/team/add_member")
+    public ResponseEntity<Map<String, Object>> addMemberToTeam(
+            @RequestBody AddTeamMemberDTO dto) {
+
+        organisationService.addMemberToTeam(dto.getTeamId(), dto.getMemberId());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Member added to team");
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/team/{teamId}")
+    public ResponseEntity<Map<String, Object>> updateTeam(
+            @PathVariable Integer teamId,
+            @RequestBody UpdateTeamDTO dto) {
+
+        organisationService.updateTeam(teamId, dto);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Team updated successfully");
+        return ResponseEntity.ok(response);
+    }
+
 
 }
