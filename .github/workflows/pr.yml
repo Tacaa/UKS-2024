@@ -1,0 +1,40 @@
+name: Pull Request Workflow
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  # Workflow for Pull Requests
+  build-and-test-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
+
+      - name: Build with Maven
+        working-directory: ./backend/uks-backend
+        run: mvn clean package
+
+      - name: Run tests
+        working-directory: ./backend/uks-backend
+        run: mvn test
+      
+      - name: Run integration tests
+        working-directory: ./backend/uks-backend
+        run: mvn verify
