@@ -1,0 +1,109 @@
+.component {
+  width: 100%;
+  padding: 2.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters {
+  height: 3rem;
+}
+.filters > * {
+  margin-right: 1rem;
+  height: 100%;
+  border-radius: 0.3rem;
+  border: 1.5px var(--gray3) solid;
+}
+
+.filters > *:hover {
+  border-color: var(--gray2);
+}
+
+.filters select {
+  width: 15rem;
+  margin-top: 0.3px;
+}
+
+.filters input {
+  width: 23rem;
+  padding-left: 0.5rem;
+}
+
+.component button {
+  border: none;
+  background-color: var(--blue-primary);
+  padding: 0 1.5rem;
+  border-radius: 0.3rem;
+  color: whitesmoke;
+  transition: 200ms;
+}
+
+.component button:hover {
+  background-color: var(--blue-light);
+  transition: 200ms;
+}
+
+.component table {
+  margin-top: 2rem;
+}
+
+tbody tr {
+  padding: 1rem 0rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  border-bottom: 1.5px solid #ddd;
+}
+
+thead {
+  border-bottom: 2px solid #ddd;
+}
+
+td {
+  padding: 0.5rem 0;
+}
+
+th {
+  padding-bottom: 0.5rem;
+  transition: 200ms;
+  user-select: none;
+}
+
+.sortableTh:hover {
+  background-color: var(--gray6);
+  transition: 200ms;
+}
+
+tbody tr:hover {
+  background-color: var(--gray6);
+}
+
+.component > span {
+  font-size: 1.2rem;
+  display: table;
+  margin: 1rem auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  white-space: nowrap;
+}
+
+/* First row should be wider */
+thead tr th:first-child,
+tbody tr td:first-child {
+  width: 60%;
+  min-width: 60%;
+  max-width: 60%;
+  word-break: break-all;
+}
+
+th > span {
+  position: absolute;
+  margin-left: 0.3rem;
+  color: var(--blue-secondary);
+  transition: 200ms;
+}

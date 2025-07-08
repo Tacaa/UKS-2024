@@ -1,0 +1,149 @@
+h2 {
+  margin: 0;
+}
+
+a:hover {
+  cursor: pointer;
+}
+.component {
+  width: 100%;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+}
+
+.information {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 3rem;
+}
+
+.details > * {
+  display: flex;
+  flex-direction: row;
+}
+
+.information > img {
+  height: 120px;
+  width: 120px;
+  object-fit: contain;
+  /* background-color: var(--gray5); */
+  border-radius: 7px;
+}
+
+.header .nav {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-bottom: 1px var(--gray5) solid;
+  margin-bottom: 2.5rem;
+}
+
+.header .nav a {
+  font-size: large;
+  color: black;
+  margin-right: 2rem;
+}
+
+.header .nav a:hover {
+  cursor: pointer;
+  color: black;
+  opacity: 0.9;
+}
+
+.top > img {
+  height: 25px;
+  width: 25px;
+  margin-right: 0.5rem;
+}
+
+.top {
+  align-items: center;
+}
+
+.top > span {
+  margin-right: 0.7rem;
+  font-weight: 600;
+  font-size: x-large;
+}
+
+.top .badge {
+  font-size: small;
+}
+
+.desc {
+  margin-bottom: 2.5rem;
+}
+
+.desc a {
+  margin-left: 0.4rem;
+  color: var(--blue-light);
+}
+
+.desc a:hover {
+  cursor: pointer;
+  color: var(--blue-dark);
+}
+
+.desc span {
+  color: var(--gray2);
+  opacity: 0.85;
+}
+
+.tags {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.tags > span {
+  margin-right: 0.8rem;
+  background-color: var(--gray55);
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 0 5px;
+  padding-top: 2px;
+  border-radius: 1rem;
+}
+
+.bottom {
+  color: var(--gray2);
+  font-size: 1.7rem;
+}
+
+.bottom span {
+  margin-right: 1.3rem;
+}
+
+.header .nav > * {
+  margin-right: 10px;
+}
+
+.header .nav a:hover {
+  text-decoration: none;
+}
+
+.header .nav a {
+  text-decoration: none;
+  padding: 0 5px;
+}
+
+.header .nav a.active {
+  border-bottom: 4px solid var(--blue-primary);
+}

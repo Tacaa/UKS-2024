@@ -1,0 +1,121 @@
+<mat-drawer-container class="drawer-container" autosize>
+  <mat-drawer #rightDrawer class="drawer" position="end" mode="over">
+    <div class="logo">
+      <app-user-avatar [disabled]="true" />
+
+      <button (click)="rightDrawer.toggle()" mat-icon-button>
+        <mat-icon class="info-color">clear</mat-icon>
+      </button>
+    </div>
+
+    <div class="menu-container">
+      <a
+        mat-menu-item
+        routerLink="/dockerhub/profile"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <mat-icon>person</mat-icon>
+        <span>My profile</span>
+      </a>
+      <a
+        mat-menu-item
+        routerLink="/dockerhub/accountSettings"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <mat-icon>manage_accounts</mat-icon>
+        <span>Account settings</span>
+      </a>
+      <mat-divider class="divider-spacing" />
+      <button mat-menu-item routerLink="/login" routerLinkActive="active">
+        <span>Sign out</span>
+      </button>
+    </div>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <mat-toolbar color="primary">
+      <div class="">
+        <img
+          class="logo-mini"
+          src="./../../../../assets/images/logo_beli.png"
+          alt=""
+        />
+      </div>
+
+      <span class="name-first-part">docker</span>
+      <span class="name-second-part">hub</span>
+
+      <div class="menu-items">
+        <button
+          class="menu-item-button"
+          mat-menu-item
+          routerLink="/dockerhub/explore"
+          routerLinkActive="router-link-active"
+          [class.underline]="selectedButton === 'explore'"
+          (click)="setActive('explore')"
+        >
+          <span class="menu-item">Explore</span>
+        </button>
+        <button
+          class="menu-item-button"
+          mat-menu-item
+          routerLink="/dockerhub/repository"
+          routerLinkActive="router-link-active"
+          [class.underline]="selectedButton === 'repositories'"
+          (click)="setActive('repositories')"
+        >
+          <span class="menu-item">Repositories</span>
+        </button>
+        <button
+          class="menu-item-button"
+          mat-menu-item
+          routerLink="/dockerhub/organizations"
+          routerLinkActive="router-link-active"
+          [class.underline]="selectedButton === 'organizations'"
+          (click)="setActive('organizations')"
+        >
+          <span class="menu-item">Organizations</span>
+        </button>
+        <button
+          class="menu-item-button"
+          mat-menu-item
+          routerLink="/dockerhub/usage"
+          routerLinkActive="router-link-active"
+          [class.underline]="selectedButton === 'usage'"
+          (click)="setActive('usage')"
+        >
+          <span class="menu-item">Usage</span>
+        </button>
+      </div>
+
+      <span class="spacer"></span>
+
+      <div class="toolbar-actions">
+        <div>
+          <mat-form-field class="search">
+            <mat-icon class="search-icn" matPrefix>search</mat-icon>
+            <input matInput placeholder="Type to search..." />
+          </mat-form-field>
+          <button
+            class="icon-btn-size-36"
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+          >
+            <mat-icon style="color: #ffffff !important; padding-top: 3px"
+              >settings</mat-icon
+            >
+          </button>
+        </div>
+        <app-user-avatar (onAvatarClick)="rightDrawer.toggle()" />
+      </div>
+    </mat-toolbar>
+
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-drawer-container>
+
+<mat-menu #menu="matMenu"></mat-menu>
