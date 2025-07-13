@@ -1,31 +1,68 @@
+-- Lozinke su hesovane pomocu BCrypt algoritma https://www.dailycred.com/article/bcrypt-calculator
+-- Lozinka za oba user-a je 123
+
 -- USERS
 INSERT INTO users (first_name, last_name, username, password, email, joined_date, role, password_changed, user_badge) VALUES
-('John', 'Doe', 'johndoe', '123', 'johndoe@example.com', '2024-12-01 08:00:00', 'USER', false, 'VERIFIED_PUBLISHER'),
-('Jane', 'Smith', 'janesmith', '123', 'janesmith@example.com', '2024-12-02 09:15:30', 'USER', false, 'SPONSORED_OSS'),
-('Alice', 'Brown', 'alicebrown', '123', 'alicebrown@example.com', '2024-12-03 10:30:15', 'ADMIN', false, 'VERIFIED_PUBLISHER'),
-('Bob', 'White', 'bobwhite', '123', 'bobwhite@example.com', '2024-12-04 11:45:45', 'SUPER_ADMIN', false, 'NONE'),
-('Charlie', 'Green', 'charliegreen', '123', 'charliegreen@example.com', '2024-12-05 13:00:10', 'USER', false, 'VERIFIED_PUBLISHER'),
-('Diana', 'Blue', 'dianablue', '123', 'dianablue@example.com', '2024-12-06 14:15:20', 'USER', false, 'SPONSORED_OSS'),
-('Ethan', 'Black', 'ethanblack', '123', 'ethanblack@example.com', '2024-12-07 15:30:25', 'ADMIN', false, 'VERIFIED_PUBLISHER'),
-('Fiona', 'Gray', 'fionagray', '123', 'fionagray@example.com', '2024-12-08 16:45:30', 'USER', false, 'SPONSORED_OSS'),
-('George', 'Yellow', 'georgeyellow', '123', 'georgeyellow@example.com', '2024-12-09 18:00:00', 'USER', false, 'NONE'),
-('Hannah', 'Red', 'hannahred', '123', 'hannahred@example.com', '2024-12-10 19:15:15', 'USER', false, 'NONE'),
-('Ivan', 'Carter', 'ivancarter', 'password123', 'ivancarter@example.com', '2024-12-11 10:15:30', 'USER', false, 'SPONSORED_OSS'),
-('Jasmine', 'Frost', 'jasminefrost', 'password123', 'jasminefrost@example.com', '2024-12-12 11:45:15', 'USER', true, 'SPONSORED_OSS'),
-('Kevin', 'Stone', 'kevinstone', 'password123', 'kevinstone@example.com', '2024-12-13 14:20:45', 'ADMIN', true, 'VERIFIED_PUBLISHER'),
-('Laura', 'Hill', 'laurahill', 'password123', 'laurahill@example.com', '2024-12-14 08:30:10', 'USER', false, 'VERIFIED_PUBLISHER'),
-('Michael', 'Ocean', 'michaelocean', 'password123', 'michaelocean@example.com', '2024-12-15 09:50:00', 'USER', true, 'VERIFIED_PUBLISHER'),
-('Nina', 'Sky', 'ninasky', 'password123', 'ninasky@example.com', '2024-12-16 16:10:25', 'USER', false, 'VERIFIED_PUBLISHER'),
-('Oscar', 'Wave', 'oscarwave', 'password123', 'oscarwave@example.com', '2024-12-17 19:35:50', 'USER', true, 'SPONSORED_OSS'),
-('Paula', 'Cloud', 'paulacloud', 'password123', 'paulacloud@example.com', '2024-12-18 07:25:40', 'USER', false, 'SPONSORED_OSS'),
-('Quentin', 'Rain', 'quentinrain', 'password123', 'quentinrain@example.com', '2024-12-19 12:00:05', 'USER', true, 'SPONSORED_OSS'),
-('Rita', 'Storm', 'ritastorm', 'password123', 'ritastorm@example.com', '2024-12-20 18:45:35', 'USER', true, 'NONE'),
-('Sam', 'Thunder', 'samthunder', 'password123', 'samthunder@example.com', '2024-12-21 10:05:15', 'ADMIN', false, 'NONE'),
-('Tina', 'Lightning', 'tinalightning', 'password123', 'tinalightning@example.com', '2024-12-22 14:55:20', 'ADMIN', true, 'SPONSORED_OSS'),
-('Uma', 'Shadow', 'umashadow', 'password123', 'umashadow@example.com', '2024-12-23 11:20:30', 'USER', true, 'VERIFIED_PUBLISHER'),
-('Victor', 'Flame', 'victorflame', 'password123', 'victorflame@example.com', '2024-12-24 09:15:40', 'USER', false, 'VERIFIED_PUBLISHER'),
-('Wendy', 'Frost', 'wendyfrost', 'password123', 'wendyfrost@example.com', '2024-12-25 16:50:10', 'ADMIN', true, 'VERIFIED_PUBLISHER');
+('John', 'Doe', 'johndoe', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'johndoe@example.com', '2024-12-01 08:00:00', 'USER', false, 'VERIFIED_PUBLISHER'),
+('Jane', 'Smith', 'janesmith', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'janesmith@example.com', '2024-12-02 09:15:30', 'USER', false, 'SPONSORED_OSS'),
+('Alice', 'Brown', 'alicebrown', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'alicebrown@example.com', '2024-12-03 10:30:15', 'ADMIN', false, 'VERIFIED_PUBLISHER'),
+('Bob', 'White', 'bobwhite', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'bobwhite@example.com', '2024-12-04 11:45:45', 'SUPER_ADMIN', false, 'NONE'),
+('Charlie', 'Green', 'charliegreen', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'charliegreen@example.com', '2024-12-05 13:00:10', 'USER', false, 'VERIFIED_PUBLISHER'),
+('Diana', 'Blue', 'dianablue', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'dianablue@example.com', '2024-12-06 14:15:20', 'USER', false, 'SPONSORED_OSS'),
+('Ethan', 'Black', 'ethanblack', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'ethanblack@example.com', '2024-12-07 15:30:25', 'ADMIN', false, 'VERIFIED_PUBLISHER'),
+('Fiona', 'Gray', 'fionagray', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'fionagray@example.com', '2024-12-08 16:45:30', 'USER', false, 'SPONSORED_OSS'),
+('George', 'Yellow', 'georgeyellow', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'georgeyellow@example.com', '2024-12-09 18:00:00', 'USER', false, 'NONE'),
+('Hannah', 'Red', 'hannahred', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'hannahred@example.com', '2024-12-10 19:15:15', 'USER', false, 'NONE'),
+('Ivan', 'Carter', 'ivancarter', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'ivancarter@example.com', '2024-12-11 10:15:30', 'USER', false, 'SPONSORED_OSS'),
+('Jasmine', 'Frost', 'jasminefrost', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'jasminefrost@example.com', '2024-12-12 11:45:15', 'USER', true, 'SPONSORED_OSS'),
+('Kevin', 'Stone', 'kevinstone', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'kevinstone@example.com', '2024-12-13 14:20:45', 'ADMIN', true, 'VERIFIED_PUBLISHER'),
+('Laura', 'Hill', 'laurahill', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'laurahill@example.com', '2024-12-14 08:30:10', 'USER', false, 'VERIFIED_PUBLISHER'),
+('Michael', 'Ocean', 'michaelocean', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'michaelocean@example.com', '2024-12-15 09:50:00', 'USER', true, 'VERIFIED_PUBLISHER'),
+('Nina', 'Sky', 'ninasky', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'ninasky@example.com', '2024-12-16 16:10:25', 'USER', false, 'VERIFIED_PUBLISHER'),
+('Oscar', 'Wave', 'oscarwave', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'oscarwave@example.com', '2024-12-17 19:35:50', 'USER', true, 'SPONSORED_OSS'),
+('Paula', 'Cloud', 'paulacloud', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'paulacloud@example.com', '2024-12-18 07:25:40', 'USER', false, 'SPONSORED_OSS'),
+('Quentin', 'Rain', 'quentinrain', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'quentinrain@example.com', '2024-12-19 12:00:05', 'USER', true, 'SPONSORED_OSS'),
+('Rita', 'Storm', 'ritastorm', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'ritastorm@example.com', '2024-12-20 18:45:35', 'USER', true, 'NONE'),
 
+('Sam', 'Thunder', 'samthunder', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'samthunder@example.com', '2024-12-21 10:05:15', 'ADMIN', false, 'NONE'),
+('Tina', 'Lightning', 'tinalightning', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'tinalightning@example.com', '2024-12-22 14:55:20', 'ADMIN', true, 'SPONSORED_OSS'),
+('Uma', 'Shadow', 'umashadow', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'umashadow@example.com', '2024-12-23 11:20:30', 'USER', true, 'VERIFIED_PUBLISHER'),
+('Victor', 'Flame', 'victorflame', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'victorflame@example.com', '2024-12-24 09:15:40', 'USER', false, 'VERIFIED_PUBLISHER'),
+('Wendy', 'Frost', 'wendyfrost', '$2a$10$X7F3hUST4aTxWHikNRY7gek7xsjW352cF51QmbRehvE9rGJooAMhW', 'wendyfrost@example.com', '2024-12-25 16:50:10', 'ADMIN', true, 'VERIFIED_PUBLISHER');
+
+
+-- ROLES
+INSERT INTO ROLE (name) VALUES ('SUPER_ADMIN');
+INSERT INTO ROLE (name) VALUES ('ADMIN');
+INSERT INTO ROLE (name) VALUES ('USER');
+
+
+-- USERS_ROLES
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (1, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (2, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (3, 2);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (4, 1);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (5, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (6, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (7, 2);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (8, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (9, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (10, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (11, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (12, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (13, 2);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (14, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (15, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (16, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (17, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (18, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (19, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (20, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (21, 2);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (22, 2);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (23, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (24, 3);
+INSERT INTO USER_ROLE (user_id, role_id) VALUES (25, 2);
 
 
 -- ORGANISATIONS

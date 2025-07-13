@@ -1,6 +1,6 @@
 package com.example.uks.enumeration;
 
-public enum Role {
+public enum RoleEnum {
     USER,
     ADMIN,
     SUPER_ADMIN
