@@ -2,7 +2,6 @@ package com.example.uks.controllers;
 
 import com.example.uks.dto.repository.*;
 import com.example.uks.dto.util.PagedResponse;
-import com.example.uks.enumeration.Category;
 import com.example.uks.exceptions.*;
 import com.example.uks.model.OfficialRepository;
 import com.example.uks.model.Repository;
