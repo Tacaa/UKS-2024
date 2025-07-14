@@ -5,6 +5,7 @@ import com.example.uks.dto.auth.UserRequest;
 import com.example.uks.dto.auth.UserTokenState;
 import com.example.uks.dto.user.UserDTO;
 import com.example.uks.enumeration.RoleEnum;
+import com.example.uks.enumeration.UserBadge;
 import com.example.uks.model.Role;
 import com.example.uks.services.RoleService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,14 +32,13 @@ import com.example.uks.services.UserService;
 import com.example.uks.util.security.TokenUtils;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 
-//Kontroler zaduzen za autentifikaciju korisnika
 @Slf4j
 @RestController
 @RequestMapping(value = "/api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
-//@CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticationController {
 
     @Autowired
@@ -59,6 +59,7 @@ public class AuthenticationController {
 
     //metoda koja sluzi za logovanje, izdvojena kako se ne bi duplirao kod i u registraciji
     private UserTokenState login(JwtAuthenticationRequest authenticationRequest){
+
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 
@@ -122,15 +123,16 @@ public class AuthenticationController {
                 .email(userRequest.getEmail())
                 .username(userRequest.getUsername())
                 .password(passwordEncoder.encode(userRequest.getPassword()))
+                .joinedDate(new Date())
+                .roleEnum(userRequest.getRoleEnum())
                 .roles(roles)
                 .enabled(true)
+                .passwordChanged(false)
+                .userBadge(UserBadge.NONE)
                 .lastPasswordResetDate(new Timestamp(System.currentTimeMillis()))
                 .build();
 
-
-
         user = this.userService.save(user);
-
 
         //kada se registrovao korisnik neka se odmah i loguje (tj. dobije svoj token i postavi u kontekst)
         JwtAuthenticationRequest jwtAuthenticationRequest = new JwtAuthenticationRequest(userRequest.getUsername(), userRequest.getPassword());

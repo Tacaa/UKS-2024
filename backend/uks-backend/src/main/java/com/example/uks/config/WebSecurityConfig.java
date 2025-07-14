@@ -36,12 +36,15 @@ import java.util.Arrays;
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
-     @Autowired
+    // Handler za vracanje 401 kada klijent sa neodogovarajucim korisnickim imenom i lozinkom pokusa da pristupi resursu
+    @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
+    // Injektujemo implementaciju iz TokenUtils klase kako bismo mogli da koristimo njene metode za rad sa JWT u TokenAuthenticationFilteru
     @Autowired
     private TokenUtils tokenUtils;
 
+    // Servis koji se koristi za citanje podataka o korisnicima aplikacije
     @Bean
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
@@ -57,10 +60,18 @@ public class WebSecurityConfig {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() throws BadCredentialsException {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        // 1. koji servis da koristi da izvuce podatke o korisniku koji zeli da se autentifikuje
+        // prilikom autentifikacije, AuthenticationManager ce sam pozivati loadUserByUsername() metodu ovog servisa
+        authProvider.setUserDetailsService(userDetailsService());
+        // 2. kroz koji enkoder da provuce lozinku koju je dobio od klijenta u zahtevu
+        // da bi adekvatan hash koji dobije kao rezultat hash algoritma uporedio sa onim koji se nalazi u bazi (posto se u bazi ne cuva plain lozinka)
         authProvider.setPasswordEncoder(passwordEncoder());
+
         return authProvider;
     }
 
+    // Registrujemo authentication manager koji ce da uradi autentifikaciju korisnika za nas
+    // Centralizuje proces autentifikacije
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
@@ -79,60 +90,53 @@ public class WebSecurityConfig {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); //Postavlja politiku upravljanja sesijama na STATELESS
         http.exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(restAuthenticationEntryPoint));
 
-        //TODO: DODATI PATHS
         http.authorizeHttpRequests(request -> {
             request.requestMatchers(new AntPathRequestMatcher("/api/auth/login")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/api/auth/register")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/api/auth/logout")).authenticated()
-                    .requestMatchers(new AntPathRequestMatcher("/api/gateway/update-user/{id}")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/api/gateway/disable-user/{id}")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/error")).permitAll()
                     .requestMatchers(new AntPathRequestMatcher("/api/auth/current-user")).authenticated()
 
-                    // User service endpoints
-                    .requestMatchers(HttpMethod.GET, "/api/user/{id}").hasAnyRole("GUEST", "HOST")
-                    .requestMatchers(HttpMethod.GET, "/api/user/all").hasAnyRole("GUEST", "HOST")
-                    .requestMatchers(HttpMethod.GET, "/api/user").hasAnyRole("GUEST", "HOST")
-                    .requestMatchers(HttpMethod.GET, "/api/user/search").hasAnyRole("GUEST", "HOST")
-                    .requestMatchers(HttpMethod.PUT, "/api/user/{id}").hasAnyRole("GUEST", "HOST")
-                    .requestMatchers(HttpMethod.DELETE, "/api/user/{id}").hasAnyRole("GUEST", "HOST")
+                    // ORGANISATION
+                    .requestMatchers(HttpMethod.PUT, "/api/organisation/{orgId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/organisation/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/organisation/{orgId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/organisation").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/organisation/user/{userId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/organisation/{orgId}/members").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/organisation/{orgId}/members").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
 
-                    //Accommodation endpoints
-                    .requestMatchers(HttpMethod.GET, "/api/accommodation/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/accommodation").hasRole("HOST")
-                    .requestMatchers(HttpMethod.POST, "/api/accommodation/search").permitAll()
+                    //TEAMS - kad se spoji sa develop
+                    .requestMatchers(HttpMethod.GET, "/api/team/{orgId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/team").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/team/add_member").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/team/{teamId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
 
-                    //Availability endpoints
-                    .requestMatchers(HttpMethod.GET, "/api/availability/{accommodationId}").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/availability").hasRole("HOST")
-                    .requestMatchers(HttpMethod.PUT, "/api/availability/{availabilityId}").hasRole("HOST")
+                    //REPOSITORIES
+                    .requestMatchers(HttpMethod.GET, "/api/repositories").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/all").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/search").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/repositories").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/repositories/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/repositories/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/repositories/soft/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
 
-                    // Reservation endpoints
-                    .requestMatchers(HttpMethod.POST, "/api/reservation").hasRole("GUEST")
-                    .requestMatchers(HttpMethod.DELETE, "/api/reservation/{id}").hasRole("GUEST")
-                    .requestMatchers(HttpMethod.GET, "/api/reservation/all-host-pending-accommodation/{hostId}").hasRole("HOST")
-                    .requestMatchers(HttpMethod.POST, "/api/reservation/save-manually-approved").hasRole("HOST")
+                    //OFFICIAL REPOSITORIES
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/official").hasAnyRole( "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/official/{id}").hasAnyRole( "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/official/all").hasAnyRole( "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/official/search").hasAnyRole( "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/repositories/official").hasAnyRole( "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/repositories/official/{id}").hasAnyRole( "ADMIN", "SUPER_ADMIN")
 
-                    // Review endpoints
-                    .requestMatchers(HttpMethod.GET, "/api/accommodation-review/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/accommodation-review").hasRole("GUEST")
-                    .requestMatchers(HttpMethod.PUT, "/api/accommodation-review/{id}").hasRole("GUEST")
-                    .requestMatchers(HttpMethod.DELETE, "/api/accommodation-review/{id}").hasRole("GUEST")
-
-                    .requestMatchers(HttpMethod.GET, "/api/host-review/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/host-review").hasRole("GUEST")
-                    .requestMatchers(HttpMethod.PUT, "/api/host-review/{id}").hasRole("GUEST")
-                    .requestMatchers(HttpMethod.DELETE, "/api/host-review/{id}").hasRole("GUEST")
-
-                    // Notifications endpoints
-                    .requestMatchers(HttpMethod.GET, "/api/notifications/{userId}").hasAnyRole("GUEST", "HOST")
-                    .requestMatchers(HttpMethod.PUT, "/api/notifications/read").hasAnyRole("GUEST", "HOST")
-
-                    .requestMatchers(HttpMethod.GET, "api/notifications-preferences/{userId}").hasAnyRole("GUEST", "HOST")
-                    .requestMatchers(HttpMethod.PUT, "/api/notifications-preferences").hasAnyRole("GUEST", "HOST")
-
-                    .requestMatchers("/actuator/prometheus").permitAll()
-                    .requestMatchers("/actuator/**").permitAll()
+                    //USERS
+                    .requestMatchers(HttpMethod.GET, "/api/users").hasAnyRole( "USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyRole( "USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/users/all").hasAnyRole( "USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/users/search").hasAnyRole( "USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/users/badge/{id}").hasAnyRole(  "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasAnyRole(  "USER", "ADMIN", "SUPER_ADMIN")
 
                     .anyRequest().authenticated();
         });
@@ -155,12 +159,10 @@ public class WebSecurityConfig {
                         "/*/*.html", "/*/*.css", "/*/*.js");
 
     }
-    //Podesavanja CORS-a
-    //https://docs.spring.io/spring-security/reference/servlet/integrations/cors.html
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://devops-user:8081", "http://prometheus:9090"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "GET", "OPTIONS", "DELETE", "PATCH")); // or simply "*"
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
