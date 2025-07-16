@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Repository } from 'src/app/shared/models/Repository';
+import { Repository } from 'src/app/shared/models/repository.model';
 
 @Injectable({
   providedIn: 'root',
@@ -142,9 +142,9 @@ export class RepositoryService {
     ];
   }
 
-  constructor(private http:HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  public getRepository(id: number){
-    return this.http.get("http://localhost:8081/api/repositories/"+id);
+  public getRepository(id: number) {
+    return this.http.get('http://localhost:8081/api/repositories/' + id);
   }
 }
