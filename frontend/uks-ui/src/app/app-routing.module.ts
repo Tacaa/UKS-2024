@@ -21,7 +21,7 @@ import { OrganizationRepositoriesComponent } from './organization-repositories/o
 import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
 import { OrganizationTeamsComponent } from './organization-teams/organization-teams.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
-
+import { BadgeEditComponent } from './admin-board/badge-edit/badge-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
@@ -90,26 +90,27 @@ const routes: Routes = [
           { path: '', redirectTo: 'general', pathMatch: 'full' },
         ],
       },
+      { path: 'adminPanel', component: BadgeEditComponent },
       {
         path: 'accountSettings',
-        component: AccountSettingsComponent
+        component: AccountSettingsComponent,
       },
       {
         path: 'profile',
-        component: UserProfileComponent
+        component: UserProfileComponent,
       },
       {
         path: 'usage',
         component: UsagePageComponent,
         title: 'Usage',
       },
-  
+
       {
         path: 'organizations',
         component: OrgsPageComponent,
         title: 'Organizations',
       },
-  
+
       {
         path: 'organizations/create',
         component: OrgsPageCreateOrgComponent,
@@ -138,7 +139,7 @@ const routes: Routes = [
           },
           { path: '', redirectTo: 'members', pathMatch: 'full' },
         ],
-      }
+      },
     ],
   },
 ];

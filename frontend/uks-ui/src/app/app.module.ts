@@ -35,6 +35,7 @@ import { CreateTeamComponent } from './dialogs/create-team/create-team.component
 import { PullsOverTimeComponent } from './usage-page/charts/pulls-over-time/pulls-over-time.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { BadgeEditComponent } from './admin-board/badge-edit/badge-edit.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     AddMembersComponent,
     CreateTeamComponent,
     PullsOverTimeComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    BadgeEditComponent
   ],
   imports: [
     BrowserModule,

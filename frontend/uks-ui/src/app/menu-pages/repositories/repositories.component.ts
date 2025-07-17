@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RepositoryService } from 'src/app/services/repository/repository.service';
-import { Repository } from 'src/app/shared/models/Repository';
+import { Repository } from 'src/app/shared/models/repository.model';
 
 @Component({
   selector: 'app-repositories',
@@ -18,7 +18,9 @@ export class RepositoriesComponent implements OnInit {
   sortField: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  constructor(private repositoryService: RepositoryService, private router: Router,
+  constructor(
+    private repositoryService: RepositoryService,
+    private router: Router,
     private sanitizer: DomSanitizer
   ) {}
 
@@ -64,14 +66,13 @@ export class RepositoriesComponent implements OnInit {
     console.log('Redirect to ' + repoName);
   }
 
-  getRepository(){
+  getRepository() {
     var id = 1;
-    this.repositoryService.getRepository(id).subscribe((result:any)=>{
-      if(result!=null){
-
-        this.testRepository=result;
-        console.log(this.testRepository?.id)
+    this.repositoryService.getRepository(id).subscribe((result: any) => {
+      if (result != null) {
+        this.testRepository = result;
+        console.log(this.testRepository?.id);
       }
-    })
+    });
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from '../services/repository/repository.service';
-import { Repository } from '../shared/models/Repository';
+import { Repository } from '../shared/models/repository.model';
 
 @Component({
   selector: 'app-create-repository',

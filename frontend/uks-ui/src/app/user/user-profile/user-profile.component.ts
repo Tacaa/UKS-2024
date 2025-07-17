@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Repository } from 'src/app/shared/models/Repository';
+import { Repository } from 'src/app/shared/models/repository.model';
 import { RepositoryService } from 'src/app/services/repository/repository.service';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+  styleUrls: ['./user-profile.component.css'],
 })
-export class UserProfileComponent implements OnInit{
+export class UserProfileComponent implements OnInit {
   name: string = 'ImeKorisnika';
   selectedOption: string = 'repositories';
   repositories: Repository[] = [];
@@ -21,8 +21,10 @@ export class UserProfileComponent implements OnInit{
 
   sortField: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
-  
-  constructor(private repositoryService: RepositoryService, private router: Router,
+
+  constructor(
+    private repositoryService: RepositoryService,
+    private router: Router,
     private sanitizer: DomSanitizer
   ) {}
 
@@ -30,7 +32,7 @@ export class UserProfileComponent implements OnInit{
     this.repositories = this.repositoryService.getAllRepositories(); // Initialize with unsorted data
     this.loadedRepos = this.repositories.length;
     this.namespaces = this.repositoryService.getAllNamespaces();
-    this.showAll()
+    this.showAll();
   }
 
   showAll() {
@@ -39,7 +41,7 @@ export class UserProfileComponent implements OnInit{
 
   showFavorites() {
     //implementorati da li je u omiljenim
-    this.filteredRepos = this.repositories.filter(repo => repo.star>33);
+    this.filteredRepos = this.repositories.filter((repo) => repo.star > 33);
   }
 
   sortTable(field: 'name' | 'updated') {
@@ -77,14 +79,13 @@ export class UserProfileComponent implements OnInit{
     console.log('Redirect to ' + repoName);
   }
 
-  getRepository(){
+  getRepository() {
     var id = 1;
-    this.repositoryService.getRepository(id).subscribe((result:any)=>{
-      if(result!=null){
-
-        this.testRepository=result;
-        console.log(this.testRepository?.id)
+    this.repositoryService.getRepository(id).subscribe((result: any) => {
+      if (result != null) {
+        this.testRepository = result;
+        console.log(this.testRepository?.id);
       }
-    })
+    });
   }
 }
