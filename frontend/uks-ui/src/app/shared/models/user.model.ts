@@ -19,3 +19,15 @@ export interface User {
   organisationsMember?: Organisation[];
   teamMember?: Organisation[];
 }
+
+export interface currentUser {
+  id?: number;
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  joinedDate: Date;
+  role: Role;
+  passwordChanged?: boolean;
+  userBadge?: UserBadge;
+}
