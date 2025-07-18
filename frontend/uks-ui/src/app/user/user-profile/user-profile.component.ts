@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Repository } from 'src/app/shared/models/repository.model';
 import { RepositoryService } from 'src/app/services/mock-repository/repository.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -25,10 +26,14 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private repositoryService: RepositoryService,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    const user = this.authService.getCurrentUser();
+    const fullName = `${user?.firstName} ${user?.lastName}`;
+    this.name = fullName;
     this.repositories = this.repositoryService.getAllRepositories(); // Initialize with unsorted data
     this.loadedRepos = this.repositories.length;
     this.namespaces = this.repositoryService.getAllNamespaces();
@@ -74,7 +79,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   openRepo(repoName: string): void {
-    // const url = `https://your-repository-domain.com/${repoName}`; // Replace with your repo URL logic
+    // const url = `https://your-repository-domain.com/${repoName}`;
     // window.open(url, '_blank');
     console.log('Redirect to ' + repoName);
   }
