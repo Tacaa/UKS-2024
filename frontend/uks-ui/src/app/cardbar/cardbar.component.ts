@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Repository } from '../shared/models/repository.model';
-import { RepositoryService } from '../services/repository/repository.service';
+import { RepositoryService } from '../services/mock-repository/repository.service';
 
 @Component({
   selector: 'app-cardbar',
