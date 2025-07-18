@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RepositoryService } from '../services/repository/repository.service';
+import { RepositoryService } from '../services/mock-repository/repository.service';
 import { Repository } from '../shared/models/repository.model';
 
 @Component({
