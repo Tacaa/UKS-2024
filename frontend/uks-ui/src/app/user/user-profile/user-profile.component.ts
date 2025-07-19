@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Repository } from 'src/app/shared/models/repository.model';
+import { Repository } from 'src/app/shared/models/mock.repository.model';
 import { RepositoryService } from 'src/app/services/mock-repository/repository.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 

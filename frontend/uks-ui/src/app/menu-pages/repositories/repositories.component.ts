@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { RepositoryService } from 'src/app/services/mock-repository/repository.service';
-import { Repository } from 'src/app/shared/models/repository.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { RepositoryService } from 'src/app/services/repository/repository.service'; // Updated import
+import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
 
 @Component({
   selector: 'app-repositories',
@@ -10,25 +11,42 @@ import { Repository } from 'src/app/shared/models/repository.model';
   styleUrls: ['./repositories.component.css'],
 })
 export class RepositoriesComponent implements OnInit {
-  sortedRepos: Repository[] = [];
+  sortedRepos: RepositoryDTO[] = []; // Updated type
   namespaces: string[] = [];
   loadedRepos?: number;
-  testRepository?: Repository;
+  testRepository?: RepositoryDTO; // Updated type
 
   sortField: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor(
     private repositoryService: RepositoryService,
+    private authService: AuthService,
     private router: Router,
     private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
-    this.sortedRepos = this.repositoryService.getAllRepositories(); // Initialize with unsorted data
-    this.loadedRepos = this.sortedRepos.length;
+    // TODO: Replace with actual owner ID - you'll need to get this from user context/login
+    const ownerId = this.authService.getCurrentUser()?.id as number; // Replace this with actual logged-in user ID
 
-    this.namespaces = this.repositoryService.getAllNamespaces();
+    this.repositoryService
+      .getRepositoriesByOwner(ownerId)
+      .subscribe((response) => {
+        this.sortedRepos = response.content;
+        this.loadedRepos = response.totalElements;
+
+        // Extract unique namespaces from the repositories
+        this.namespaces = [
+          ...new Set(
+            this.sortedRepos
+              .map((repo) => repo.namespace)
+              .filter(
+                (namespace) => namespace !== null && namespace !== undefined
+              )
+          ),
+        ] as string[];
+      });
   }
 
   sortTable(field: 'name' | 'updated') {
@@ -47,8 +65,8 @@ export class RepositoriesComponent implements OnInit {
 
       if (field === 'updated') {
         // For "Last Pushed", prioritize `updated`, fallback to `created`
-        valueA = a.updated ?? a.created;
-        valueB = b.updated ?? b.created;
+        valueA = new Date(a.updated ?? a.created);
+        valueB = new Date(b.updated ?? b.created);
       } else {
         valueA = a[field];
         valueB = b[field];
@@ -61,18 +79,11 @@ export class RepositoriesComponent implements OnInit {
   }
 
   openRepo(repoName: string): void {
-    // const url = `https://your-repository-domain.com/${repoName}`; // Replace with your repo URL logic
-    // window.open(url, '_blank');
     console.log('Redirect to ' + repoName);
   }
 
   getRepository() {
-    var id = 1;
-    this.repositoryService.getRepository(id).subscribe((result: any) => {
-      if (result != null) {
-        this.testRepository = result;
-        console.log(this.testRepository?.id);
-      }
-    });
+    // This method seems to be for testing - you can remove it or update as needed
+    console.log('Individual repository fetch - implement if needed');
   }
 }
