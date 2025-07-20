@@ -2,18 +2,23 @@
 <div class="top">
   <div class="topleft">
     <h2>
-      Creator/repoName<i
+      {{ repository?.owner?.name | lowercase }}/{{ repository?.name }}
+      <i
         class="fa fa-lock"
-        aria-hidden="true"
+        *ngIf="repository?.visibility === 'PRIVATE'"
         matTooltip="Private repository"
       ></i>
+      <div class="starDiv" matTooltip="Starred">
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <p>{{ repository?.star }}</p>
+      </div>
     </h2>
-    <p>Created 27 days ago</p>
+    <p>Created {{ repository?.created | date : "mediumDate" }}</p>
 
     <!-- EDITING DESCRIPTION START -->
     <div class="descDiv">
       <ng-container *ngIf="!isEditingDescription">
-        <span id="description">{{ shortDescription }}</span>
+        <span id="description">{{ repository?.description }}</span>
         <i class="fa fa-pencil" (click)="toggleDescriptionEdit()"></i>
       </ng-container>
       <ng-container *ngIf="isEditingDescription">
@@ -47,7 +52,7 @@
     <!-- EDITING CATEGORY START -->
     <div class="categories">
       <ng-container *ngIf="!isEditingCategory">
-        <span id="category">{{ repoCategory }}</span>
+        <span id="category">{{ repository?.categoryString }}</span>
         <i class="fa fa-pencil" (click)="toggleCategoryEdit()"></i>
       </ng-container>
 
@@ -55,7 +60,7 @@
         <form>
           <select [(ngModel)]="tempCategory" name="tempCategory">
             <option *ngFor="let category of categories" [value]="category">
-              {{ category }}
+              {{ category.replaceAll("_", " ") }}
             </option>
           </select>
           <button
@@ -87,8 +92,8 @@
 <div class="middle">
   <h3>Tags</h3>
   <div class="tagholder">
-    <a>Tag 1.2.4</a>
-    <a>Tag 2.4.5</a>
+    <a>LOAD TAGS FROM SERVICE</a>
+    <a>LOAD TAGS FROM SERVICE</a>
   </div>
 </div>
 <div class="bot">
@@ -97,9 +102,9 @@
     <ng-container *ngIf="!isEditingOverview">
       <div style="display: flex; flex-direction: column">
         <span id="overview">
-          <ng-container *ngIf="overview; else defaultOverview">{{
+          <!-- <ng-container *ngIf="overview; else defaultOverview">{{
             overview
-          }}</ng-container>
+          }}</ng-container> -->
           <ng-template #defaultOverview>
             <span class="no-overview"
               >An overview describes what your image does and how to run it. It
