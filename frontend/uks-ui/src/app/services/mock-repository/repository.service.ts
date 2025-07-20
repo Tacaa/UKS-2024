@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Repository } from 'src/app/shared/models/repository.model';
+import { Repository } from 'src/app/shared/models/mock.repository.model';
 
 @Injectable({
   providedIn: 'root',
