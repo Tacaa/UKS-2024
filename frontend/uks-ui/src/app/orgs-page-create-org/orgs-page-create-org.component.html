@@ -1,9 +1,11 @@
 <div class="form">
-  <p>Organization namespace</p>
-  <input type="text" placeholder="Organization namespace" />
-  <p>Company name</p>
-  <input type="text" placeholder="Company name" />
-  <button class="blueButton" (click)="createNamespace()">
-    Create namespace
+  <p>Organization name</p>
+  <input type="text" placeholder="" [(ngModel)]="name" />
+  <p>Description</p>
+  <input type="text" placeholder="" [(ngModel)]="description" />
+  <p>Image</p>
+  <input type="text" placeholder="" [(ngModel)]="image" />
+  <button class="blueButton" (click)="createOrganisation()">
+    Create organization
   </button>
 </div>

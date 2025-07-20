@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { OrganisationCreateDTO } from 'src/app/shared/dto/organisation/organisation-create.dto';
 import { OrganisationDTO } from 'src/app/shared/dto/organisation/organisation.dto';
 
 @Injectable({
@@ -16,6 +17,15 @@ export class OrganisationService {
   ): Observable<{ message: string; data: OrganisationDTO[] }> {
     return this.http.get<{ message: string; data: OrganisationDTO[] }>(
       `${this.baseUrl}/user/${userId}`
+    );
+  }
+
+  createOrganisation(
+    dto: OrganisationCreateDTO
+  ): Observable<{ message: string | null; data: OrganisationDTO }> {
+    return this.http.post<{ message: string | null; data: OrganisationDTO }>(
+      this.baseUrl,
+      dto
     );
   }
 }
