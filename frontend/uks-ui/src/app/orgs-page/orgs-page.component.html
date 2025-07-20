@@ -4,23 +4,24 @@
     <button class="blueButton" routerLink="create">Create Organization</button>
   </div>
   <div class="tablediv">
-    <table>
+    <div *ngIf="loading">Loading...</div>
+    <table *ngIf="!loading">
       <thead>
-        <th>Namespace</th>
         <th>Name</th>
-        <th>My Role</th>
-        <th>Teams</th>
+        <th>Owner id</th>
+        <th>Number of teams</th>
+        <th>Number of members</th>
       </thead>
       <tbody>
-        <tr>
+        <tr *ngFor="let org of organisations">
           <td>
-            <a routerLink="namespace1"
-              ><i class="fa fa-building-o" aria-hidden="true"></i>namespace</a
-            >
+            <a [routerLink]="org.name">
+              <i class="fa fa-building-o" aria-hidden="true"></i>{{ org.name }}
+            </a>
           </td>
-          <td>name</td>
-          <td>role</td>
-          <td>numberOfTeams</td>
+          <td>{{ org.ownerId }}</td>
+          <td>{{ org.teams.length }}</td>
+          <td>{{ org.members.length }}</td>
         </tr>
       </tbody>
     </table>
