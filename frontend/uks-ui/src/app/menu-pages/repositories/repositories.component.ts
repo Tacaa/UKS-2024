@@ -11,10 +11,11 @@ import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
   styleUrls: ['./repositories.component.css'],
 })
 export class RepositoriesComponent implements OnInit {
-  sortedRepos: RepositoryDTO[] = []; // Updated type
+  sortedRepos: RepositoryDTO[] = [];
   namespaces: string[] = [];
   loadedRepos?: number;
-  testRepository?: RepositoryDTO; // Updated type
+  testRepository?: RepositoryDTO;
+  searchTerm: string = '';
 
   sortField: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
@@ -49,6 +50,12 @@ export class RepositoriesComponent implements OnInit {
       });
   }
 
+  get filteredRepos(): RepositoryDTO[] {
+    return this.sortedRepos.filter((repo) =>
+      repo.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
   sortTable(field: 'name' | 'updated') {
     if (this.sortField === field) {
       // Toggle direction if sorting the same field
@@ -76,14 +83,5 @@ export class RepositoriesComponent implements OnInit {
       if (valueA > valueB) return this.sortDirection === 'asc' ? 1 : -1;
       return 0;
     });
-  }
-
-  openRepo(repoName: string): void {
-    console.log('Redirect to ' + repoName);
-  }
-
-  getRepository() {
-    // This method seems to be for testing - you can remove it or update as needed
-    console.log('Individual repository fetch - implement if needed');
   }
 }

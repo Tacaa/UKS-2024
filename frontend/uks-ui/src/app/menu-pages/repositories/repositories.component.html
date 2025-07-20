@@ -2,19 +2,23 @@
 <div class="component">
   <div class="header">
     <div class="filters">
-      <select name="namespace" id="namespace">
+      <!-- <select name="namespace" id="namespace">
         <option *ngFor="let namespace of namespaces" value="{{ namespace }}">
           {{ namespace }}
         </option>
-      </select>
-      <input type="text" placeholder="Search repositories by name" />
-      <select name="content" id="content">
+      </select> -->
+      <input
+        type="text"
+        placeholder="Search repositories by name"
+        [(ngModel)]="searchTerm"
+      />
+      <!-- <select name="content" id="content">
         <option value="1">Da li</option>
         <option value="2">cemo</option>
         <option value="3">zdrzati</option>
         <option value="4">ovo</option>
         <option value="5">za content</option>
-      </select>
+      </select> -->
     </div>
     <button class="blueButton" routerLink="/dockerhub/create">
       Create a repository
@@ -51,12 +55,11 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let repo of sortedRepos"
-        (click)="openRepo(repo.name)"
-        routerLink="/dockerhub/repository/{{ repo.namespace }}/{{ repo.name }}"
+        *ngFor="let repo of filteredRepos"
+        routerLink="/dockerhub/repository/{{ repo.id }}"
         style="cursor: pointer; border-bottom: 1px solid #ddd"
       >
-        <td>{{ repo.name }}</td>
+        <td>{{ repo.owner.name | lowercase }}/{{ repo.name }}</td>
         <td>
           {{
             repo.updated
@@ -64,9 +67,9 @@
               : (repo.created | date : "mediumDate")
           }}
         </td>
-        <td>Some data</td>
-        <td>{{ repo.visibility ? "Public" : "Private" }}</td>
-        <td>Scout Data</td>
+        <td></td>
+        <td>{{ repo.visibility | titlecase }}</td>
+        <td>Inactive</td>
       </tr>
     </tbody>
   </table>

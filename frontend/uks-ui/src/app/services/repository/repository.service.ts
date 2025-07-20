@@ -33,4 +33,8 @@ export class RepositoryService {
       }
     );
   }
+
+  getRepositoryById(id: number): Observable<RepositoryDTO> {
+    return this.http.get<RepositoryDTO>(`${this.baseUrl}/${id}`);
+  }
 }

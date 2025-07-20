@@ -67,9 +67,9 @@ const routes: Routes = [
       {
         // TODO   If the user cannot edit this repository it should be
         // TODO   redirected to /r/repositoryName where he can just view it
-        path: 'repository/:user/:repository',
+        path: 'repository/:id',
         component: PersonalRepositoryPageComponent,
-        title: ':user/:repository',
+        //title: ':user/:repository',
         children: [
           {
             path: 'general',
@@ -78,7 +78,7 @@ const routes: Routes = [
           {
             path: 'tags',
             component: PersonalRepositoryPageTagsComponent,
-            title: ':user/:repository',
+            //title: ':user/:repository',
           },
           {
             path: 'collaborators',
