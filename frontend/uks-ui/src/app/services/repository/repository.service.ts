@@ -47,4 +47,8 @@ export class RepositoryService {
       .put<{ data: RepositoryDTO }>(`${this.baseUrl}/${id}`, updateDto)
       .pipe(map((res) => res.data));
   }
+
+  deleteRepository(id: number): Observable<string> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  }
 }
