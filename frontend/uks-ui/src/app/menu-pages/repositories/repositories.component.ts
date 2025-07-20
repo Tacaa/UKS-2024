@@ -13,7 +13,7 @@ import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
 export class RepositoriesComponent implements OnInit {
   sortedRepos: RepositoryDTO[] = [];
   namespaces: string[] = [];
-  loadedRepos?: number;
+  loadedRepos?: number = 0;
   testRepository?: RepositoryDTO;
   searchTerm: string = '';
 
