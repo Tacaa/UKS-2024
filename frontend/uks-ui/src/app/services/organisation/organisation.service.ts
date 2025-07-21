@@ -36,4 +36,15 @@ export class OrganisationService {
       `${this.baseUrl}/${id}`
     );
   }
+
+  addMemberToOrganisation(
+    orgId: number,
+    ownerId: number,
+    memberId: number
+  ): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${orgId}/members`, {
+      ownerId,
+      memberId,
+    });
+  }
 }

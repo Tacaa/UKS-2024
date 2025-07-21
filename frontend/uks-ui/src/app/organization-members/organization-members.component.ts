@@ -38,8 +38,11 @@ export class OrganizationMembersComponent implements OnInit {
   ) {}
 
   openDialog(): void {
-    this.dialog.open(AddMembersComponent);
+    this.dialog.open(AddMembersComponent, {
+      data: { orgId: this.organisation.id },
+    });
   }
+
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe((params) => {
       const orgId = Number(params.get('id'));
