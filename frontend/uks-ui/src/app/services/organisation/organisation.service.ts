@@ -28,4 +28,12 @@ export class OrganisationService {
       dto
     );
   }
+
+  getOrganisationById(
+    id: number
+  ): Observable<{ message: string | null; data: OrganisationDTO }> {
+    return this.http.get<{ message: string | null; data: OrganisationDTO }>(
+      `${this.baseUrl}/${id}`
+    );
+  }
 }

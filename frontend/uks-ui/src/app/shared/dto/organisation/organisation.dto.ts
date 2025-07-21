@@ -4,7 +4,7 @@ export interface OrganisationDTO {
   description?: string;
   deactivated?: boolean;
   ownerId: number;
-  image?: string;
+  image?: string | null;
   members: number[];
   teams: number[];
 }

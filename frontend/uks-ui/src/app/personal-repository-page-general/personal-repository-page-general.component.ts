@@ -30,7 +30,7 @@ export class PersonalRepositoryPageGeneralComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categories = Object.values(Category); // From official enum
+    this.categories = Object.values(Category);
 
     this.route.parent?.paramMap.subscribe((params) => {
       const repoId = Number(params.get('id'));
@@ -39,7 +39,7 @@ export class PersonalRepositoryPageGeneralComponent implements OnInit {
           this.repository = repo;
           this.tempDescription = repo.description || '';
           this.tempCategory = repo.category;
-          this.tempOverview = ''; // if overview is stored somewhere
+          this.tempOverview = ''; //! if overview is stored somewhere
         });
       }
     });
@@ -94,11 +94,9 @@ export class PersonalRepositoryPageGeneralComponent implements OnInit {
   }
 
   updateOverview() {
-    // Only if overview becomes a real field
     this.isEditingOverview = false;
   }
 
-  // UI toggles
   toggleDescriptionEdit() {
     this.isEditingDescription = true;
     this.tempDescription = this.repository?.description || '';
@@ -119,7 +117,7 @@ export class PersonalRepositoryPageGeneralComponent implements OnInit {
 
   toggleOverviewEdit() {
     this.isEditingOverview = true;
-    this.tempOverview = ''; // set if overview exists
+    this.tempOverview = ''; //! set if overview exists
   }
 
   cancelOverviewEdit() {

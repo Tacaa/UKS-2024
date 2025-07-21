@@ -3,17 +3,20 @@
     <div class="information">
       <img src="../../assets/images/company.png" alt="" />
       <div class="details">
-        <h3>orgName</h3>
+        <h3>{{ organisation.name }}</h3>
         <div class="desc">
           <i class="fa fa-user-o" aria-hidden="true"></i>
           <span>Community organisation</span>
           <i class="fa fa-building-o" aria-hidden="true"></i>
-          <span>company</span>
+          <span>Company owner: {{ owner }}</span>
           <i class="fa fa-calendar-minus-o" aria-hidden="true"></i>
           <span>Joined December 11, 2024</span>
         </div>
       </div>
     </div>
+    <p style="margin: 20px; font-weight: 500; font-size: medium">
+      {{ organisation.description }}
+    </p>
     <div class="nav">
       <a
         routerLink="members"

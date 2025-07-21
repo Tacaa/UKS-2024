@@ -69,7 +69,7 @@ const routes: Routes = [
         // TODO   redirected to /r/repositoryName where he can just view it
         path: 'repository/:id',
         component: PersonalRepositoryPageComponent,
-        //title: ':user/:repository',
+
         children: [
           {
             path: 'general',
@@ -78,7 +78,6 @@ const routes: Routes = [
           {
             path: 'tags',
             component: PersonalRepositoryPageTagsComponent,
-            //title: ':user/:repository',
           },
           {
             path: 'collaborators',
@@ -127,7 +126,7 @@ const routes: Routes = [
         title: 'Create new organization',
       },
       {
-        path: 'organizations/:orgNamespace',
+        path: 'organizations/:id',
         component: OrganizationComponent,
         title: 'Organization',
         children: [
