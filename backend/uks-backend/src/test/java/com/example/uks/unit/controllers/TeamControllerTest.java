@@ -1,5 +1,6 @@
-package com.example.uks.controllers;
+package com.example.uks.unit.controllers;
 
+import com.example.uks.controllers.TeamController;
 import com.example.uks.dto.organisation.UpdateTeamDTO;
 import com.example.uks.dto.team.AddTeamMemberDTO;
 import com.example.uks.dto.team.CreateTeamDTO;
