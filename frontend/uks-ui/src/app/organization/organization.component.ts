@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OrganisationDTO } from '../shared/dto/organisation/organisation.dto';
 import { OrganisationService } from '../services/organisation/organisation.service';
 import { UserService } from '../services/user/user.service';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-organization',
@@ -22,12 +23,14 @@ export class OrganizationComponent implements OnInit {
   };
 
   owner?: string;
+  isOwner: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private organisationService: OrganisationService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +40,10 @@ export class OrganizationComponent implements OnInit {
         this.organisationService.getOrganisationById(orgId).subscribe((org) => {
           this.organisation = org.data;
           this.userService.getUserById(org.data.ownerId).subscribe((res) => {
+            const currentUser = this.authService.getCurrentUser();
             const user = res;
             this.owner = res.username;
+            this.isOwner = currentUser?.id === this.organisation.ownerId;
           });
         });
       }

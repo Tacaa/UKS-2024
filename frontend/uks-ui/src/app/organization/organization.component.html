@@ -42,6 +42,7 @@
       </a>
       <a
         routerLink="settings"
+        *ngIf="isOwner"
         [routerLinkActive]="'active'"
         [ngClass]="{ active: isActive('/tags') }"
       >
