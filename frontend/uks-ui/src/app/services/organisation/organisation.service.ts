@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrganisationCreateDTO } from 'src/app/shared/dto/organisation/organisation-create.dto';
+import { OrganisationUpdateDTO } from 'src/app/shared/dto/organisation/organisation-update.dto';
 import { OrganisationDTO } from 'src/app/shared/dto/organisation/organisation.dto';
 
 @Injectable({
@@ -34,6 +35,22 @@ export class OrganisationService {
   ): Observable<{ message: string | null; data: OrganisationDTO }> {
     return this.http.get<{ message: string | null; data: OrganisationDTO }>(
       `${this.baseUrl}/${id}`
+    );
+  }
+
+  updateOrganisation(
+    orgId: number,
+    dto: OrganisationUpdateDTO
+  ): Observable<{ message: string | null; data: OrganisationDTO }> {
+    return this.http.put<{ message: string | null; data: OrganisationDTO }>(
+      `${this.baseUrl}/${orgId}`,
+      dto
+    );
+  }
+
+  deactivateOrganisation(orgId: number, ownerId: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.baseUrl}/${orgId}?ownerId=${ownerId}`
     );
   }
 

@@ -34,6 +34,7 @@ export class OrgsPageCreateOrgComponent {
     this.organisationService.createOrganisation(dto).subscribe({
       next: (response) => {
         alert('Organisation created');
+        this.router.navigate(['dockerhub/organizations']);
       },
       error: (error) => {
         console.error('Error creating organisation:', error);
