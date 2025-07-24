@@ -46,7 +46,7 @@ public class OrganisationService {
             organisation.setImage(dto.getImage());
         }
 
-       return organisation;
+       return organisationRepository.save(organisation);
     }
 
     public void deactivateOrganisation(Integer orgId, Integer ownerId) {
