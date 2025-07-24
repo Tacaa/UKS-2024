@@ -9,6 +9,8 @@ import com.example.uks.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TagService {
 
@@ -31,5 +33,9 @@ public class TagService {
         tag.setRepository(repository);
 
         return tagRepository.save(tag);
+    }
+
+    public List<Tag> getAllTagsByRepository(Long repositoryId) {
+        return tagRepository.findAllByRepositoryId(repositoryId);
     }
 }
