@@ -23,13 +23,13 @@ import { PersonalRepositoryPageCollaboratorsComponent } from './personal-reposit
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 import { UsagePageComponent } from './usage-page/usage-page.component';
-import { OrgsPageComponent } from './orgs-page/orgs-page.component';
-import { OrgsPageCreateOrgComponent } from './orgs-page-create-org/orgs-page-create-org.component';
-import { OrganizationComponent } from './organization/organization.component';
-import { OrganizationMembersComponent } from './organization-members/organization-members.component';
-import { OrganizationTeamsComponent } from './organization-teams/organization-teams.component';
-import { OrganizationRepositoriesComponent } from './organization-repositories/organization-repositories.component';
-import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
+import { OrgsPageComponent } from './organisation-pages/orgs-page/orgs-page.component';
+import { OrgsPageCreateOrgComponent } from './organisation-pages/orgs-page-create-org/orgs-page-create-org.component';
+import { OrganizationComponent } from './organisation-pages/organization/organization.component';
+import { OrganizationMembersComponent } from './organisation-pages/organization-members/organization-members.component';
+import { OrganizationTeamsComponent } from './organisation-pages/organization-teams/organization-teams.component';
+import { OrganizationRepositoriesComponent } from './organisation-pages/organization-repositories/organization-repositories.component';
+import { OrganizationSettingsComponent } from './organisation-pages/organization-settings/organization-settings.component';
 import { AddMembersComponent } from './dialogs/add-members/add-members.component';
 import { CreateTeamComponent } from './dialogs/create-team/create-team.component';
 import { PullsOverTimeComponent } from './usage-page/charts/pulls-over-time/pulls-over-time.component';
@@ -67,7 +67,7 @@ import { CreateOfficialRepoComponent } from './admin-board/create-official-repo/
     PullsOverTimeComponent,
     UserProfileComponent,
     BadgeEditComponent,
-    CreateOfficialRepoComponent
+    CreateOfficialRepoComponent,
   ],
   imports: [
     BrowserModule,

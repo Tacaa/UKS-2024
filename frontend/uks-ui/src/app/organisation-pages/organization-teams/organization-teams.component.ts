@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateTeamComponent } from '../dialogs/create-team/create-team.component';
-import { OrganisationDTO } from '../shared/dto/organisation/organisation.dto';
-import { TeamResponse, TeamService } from '../services/team/team.service';
+import { CreateTeamComponent } from '../../dialogs/create-team/create-team.component';
+import { OrganisationDTO } from '../../shared/dto/organisation/organisation.dto';
+import { TeamResponse, TeamService } from '../../services/team/team.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../services/auth/auth.service';
-import { OrganisationService } from '../services/organisation/organisation.service';
-import { UserService } from '../services/user/user.service';
-import { TeamDTO } from '../shared/dto/team/team.dto';
+import { AuthService } from '../../services/auth/auth.service';
+import { OrganisationService } from '../../services/organisation/organisation.service';
+import { UserService } from '../../services/user/user.service';
+import { TeamDTO } from '../../shared/dto/team/team.dto';
 
 @Component({
   selector: 'app-organization-teams',

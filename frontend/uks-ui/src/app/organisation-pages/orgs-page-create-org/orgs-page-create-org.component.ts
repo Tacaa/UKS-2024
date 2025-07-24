@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { OrganisationService } from '../services/organisation/organisation.service';
-import { OrganisationCreateDTO } from '../shared/dto/organisation/organisation-create.dto';
-import { AuthService } from '../services/auth/auth.service';
+import { OrganisationService } from '../../services/organisation/organisation.service';
+import { OrganisationCreateDTO } from '../../shared/dto/organisation/organisation-create.dto';
+import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({

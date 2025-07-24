@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { OrganisationService } from '../services/organisation/organisation.service';
-import { OrganisationDTO } from '../shared/dto/organisation/organisation.dto';
-import { AuthService } from '../services/auth/auth.service';
-import { UserService } from '../services/user/user.service';
+import { OrganisationService } from '../../services/organisation/organisation.service';
+import { OrganisationDTO } from '../../shared/dto/organisation/organisation.dto';
+import { AuthService } from '../../services/auth/auth.service';
+import { UserService } from '../../services/user/user.service';
 import { forkJoin } from 'rxjs';
 
 @Component({

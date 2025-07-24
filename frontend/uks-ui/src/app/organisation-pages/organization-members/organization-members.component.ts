@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddMembersComponent } from '../dialogs/add-members/add-members.component';
+import { AddMembersComponent } from '../../dialogs/add-members/add-members.component';
 import { ActivatedRoute } from '@angular/router';
-import { OrganisationDTO } from '../shared/dto/organisation/organisation.dto';
-import { OrganisationService } from '../services/organisation/organisation.service';
-import { UserService } from '../services/user/user.service';
-import { AuthService } from '../services/auth/auth.service';
+import { OrganisationDTO } from '../../shared/dto/organisation/organisation.dto';
+import { OrganisationService } from '../../services/organisation/organisation.service';
+import { UserService } from '../../services/user/user.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-organization-members',
