@@ -1,0 +1,26 @@
+<div class="component">
+  <div class="header">
+    <button class="outlinedButton" *ngIf="isOwner" (click)="openDialog()">
+      Create team
+    </button>
+  </div>
+  <table>
+    <thead>
+      <th>Team</th>
+      <th>Description</th>
+      <th>Team Permission</th>
+      <th>Members</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of teams">
+        <!-- TODO CREATE TEAM PAGE -->
+        <td>
+          <a>{{ team.name }}</a>
+        </td>
+        <td>{{ team.description }}</td>
+        <td>{{ team.teamPersmission?.replace("_", " ") | titlecase }}</td>
+        <td>{{ team.members?.length }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

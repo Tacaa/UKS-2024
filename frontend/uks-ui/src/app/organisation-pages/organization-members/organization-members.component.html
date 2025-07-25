@@ -1,0 +1,23 @@
+<div class="component">
+  <div class="header">
+    <button class="outlinedButton" *ngIf="isOwner" (click)="openDialog()">
+      Invite members
+    </button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Full name</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let member of members">
+        <td>{{ member.user.username }}</td>
+        <td>{{ member.user.firstName }} {{ member.user.lastName }}</td>
+        <td>{{ member.role }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

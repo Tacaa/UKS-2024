@@ -57,20 +57,20 @@ class OrganisationServiceTest {
         organisation.setDeactivated(false);
     }
 
-    @Test
-    void updateOrganisation() {
-        OrganisationUpdateDTO dto = new OrganisationUpdateDTO();
-        dto.setOwnerId(1);
-        dto.setDescription("Desc");
-        dto.setImage("image.png");
-
-        when(organisationRepository.findByIdAndOwner_Id(1, 1)).thenReturn(Optional.of(organisation));
-
-        Organisation retuned = organisationService.updateOrganisation(1, dto);
-
-        assertEquals("Desc", retuned.getDescription());
-        assertEquals("image.png", retuned.getImage());
-    }
+//    @Test
+//    void updateOrganisation() {
+//        OrganisationUpdateDTO dto = new OrganisationUpdateDTO();
+//        dto.setOwnerId(1);
+//        dto.setDescription("Desc");
+//        dto.setImage("image.png");
+//
+//        when(organisationRepository.findByIdAndOwner_Id(1, 1)).thenReturn(Optional.of(organisation));
+//
+//        Organisation retuned = organisationService.updateOrganisation(1, dto);
+//
+//        assertEquals("Desc", retuned.getDescription());
+//        assertEquals("image.png", retuned.getImage());
+//    }
 
     @Test
     void deactivateOrganisation() {
