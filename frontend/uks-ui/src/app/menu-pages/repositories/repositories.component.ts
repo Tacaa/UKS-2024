@@ -28,8 +28,7 @@ export class RepositoriesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // TODO: Replace with actual owner ID - you'll need to get this from user context/login
-    const ownerId = this.authService.getCurrentUser()?.id as number; // Replace this with actual logged-in user ID
+    const ownerId = this.authService.getCurrentUser()?.id as number;
 
     this.repositoryService
       .getRepositoriesByOwner(ownerId)
