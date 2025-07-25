@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CreateTeamDTO } from 'src/app/shared/dto/team/create-team.dto';
 import { TeamDTO } from 'src/app/shared/dto/team/team.dto';
 
 export interface TeamResponse {
@@ -25,5 +26,9 @@ export class TeamService {
         userId: userId.toString(),
       },
     });
+  }
+
+  createTeam(dto: CreateTeamDTO): Observable<any> {
+    return this.http.post<any>(this.baseUrl, dto);
   }
 }

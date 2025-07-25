@@ -63,6 +63,11 @@ export class OrganizationTeamsComponent implements OnInit {
   }
 
   openDialog(): void {
-    this.dialog.open(CreateTeamComponent);
+    this.dialog.open(CreateTeamComponent, {
+      data: {
+        ownerId: this.organisation.ownerId,
+        organisationId: this.organisation.id,
+      },
+    });
   }
 }
