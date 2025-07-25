@@ -35,6 +35,7 @@ export class CreateTeamComponent {
       next: (res) => {
         console.log('Team created:', res.data);
         alert('Team created');
+        this.dialogRef.close(true);
       },
       error: (err) => {
         console.error('Create team failed:', err);

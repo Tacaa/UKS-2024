@@ -15,11 +15,21 @@
       <tr *ngFor="let team of teams">
         <!-- TODO CREATE TEAM PAGE -->
         <td>
-          <a>{{ team.name }}</a>
+          <a *ngIf="isOwner" (click)="openTeamDialog(team)">{{ team.name }}</a>
+          <span *ngIf="!isOwner">{{ team.name }}</span>
         </td>
+
         <td>{{ team.description }}</td>
-        <td>{{ team.teamPersmission?.replace("_", " ") | titlecase }}</td>
-        <td>{{ team.members?.length }}</td>
+        <td>{{ team.teamPermission?.replace("_", " ") | titlecase }}</td>
+        <td>
+          {{ team.members?.length }}
+          <a
+            *ngIf="isOwner"
+            (click)="openAddMembersDialog(organisation.members, team)"
+          >
+            + Add
+          </a>
+        </td>
       </tr>
     </tbody>
   </table>
