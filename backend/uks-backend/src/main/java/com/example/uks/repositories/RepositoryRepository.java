@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,5 +25,7 @@ public interface RepositoryRepository extends JpaRepository<Repository, Integer>
 
     @Query("SELECT o FROM Repository o WHERE o.prefix = :prefix ")
     Optional<OfficialRepository> findOfficialRepositoryByPrefix(@Param("prefix") String prefix);
+
+    List<Repository> findByOrganisationId(Integer organisationId);
 
 }
