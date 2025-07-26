@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
-import { RepositoryService } from '../services/repository/repository.service';
+import { RepositoryService } from '../../services/repository/repository.service';
 import { UpdateRepositoryDTO } from 'src/app/shared/dto/repository/update-repository.dto';
-import { Category } from '../shared/enum/Category';
+import { Category } from '../../shared/enum/Category';
 
 @Component({
   selector: 'app-personal-repository-page-general',
