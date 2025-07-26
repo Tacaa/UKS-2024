@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RepositoriesComponent } from './menu-pages/repositories/repositories.component';
+import { RepositoriesComponent } from './personal-repository-pages/repositories/repositories.component';
 import { CreateRepositoryComponent } from './create-repository/create-repository.component';
 import { ExploreComponent } from './explore/explore.component';
 import { RepositoryPageComponent } from './repository-page/repository-page.component';
