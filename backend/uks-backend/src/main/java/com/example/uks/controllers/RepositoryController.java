@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "api/repositories")
@@ -261,6 +262,15 @@ public class RepositoryController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @GetMapping("/organisation/{organisationId}")
+    public ResponseEntity<List<OrganisationRepositoryDTO>> getRepositoriesByOrganisation(@PathVariable Integer organisationId) {
+        List<Repository> repos = repositoryService.getRepositoriesByOrganisationId(organisationId);
+        List<OrganisationRepositoryDTO> dtoList = repos.stream()
+                                        .map(OrganisationRepositoryDTO::from)
+                                        .collect(Collectors.toList());
+        return ResponseEntity.ok(dtoList);
     }
 
 
