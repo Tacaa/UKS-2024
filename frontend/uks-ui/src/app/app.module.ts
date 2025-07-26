@@ -9,7 +9,10 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular_material.module';
 
-import { RepositoriesComponent } from './personal-repository-pages/repositories/repositories.component';
+import {
+  RepositoriesComponent,
+  SpaceToUnderscorePipe,
+} from './personal-repository-pages/repositories/repositories.component';
 import { CreateRepositoryComponent } from './create-repository/create-repository.component';
 import { ExploreComponent } from './explore/explore.component';
 import { CardbarComponent } from './cardbar/cardbar.component';
@@ -72,6 +75,7 @@ import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-mem
     CreateOfficialRepoComponent,
     EditTeamComponent,
     AddMembersToTeamComponent,
+    SpaceToUnderscorePipe,
   ],
   imports: [
     BrowserModule,
@@ -85,5 +89,6 @@ import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-mem
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [SpaceToUnderscorePipe],
 })
 export class AppModule {}
