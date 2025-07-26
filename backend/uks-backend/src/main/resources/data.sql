@@ -3,7 +3,7 @@ INSERT INTO users (first_name, last_name, username, password, email, joined_date
 ('John', 'Doe', 'johndoe', '123', 'johndoe@example.com', '2024-12-01 08:00:00', 'USER', false, 'VERIFIED_PUBLISHER'),
 ('Jane', 'Smith', 'janesmith', '123', 'janesmith@example.com', '2024-12-02 09:15:30', 'USER', false, 'SPONSORED_OSS'),
 ('Alice', 'Brown', 'alicebrown', '123', 'alicebrown@example.com', '2024-12-03 10:30:15', 'ADMIN', false, 'VERIFIED_PUBLISHER'),
-('Bob', 'White', 'bobwhite', '123', 'bobwhite@example.com', '2024-12-04 11:45:45', 'SUPER_ADMIN', false, 'NONE'),
+('Bob', 'White', 'bobwhite', '123', 'bobwhite@example.com', '2024-12-04 11:45:45', 'ADMIN', false, 'NONE'),
 ('Charlie', 'Green', 'charliegreen', '123', 'charliegreen@example.com', '2024-12-05 13:00:10', 'USER', false, 'VERIFIED_PUBLISHER'),
 ('Diana', 'Blue', 'dianablue', '123', 'dianablue@example.com', '2024-12-06 14:15:20', 'USER', false, 'SPONSORED_OSS'),
 ('Ethan', 'Black', 'ethanblack', '123', 'ethanblack@example.com', '2024-12-07 15:30:25', 'ADMIN', false, 'VERIFIED_PUBLISHER'),
