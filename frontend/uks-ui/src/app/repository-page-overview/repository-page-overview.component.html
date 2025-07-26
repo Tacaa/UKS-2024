@@ -1,44 +1,21 @@
-<div class="body">
+<div *ngIf="repository$ | async as repo" class="body">
   <div class="first">
-    <h2>Source code</h2>
-    <h3>Building the images</h3>
-    <span
-      >The source code that builds this image can be found
-      <a>here<i class="fa fa-external-link" aria-hidden="true"></i></a>
-    </span>
-    <h3>Stack releases</h3>
-    <span> You can find the receipts and release notes for each stack </span>
-    <ul>
-      <li>
-        <a
-          >Base Stack release<i
-            class="fa fa-external-link"
-            aria-hidden="true"
-          ></i
-        ></a>
-      </li>
-      <li>
-        <a
-          >Full Stack release<i
-            class="fa fa-external-link"
-            aria-hidden="true"
-          ></i
-        ></a>
-      </li>
-      <li>
-        <a
-          >Tiny Stack release<i
-            class="fa fa-external-link"
-            aria-hidden="true"
-          ></i
-        ></a>
-      </li>
-    </ul>
+    <h2>Repository description</h2>
+    <div class="desc">{{ repo.description }}</div>
   </div>
+
   <div class="second">
     <h3>Docker Pull Command</h3>
     <div class="terminal">
-      <p>docker pull paketobuildpacks/build</p>
+      <p>docker pull {{ repo?.name }}/build</p>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="copyToClipboard(repo.name)"
+      >
+        <span *ngIf="!copied"> Copy </span>
+        <span *ngIf="copied"> Copied! </span>
+      </button>
     </div>
   </div>
 </div>

@@ -37,6 +37,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { BadgeEditComponent } from './admin-board/badge-edit/badge-edit.component';
 import { CreateOfficialRepoComponent } from './admin-board/create-official-repo/create-official-repo.component';
+import { TimeAgoPipe } from './shared/pipes/time-ago.pipe';
 import { EditTeamComponent } from './dialogs/edit-team/edit-team.component';
 import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-members-to-team.component';
 
@@ -70,6 +71,7 @@ import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-mem
     UserProfileComponent,
     BadgeEditComponent,
     CreateOfficialRepoComponent,
+    TimeAgoPipe
     EditTeamComponent,
     AddMembersToTeamComponent,
   ],
