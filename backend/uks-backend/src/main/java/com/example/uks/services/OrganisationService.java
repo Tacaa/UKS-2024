@@ -3,7 +3,7 @@ package com.example.uks.services;
 import com.example.uks.dto.organisation.OrganisationUpdateDTO;
 import com.example.uks.dto.organisation.UpdateTeamDTO;
 import com.example.uks.dto.team.CreateTeamDTO;
-import com.example.uks.enumeration.TeamPersmission;
+import com.example.uks.enumeration.TeamPermission;
 import com.example.uks.exceptions.*;
 import com.example.uks.model.*;
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
@@ -46,7 +46,7 @@ public class OrganisationService {
             organisation.setImage(dto.getImage());
         }
 
-       return organisation;
+       return organisationRepository.save(organisation);
     }
 
     public void deactivateOrganisation(Integer orgId, Integer ownerId) {

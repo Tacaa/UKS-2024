@@ -13,13 +13,13 @@ import { PersonalRepositoryPageSettingsComponent } from './personal-repository-p
 import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 import { UsagePageComponent } from './usage-page/usage-page.component';
-import { OrgsPageComponent } from './orgs-page/orgs-page.component';
-import { OrgsPageCreateOrgComponent } from './orgs-page-create-org/orgs-page-create-org.component';
-import { OrganizationComponent } from './organization/organization.component';
-import { OrganizationMembersComponent } from './organization-members/organization-members.component';
-import { OrganizationRepositoriesComponent } from './organization-repositories/organization-repositories.component';
-import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
-import { OrganizationTeamsComponent } from './organization-teams/organization-teams.component';
+import { OrgsPageComponent } from './organisation-pages/orgs-page/orgs-page.component';
+import { OrgsPageCreateOrgComponent } from './organisation-pages/orgs-page-create-org/orgs-page-create-org.component';
+import { OrganizationComponent } from './organisation-pages/organization/organization.component';
+import { OrganizationMembersComponent } from './organisation-pages/organization-members/organization-members.component';
+import { OrganizationRepositoriesComponent } from './organisation-pages/organization-repositories/organization-repositories.component';
+import { OrganizationSettingsComponent } from './organisation-pages/organization-settings/organization-settings.component';
+import { OrganizationTeamsComponent } from './organisation-pages/organization-teams/organization-teams.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { BadgeEditComponent } from './admin-board/badge-edit/badge-edit.component';
 import { CreateOfficialRepoComponent } from './admin-board/create-official-repo/create-official-repo.component';
@@ -69,7 +69,7 @@ const routes: Routes = [
         // TODO   redirected to /r/repositoryName where he can just view it
         path: 'repository/:id',
         component: PersonalRepositoryPageComponent,
-        //title: ':user/:repository',
+
         children: [
           {
             path: 'general',
@@ -78,7 +78,6 @@ const routes: Routes = [
           {
             path: 'tags',
             component: PersonalRepositoryPageTagsComponent,
-            //title: ':user/:repository',
           },
           {
             path: 'collaborators',
@@ -127,7 +126,7 @@ const routes: Routes = [
         title: 'Create new organization',
       },
       {
-        path: 'organizations/:orgNamespace',
+        path: 'organizations/:id',
         component: OrganizationComponent,
         title: 'Organization',
         children: [

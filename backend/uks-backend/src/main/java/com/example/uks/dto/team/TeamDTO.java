@@ -15,7 +15,7 @@ public class TeamDTO {
     private Integer id;
     private String name;
     private String description;
-    private String teamPersmission;
+    private String TeamPermission;
     private List<TeamMemberDTO> members;
 
     public static TeamDTO from(Team team) {
@@ -27,7 +27,7 @@ public class TeamDTO {
                 .id(team.getId())
                 .name(team.getName())
                 .description(team.getDescription())
-                .teamPersmission(team.getTeamPersmission().name())
+                .TeamPermission(team.getTeamPermission().name())
                 .members(memberDTOs)
                 .build();
     }

@@ -56,7 +56,7 @@ public class TeamService {
         Team team = new Team();
         team.setName(dto.getName());
         team.setDescription(dto.getDescription());
-        team.setTeamPersmission(dto.getTeamPersmission());
+        team.setTeamPermission(dto.getTeamPermission());
         team.setOrganisation(organisation);
 
         return teamRepository.save(team);

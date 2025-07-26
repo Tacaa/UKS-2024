@@ -3,7 +3,7 @@ package com.example.uks.controllers;
 import com.example.uks.dto.organisation.UpdateTeamDTO;
 import com.example.uks.dto.team.AddTeamMemberDTO;
 import com.example.uks.dto.team.CreateTeamDTO;
-import com.example.uks.enumeration.TeamPersmission;
+import com.example.uks.enumeration.TeamPermission;
 import com.example.uks.exceptions.AccessDeniedException;
 import com.example.uks.exceptions.OrganisationNotFound;
 import com.example.uks.model.Team;
@@ -41,7 +41,7 @@ class TeamControllerTest {
 
         Team team = new Team();
         team.setId(1);
-        team.setTeamPersmission(TeamPersmission.READ_WRITE);
+        team.setTeamPermission(TeamPermission.READ_WRITE);
         List<Team> teams = List.of(team);
         when(teamService.getTeamsForMember(1, 100)).thenReturn(teams);
 
@@ -82,7 +82,7 @@ class TeamControllerTest {
 
         Team team = new Team();
         team.setId(1);
-        team.setTeamPersmission(TeamPersmission.READ_WRITE);
+        team.setTeamPermission(TeamPermission.READ_WRITE);
 
         when(teamService.createTeam(dto)).thenReturn(team);
 
