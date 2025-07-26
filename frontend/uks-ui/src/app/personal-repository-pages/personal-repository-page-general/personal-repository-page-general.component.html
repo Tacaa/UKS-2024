@@ -1,8 +1,12 @@
-<!-- TODO ADD EDITING WINDOWS FOR shortDescription, Categories and Repo Overview -->
 <div class="top">
   <div class="topleft">
     <h2>
-      {{ repository?.owner?.name | lowercase }}/{{ repository?.name }}
+      {{
+        repository?.organisation?.name
+          ? (repository?.organisation?.name | spaceToUnderscore | lowercase)
+          : (repository?.owner?.name | lowercase)
+      }}/{{ repository?.name }}
+
       <i
         class="fa fa-lock"
         *ngIf="repository?.visibility === 'PRIVATE'"

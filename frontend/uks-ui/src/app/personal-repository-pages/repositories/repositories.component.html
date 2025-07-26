@@ -48,7 +48,7 @@
             {{ sortDirection === "asc" ? "▲" : "▼" }}
           </span>
         </th>
-        <th>Contains</th>
+        <th>Organisation</th>
         <th>Visibility</th>
         <th>Scout</th>
       </tr>
@@ -59,7 +59,14 @@
         routerLink="/dockerhub/repository/{{ repo.id }}"
         style="cursor: pointer; border-bottom: 1px solid #ddd"
       >
-        <td>{{ repo.owner.name | lowercase }}/{{ repo.name }}</td>
+        <td>
+          {{
+            repo.organisation?.name
+              ? (repo.organisation?.name | spaceToUnderscore | lowercase)
+              : (repo.owner.name | lowercase)
+          }}/{{ repo.name }}
+        </td>
+
         <td>
           {{
             repo.updated
@@ -67,7 +74,7 @@
               : (repo.created | date : "mediumDate")
           }}
         </td>
-        <td></td>
+        <td>{{ repo.organisation?.name }}</td>
         <td>{{ repo.visibility | titlecase }}</td>
         <td>Inactive</td>
       </tr>

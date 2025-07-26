@@ -1,9 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { RepositoryService } from 'src/app/services/repository/repository.service'; // Updated import
+import { RepositoryService } from 'src/app/services/repository/repository.service';
 import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
+
+@Pipe({
+  name: 'spaceToUnderscore',
+})
+export class SpaceToUnderscorePipe implements PipeTransform {
+  transform(value: string | undefined | null): string {
+    return value ? value.replace(/ /g, '_') : '';
+  }
+}
 
 @Component({
   selector: 'app-repositories',
@@ -11,6 +20,8 @@ import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
   styleUrls: ['./repositories.component.css'],
 })
 export class RepositoriesComponent implements OnInit {
+  @Input() organisationId?: number; // Optional input
+
   sortedRepos: RepositoryDTO[] = [];
   namespaces: string[] = [];
   loadedRepos?: number = 0;
@@ -28,25 +39,36 @@ export class RepositoriesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const ownerId = this.authService.getCurrentUser()?.id as number;
+    if (this.organisationId) {
+      this.repositoryService
+        .getRepositoriesByOrganisation(this.organisationId)
+        .subscribe((response) => {
+          this.handleRepositoryResponse(response);
+        });
+    } else {
+      const ownerId = this.authService.getCurrentUser()?.id as number;
+      this.repositoryService
+        .getRepositoriesByOwner(ownerId)
+        .subscribe((response) => {
+          this.handleRepositoryResponse(response);
+        });
+    }
+  }
 
-    this.repositoryService
-      .getRepositoriesByOwner(ownerId)
-      .subscribe((response) => {
-        this.sortedRepos = response.content;
-        this.loadedRepos = response.totalElements;
+  private handleRepositoryResponse(response: {
+    content: RepositoryDTO[];
+    totalElements: number;
+  }): void {
+    this.sortedRepos = response.content;
+    this.loadedRepos = response.totalElements;
 
-        // Extract unique namespaces from the repositories
-        this.namespaces = [
-          ...new Set(
-            this.sortedRepos
-              .map((repo) => repo.namespace)
-              .filter(
-                (namespace) => namespace !== null && namespace !== undefined
-              )
-          ),
-        ] as string[];
-      });
+    this.namespaces = [
+      ...new Set(
+        this.sortedRepos
+          .map((repo) => repo.namespace)
+          .filter((namespace) => namespace !== null && namespace !== undefined)
+      ),
+    ] as string[];
   }
 
   get filteredRepos(): RepositoryDTO[] {
@@ -57,10 +79,8 @@ export class RepositoriesComponent implements OnInit {
 
   sortTable(field: 'name' | 'updated') {
     if (this.sortField === field) {
-      // Toggle direction if sorting the same field
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
-      // Set new field and reset direction
       this.sortField = field;
       this.sortDirection = 'asc';
     }
@@ -70,7 +90,6 @@ export class RepositoriesComponent implements OnInit {
       let valueB: any;
 
       if (field === 'updated') {
-        // For "Last Pushed", prioritize `updated`, fallback to `created`
         valueA = new Date(a.updated ?? a.created);
         valueB = new Date(b.updated ?? b.created);
       } else {

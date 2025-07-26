@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { OrganisationRepositoryDTO } from 'src/app/shared/dto/repository/organisation-repository.dto';
 import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
 import { UpdateRepositoryDTO } from 'src/app/shared/dto/repository/update-repository.dto';
 import { CreateOfficialRepositoryDTO } from 'src/app/shared/models/create-official-repository-model';
@@ -33,6 +34,42 @@ export class RepositoryService {
         params,
       }
     );
+  }
+  getRepositoriesByOrganisation(
+    organisationId: number
+  ): Observable<PagedResponse<RepositoryDTO>> {
+    return this.http
+      .get<OrganisationRepositoryDTO[]>(
+        `${this.baseUrl}/organisation/${organisationId}`
+      )
+      .pipe(
+        map((repos) => {
+          const content: RepositoryDTO[] = repos
+            .filter((repo) => repo.owner)
+            .map((repo) => ({
+              id: repo.id,
+              name: repo.name,
+              namespace: repo.namespace ?? '',
+              description: repo.description ?? '',
+              visibility: repo.visibility,
+              created: new Date(repo.created),
+              updated: new Date(repo.updated),
+              star: repo.star,
+              personal: repo.personal,
+              categoryString: repo.categoryString,
+              category: repo.category,
+              deleted: repo.deleted,
+              owner: repo.owner!,
+              organisation: repo.organisation ?? undefined,
+            }));
+
+          return {
+            content,
+            totalElements: content.length,
+            totalPages: 1,
+          };
+        })
+      );
   }
 
   getRepositoryById(id: number): Observable<RepositoryDTO> {

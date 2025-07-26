@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RepositoryService } from '../services/repository/repository.service';
+import { RepositoryService } from '../../services/repository/repository.service';
 import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
 import { UpdateRepositoryDTO } from 'src/app/shared/dto/repository/update-repository.dto';
-import { Visibility } from '../shared/enum/Visibility';
+import { Visibility } from '../../shared/enum/Visibility';
 
 @Component({
   selector: 'app-personal-repository-page-settings',

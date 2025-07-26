@@ -9,18 +9,21 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular_material.module';
 
-import { RepositoriesComponent } from './menu-pages/repositories/repositories.component';
+import {
+  RepositoriesComponent,
+  SpaceToUnderscorePipe,
+} from './personal-repository-pages/repositories/repositories.component';
 import { CreateRepositoryComponent } from './create-repository/create-repository.component';
 import { ExploreComponent } from './explore/explore.component';
 import { CardbarComponent } from './cardbar/cardbar.component';
 import { RepositoryPageComponent } from './repository-page/repository-page.component';
 import { RepositoryPageOverviewComponent } from './repository-page-overview/repository-page-overview.component';
 import { RepositoryPageTagsComponent } from './repository-page-tags/repository-page-tags.component';
-import { PersonalRepositoryPageComponent } from './personal-repository-page/personal-repository-page.component';
-import { PersonalRepositoryPageGeneralComponent } from './personal-repository-page-general/personal-repository-page-general.component';
-import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
-import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
-import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
+import { PersonalRepositoryPageComponent } from './personal-repository-pages/personal-repository-page/personal-repository-page.component';
+import { PersonalRepositoryPageGeneralComponent } from './personal-repository-pages/personal-repository-page-general/personal-repository-page-general.component';
+import { PersonalRepositoryPageSettingsComponent } from './personal-repository-pages/personal-repository-page-settings/personal-repository-page-settings.component';
+import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-pages/personal-repository-page-collaborators/personal-repository-page-collaborators.component';
+import { PersonalRepositoryPageTagsComponent } from './personal-repository-pages/personal-repository-page-tags/personal-repository-page-tags.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 import { UsagePageComponent } from './usage-page/usage-page.component';
 import { OrgsPageComponent } from './organisation-pages/orgs-page/orgs-page.component';
@@ -74,6 +77,7 @@ import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-mem
     TimeAgoPipe
     EditTeamComponent,
     AddMembersToTeamComponent,
+    SpaceToUnderscorePipe,
   ],
   imports: [
     BrowserModule,
@@ -87,5 +91,6 @@ import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-mem
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [SpaceToUnderscorePipe],
 })
 export class AppModule {}
