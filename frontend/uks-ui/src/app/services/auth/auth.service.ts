@@ -71,9 +71,16 @@ export class AuthService {
     localStorage.setItem('currentUser', JSON.stringify(mockUser));
   }
 
+  //?? MOCK METHOD - Will be replaced with actual API call
   getCurrentUser(): currentUser | null {
     const userJson = localStorage.getItem('currentUser');
     return userJson ? JSON.parse(userJson) : null;
+  }
+
+  //?? MOCK METHOD - Will be replaced with actual API call
+  getCurrentUserRole(): Role | null {
+    const currentUser = this.getCurrentUser();
+    return currentUser ? currentUser.role : null;
   }
 
   logout(): void {
