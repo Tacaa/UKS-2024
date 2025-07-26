@@ -1,6 +1,6 @@
 package com.example.uks.model;
 
-import com.example.uks.enumeration.TeamPersmission;
+import com.example.uks.enumeration.TeamPermission;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +30,7 @@ public class Team {
 
     @Column(name = "team_permission")
     @Enumerated(EnumType.STRING)
-    private TeamPersmission teamPersmission;
+    private TeamPermission teamPermission;
 
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH})
     @JoinTable(name = "teams_members", joinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"),

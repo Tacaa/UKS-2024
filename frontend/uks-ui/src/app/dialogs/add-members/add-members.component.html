@@ -11,7 +11,7 @@
 
   <mat-list>
     <mat-list-item
-      *ngFor="let user of filteredUsers | slice : 0 : 4"
+      *ngFor="let user of filteredUsers | slice : 0 : 8"
       (click)="setSearch(user)"
     >
       {{ user.username }}
