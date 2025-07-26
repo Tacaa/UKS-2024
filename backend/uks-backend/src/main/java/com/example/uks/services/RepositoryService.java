@@ -308,4 +308,8 @@ public class RepositoryService {
         return officialRepositoryRepository.save(newOfficialRepository);
     }
 
+    public List<Repository> getRepositoriesByOrganisationId(Integer organisationId) {
+        return repositoryRepository.findByOrganisationId(organisationId);
+    }
+
 }
