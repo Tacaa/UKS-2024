@@ -37,6 +37,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { BadgeEditComponent } from './admin-board/badge-edit/badge-edit.component';
 import { CreateOfficialRepoComponent } from './admin-board/create-official-repo/create-official-repo.component';
+import { TimeAgoPipe } from './shared/pipes/time-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { CreateOfficialRepoComponent } from './admin-board/create-official-repo/
     PullsOverTimeComponent,
     UserProfileComponent,
     BadgeEditComponent,
-    CreateOfficialRepoComponent
+    CreateOfficialRepoComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,

@@ -51,4 +51,8 @@ export class RepositoryService {
   deleteRepository(id: number): Observable<string> {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
+
+  getAllRepositories(): Observable<RepositoryDTO> {
+    return this.http.get<RepositoryDTO>(`${this.baseUrl}/all`);
+  }
 }

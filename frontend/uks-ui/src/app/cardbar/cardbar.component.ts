@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Repository } from '../shared/models/mock.repository.model';
-import { RepositoryService } from '../services/mock-repository/repository.service';
+import { RepositoryService } from '../services/repository/repository.service';
 
 @Component({
   selector: 'app-cardbar',
@@ -12,6 +12,12 @@ export class CardbarComponent implements OnInit {
 
   constructor(private repositoryService: RepositoryService) {}
   ngOnInit(): void {
-    this.repos = this.repositoryService.getAllRepositories();
+    this.repositoryService.getAllRepositories().subscribe((repo) => {
+      const reposArray = Array.isArray(repo) ? repo : [repo];
+      this.repos = reposArray.map(r => ({
+        ...r,
+        namespace: r.namespace ?? ''
+      }));
+    });
   }
 }

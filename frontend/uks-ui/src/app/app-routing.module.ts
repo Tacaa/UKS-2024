@@ -55,9 +55,9 @@ const routes: Routes = [
         title: 'explore',
       },
       {
-        path: 'r/:user/:repository',
+        path: 'r/:id',
         component: RepositoryPageComponent,
-        title: ':user/:repository',
+        title: 'Repository',
         children: [
           { path: 'overview', component: RepositoryPageOverviewComponent },
           { path: 'tags', component: RepositoryPageTagsComponent },
