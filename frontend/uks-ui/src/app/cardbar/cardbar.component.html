@@ -1,4 +1,4 @@
-<div class="cardbar">
+<div class="cardbar" *ngFor="let repo of filteredRepositories">
   <div
     class="card"
     routerLink="../r/{{ repo.id }}"

@@ -74,7 +74,7 @@ import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-mem
     UserProfileComponent,
     BadgeEditComponent,
     CreateOfficialRepoComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
     EditTeamComponent,
     AddMembersToTeamComponent,
     SpaceToUnderscorePipe,
