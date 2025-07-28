@@ -14,6 +14,7 @@ export class ExploreComponent implements OnInit {
   selectedCategory: string | null = null;
 
   constructor(private repositoryService: RepositoryService) {}
+
   ngOnInit(): void {
     this.repositoryService.getAllRepositories().subscribe((repo) => {
       const reposArray = Array.isArray(repo) ? repo : [repo];

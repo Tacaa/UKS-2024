@@ -11,23 +11,19 @@ import { RepositoryDTO } from '../shared/dto/repository/repository.dto';
 export class CardbarComponent implements OnInit {
   @Input() category: string | null = null;
   @Input() repositories: RepositoryDTO[] = [];
-  repos: RepositoryDTO[] = [];
 
   constructor(private repositoryService: RepositoryService) {}
+
   ngOnInit(): void {
-    this.repositoryService.getAllRepositories().subscribe((repo) => {
-      const reposArray = Array.isArray(repo) ? repo : [repo];
-      this.repos = reposArray.map((r) => ({
-        ...r,
-        namespace: r.namespace ?? '',
-      }));
-    });
+    // Removed duplicate API call - now using the repositories input from parent
   }
 
   get filteredRepositories(): RepositoryDTO[] {
     if (!this.category || this.category.trim() === '') {
-      return this.repos;
+      return this.repositories;
     }
-    return this.repos.filter((repo) => repo.categoryString === this.category);
+    return this.repositories.filter(
+      (repo) => repo.categoryString === this.category
+    );
   }
 }

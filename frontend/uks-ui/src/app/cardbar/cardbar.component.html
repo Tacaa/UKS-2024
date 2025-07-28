@@ -1,8 +1,8 @@
-<div class="cardbar" *ngFor="let repo of filteredRepositories">
+<div class="cardbar">
   <div
     class="card"
     routerLink="../r/{{ repo.id }}"
-    *ngFor="let repo of repos | slice : 0 : 4"
+    *ngFor="let repo of filteredRepositories"
   >
     <div class="header">
       <img src="../../assets/images/logo_beli.png" alt="" />
