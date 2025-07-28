@@ -6,7 +6,13 @@
   >
     <div class="header">
       <img src="../../assets/images/logo_beli.png" alt="" />
-      <p>{{ repo.name }}/repoTag</p>
+      <p>
+        {{
+          repo.organisation?.name
+            ? (repo.organisation?.name | spaceToUnderscore | lowercase)
+            : (repo.owner.name | lowercase)
+        }}/{{ repo.name }}
+      </p>
       <img
         style="
           height: 15px;
@@ -27,7 +33,10 @@
       <span>
         <i class="fa fa-star" aria-hidden="true"></i> {{ repo.star }}
       </span>
-      <span> <i class="fa fa-download" aria-hidden="true"></i>1.5mil </span>
+      <span>
+        <i class="fa fa-download" aria-hidden="true"></i>
+        {{ getDownloadCount(repo.id) }}</span
+      >
     </div>
   </div>
 </div>
