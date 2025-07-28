@@ -1,13 +1,19 @@
-<div class="cardbar" *ngFor="let repo of filteredRepositories">
+<div class="cardbar">
   <div
     class="card"
     routerLink="../r/{{ repo.id }}"
-    *ngFor="let repo of repos | slice : 0 : 4"
+    *ngFor="let repo of filteredRepositories"
   >
     <div class="header">
       <img src="../../assets/images/logo_beli.png" alt="" />
-      <p>{{ repo.name }}/repoTag</p>
-      <img
+      <p>
+        {{
+          repo.organisation?.name
+            ? (repo.organisation?.name | spaceToUnderscore | lowercase)
+            : (repo.owner.name | lowercase)
+        }}/{{ repo.name }}
+      </p>
+      <!-- <img
         style="
           height: 15px;
           width: 15px;
@@ -18,7 +24,11 @@
         matTooltip="Official / Sponsored / Verified"
         src="../../assets/images/logo_beli.png"
         alt=""
-      />
+      /> -->
+
+      <p style="margin-left: auto; color: #4271e7">
+        {{ getUserBadge(repo.owner.id) | lowercase }}
+      </p>
     </div>
     <div class="body">
       {{ repo.description }}
@@ -27,7 +37,10 @@
       <span>
         <i class="fa fa-star" aria-hidden="true"></i> {{ repo.star }}
       </span>
-      <span> <i class="fa fa-download" aria-hidden="true"></i>1.5mil </span>
+      <span>
+        <i class="fa fa-download" aria-hidden="true"></i>
+        {{ getDownloadCount(repo.id) }}</span
+      >
     </div>
   </div>
 </div>
