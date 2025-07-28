@@ -13,7 +13,7 @@
             : (repo.owner.name | lowercase)
         }}/{{ repo.name }}
       </p>
-      <img
+      <!-- <img
         style="
           height: 15px;
           width: 15px;
@@ -24,7 +24,11 @@
         matTooltip="Official / Sponsored / Verified"
         src="../../assets/images/logo_beli.png"
         alt=""
-      />
+      /> -->
+
+      <p style="margin-left: auto; color: #4271e7">
+        {{ getUserBadge(repo.owner.id) | lowercase }}
+      </p>
     </div>
     <div class="body">
       {{ repo.description }}

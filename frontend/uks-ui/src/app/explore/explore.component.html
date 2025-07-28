@@ -18,6 +18,7 @@
     <app-cardbar
       [category]="selectedCategory"
       [repositories]="repos"
+      [allUsers]="allUsers"
     ></app-cardbar>
   </div>
 
@@ -25,7 +26,11 @@
     <div class="main">
       <div class="row" *ngFor="let category of categories">
         <h4>{{ category }}</h4>
-        <app-cardbar [category]="category" [repositories]="repos"></app-cardbar>
+        <app-cardbar
+          [category]="category"
+          [repositories]="repos"
+          [allUsers]="allUsers"
+        ></app-cardbar>
       </div>
     </div>
   </ng-template>

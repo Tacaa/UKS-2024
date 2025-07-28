@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RepositoryService } from '../services/repository/repository.service';
 import { RepositoryDTO } from '../shared/dto/repository/repository.dto';
 import { Visibility } from '../shared/enum/Visibility';
+import { User } from '../shared/models/user.model';
+import { UserBadge } from '../shared/enum/UserBadge';
 
 @Component({
   selector: 'app-cardbar',
@@ -11,13 +13,13 @@ import { Visibility } from '../shared/enum/Visibility';
 export class CardbarComponent implements OnInit {
   @Input() category: string | null = null;
   @Input() repositories: RepositoryDTO[] = [];
+  @Input() allUsers: User[] = [];
 
   constructor(private repositoryService: RepositoryService) {}
 
   ngOnInit(): void {}
 
   get filteredRepositories(): RepositoryDTO[] {
-    // First filter by category if specified
     let filtered = this.repositories;
 
     if (this.category && this.category.trim() !== '') {
@@ -26,7 +28,6 @@ export class CardbarComponent implements OnInit {
       );
     }
 
-    // Then exclude private repositories
     filtered = filtered.filter(
       (repo) => repo.visibility !== Visibility.PRIVATE
     );
@@ -44,5 +45,13 @@ export class CardbarComponent implements OnInit {
     } else {
       return Math.round(downloads / 1000) + 'k';
     }
+  }
+
+  getUserBadge(userId: number): UserBadge | undefined {
+    const user = this.allUsers.find((u) => u.id === userId);
+    if (user?.userBadge === UserBadge.NONE) {
+      return;
+    }
+    return user?.userBadge;
   }
 }
