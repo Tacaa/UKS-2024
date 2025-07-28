@@ -43,6 +43,7 @@ import { CreateOfficialRepoComponent } from './admin-board/create-official-repo/
 import { TimeAgoPipe } from './shared/pipes/time-ago.pipe';
 import { EditTeamComponent } from './dialogs/edit-team/edit-team.component';
 import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-members-to-team.component';
+import { AddTagComponent } from './dialogs/add-tag/add-tag.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-mem
     EditTeamComponent,
     AddMembersToTeamComponent,
     SpaceToUnderscorePipe,
+    AddTagComponent,
   ],
   imports: [
     BrowserModule,

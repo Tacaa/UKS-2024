@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TagService } from '../services/tag/tag.service';
 import { TagDTO } from '../shared/dto/tag/tag.dto';
+import { MatDialog } from '@angular/material/dialog';
+import { AddTagComponent } from '../dialogs/add-tag/add-tag.component';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-repository-page-tags',
@@ -9,12 +12,18 @@ import { TagDTO } from '../shared/dto/tag/tag.dto';
   styleUrls: ['./repository-page-tags.component.css'],
 })
 export class RepositoryPageTagsComponent implements OnInit {
+  @Input() canAddTags?: boolean;
   tags: TagDTO[] = [];
   filteredTags: TagDTO[] = [];
   searchTerm: string = '';
   showToast = false;
 
-  constructor(private route: ActivatedRoute, private tagService: TagService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private tagService: TagService,
+    private dialog: MatDialog,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe((params) => {
@@ -60,5 +69,13 @@ export class RepositoryPageTagsComponent implements OnInit {
     navigator.clipboard.writeText(text);
     this.showToast = true;
     setTimeout(() => (this.showToast = false), 2000);
+  }
+
+  get isUserLoggedIn(): boolean {
+    return this.authService.getCurrentUser() !== null;
+  }
+
+  openAddTagDialog() {
+    this.dialog.open(AddTagComponent);
   }
 }

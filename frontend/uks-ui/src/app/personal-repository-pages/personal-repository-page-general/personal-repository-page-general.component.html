@@ -90,25 +90,27 @@
       </div>
       <button class="outlinedButton">Public view</button>
     </div>
-    <div class="terminal">docker push Creator/repoName:tagname</div>
+    <div class="terminal">
+      docker push Creator/repoName:tagname // or use the Web Application
+    </div>
   </div>
 </div>
 <div class="middle">
   <h3>Tags</h3>
-  <div class="tagholder">
-    <a>LOAD TAGS FROM SERVICE</a>
-    <a>LOAD TAGS FROM SERVICE</a>
+  <div class="tagholder" *ngFor="let tag of tags">
+    <a>{{ tag.name }}</a>
   </div>
 </div>
+<!-- 
 <div class="bot">
-  <h3>Repository overview</h3>
+ <h3>Repository overview</h3>
   <div class="repo-overview">
     <ng-container *ngIf="!isEditingOverview">
       <div style="display: flex; flex-direction: column">
         <span id="overview">
-          <!-- <ng-container *ngIf="overview; else defaultOverview">{{
+           <ng-container *ngIf="overview; else defaultOverview">{{
             overview
-          }}</ng-container> -->
+          }}</ng-container> 
           <ng-template #defaultOverview>
             <span class="no-overview"
               >An overview describes what your image does and how to run it. It
@@ -148,6 +150,6 @@
         </form>
       </div>
     </ng-container>
-  </div>
-  <!-- TODO ADD EDITING WINDOW -->
+  </div> 
 </div>
+-->

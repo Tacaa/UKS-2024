@@ -16,12 +16,9 @@ a:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   height: 43px;
   margin-bottom: 2rem;
-}
-
-.component .header > * {
-  margin-right: 2.5rem;
 }
 
 .component .header > select,

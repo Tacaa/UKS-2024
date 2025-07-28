@@ -5,6 +5,8 @@ import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
 import { RepositoryService } from '../../services/repository/repository.service';
 import { UpdateRepositoryDTO } from 'src/app/shared/dto/repository/update-repository.dto';
 import { Category } from '../../shared/enum/Category';
+import { TagService } from 'src/app/services/tag/tag.service';
+import { TagDTO } from 'src/app/shared/dto/tag/tag.dto';
 
 @Component({
   selector: 'app-personal-repository-page-general',
@@ -24,9 +26,12 @@ export class PersonalRepositoryPageGeneralComponent implements OnInit {
 
   categories: string[] = [];
 
+  tags: TagDTO[] = [];
+
   constructor(
     private route: ActivatedRoute,
-    private repositoryService: RepositoryService
+    private repositoryService: RepositoryService,
+    private tagService: TagService
   ) {}
 
   ngOnInit(): void {
@@ -39,13 +44,18 @@ export class PersonalRepositoryPageGeneralComponent implements OnInit {
           this.repository = repo;
           this.tempDescription = repo.description || '';
           this.tempCategory = repo.category;
-          this.tempOverview = ''; //! if overview is stored somewhere
         });
+        this.loadTags(repoId);
       }
     });
   }
 
-  // Create full update DTO from current repository and override specific fields
+  loadTags(repositoryId: number): void {
+    this.tagService.getTagsByRepository(repositoryId).subscribe((tags) => {
+      this.tags = tags;
+    });
+  }
+
   buildFullUpdateDTO(
     override: Partial<UpdateRepositoryDTO>
   ): UpdateRepositoryDTO {

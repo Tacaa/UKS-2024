@@ -6,6 +6,14 @@
       [(ngModel)]="searchTerm"
       (input)="applyFilter()"
     />
+
+    <button
+      class="blueButton"
+      *ngIf="canAddTags && isUserLoggedIn"
+      (click)="openAddTagDialog()"
+    >
+      Push new tag
+    </button>
   </div>
 
   <div class="tagCard" *ngFor="let tag of filteredTags">
