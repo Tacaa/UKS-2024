@@ -40,4 +40,7 @@ public class Tag {
     @JoinColumn(name = "repository_id")
     private Repository repository;
 
+    @Column(name = "deleted")
+    private Boolean deleted = false;
+
 }

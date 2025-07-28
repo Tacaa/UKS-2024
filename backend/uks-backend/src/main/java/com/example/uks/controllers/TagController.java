@@ -5,6 +5,7 @@ import com.example.uks.dto.tag.TagDTO;
 import com.example.uks.dto.team.TeamDTO;
 import com.example.uks.exceptions.OrganisationNotFound;
 import com.example.uks.exceptions.RepositoryNotFoundException;
+import com.example.uks.exceptions.TagNotFoundException;
 import com.example.uks.model.Tag;
 import com.example.uks.model.Team;
 import com.example.uks.services.TagService;
@@ -59,4 +60,15 @@ public class TagController {
                 .map(TagDTO::from)
                 .collect(Collectors.toList()));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTag(@PathVariable Integer id) {
+        try {
+            tagService.delete(id);
+            return ResponseEntity.ok("Tag successfully deleted!");
+        } catch (TagNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
 }
