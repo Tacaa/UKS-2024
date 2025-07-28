@@ -119,5 +119,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public List<User> getUsersByBadge(UserBadge badge) {
+        return userRepository.findByUserBadge(badge);
+    }
 
 }

@@ -274,5 +274,16 @@ public class RepositoryController {
     }
 
 
+    @GetMapping("/filter-by-badge")
+    public ResponseEntity<List<OfficialRepositoryDTO>> getOfficialRepositories() {
+        List<OfficialRepository> repos = repositoryService.getAllOfficialRepositories();
+
+        List<OfficialRepositoryDTO> dtos = repos.stream()
+                .map(OfficialRepositoryDTO::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtos);
+    }
+
 
 }
