@@ -28,27 +28,36 @@
       <input type="text" id="prefix" [(ngModel)]="prefix" class="textInput" />
     </div>
 
-    <label for="visibility">Visibility: </label>
+    <!-- <label for="visibility">Visibility: </label>
     <div>
       <select id="visibility" [(ngModel)]="visibility" class="textInput">
         <option value="PUBLIC">Public</option>
         <option value="PRIVATE">Private</option>
       </select>
-    </div>
+    </div> -->
 
+    <!-- 
     <label for="personal">Personal: </label>
     <div>
       <input type="checkbox" id="personal" [(ngModel)]="personal" />
-    </div>
+    </div> -->
 
-    <label for="organisationId">Organisation ID: </label>
+    <label for="organisationId">Organisation: </label>
     <div>
-      <input
-        type="number"
+      <select
         id="organisationId"
         [(ngModel)]="organisationId"
         class="textInput"
-      />
+        *ngIf="userOrganisations.length > 0"
+      >
+        <option [ngValue]="null">-- No organisation --</option>
+        <option *ngFor="let org of userOrganisations" [value]="org.id">
+          {{ org.name }}
+        </option>
+      </select>
+      <div *ngIf="userOrganisations.length === 0">
+        You are not part of any organisation.
+      </div>
     </div>
 
     <label for="category">Category: </label>

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/model/repository';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { OrganisationService } from 'src/app/services/organisation/organisation.service';
 import { RepositoryService } from 'src/app/services/repository/repository.service';
-import { CreateOfficialRepositoryDTO } from 'src/app/shared/models/create-official-repository-model';
+import { OrganisationDTO } from 'src/app/shared/dto/organisation/organisation.dto';
+import { CreateOfficialRepositoryDTO } from 'src/app/shared/dto/repository/create-repository.dto';
 
 @Component({
   selector: 'app-create-official-repo',
@@ -17,17 +19,32 @@ export class CreateOfficialRepoComponent implements OnInit {
   visibility: string = 'PUBLIC';
   personal: boolean = false;
   ownerId: number = this.authService.getCurrentUser()?.id as number;
-  organisationId: number = 0;
+  organisationId: number | null = null;
   category: Category = Category.NONE;
+
+  userOrganisations: OrganisationDTO[] = [];
 
   categories = Object.keys(Category).filter((key) => isNaN(Number(key)));
 
   constructor(
+    private organisationService: OrganisationService,
     private repositoryService: RepositoryService,
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const userId = this.authService.getCurrentUser()?.id;
+    if (userId) {
+      this.organisationService.getUserOrganisations(userId).subscribe({
+        next: (res) => {
+          this.userOrganisations = res.data;
+        },
+        error: (err) => {
+          console.error('Error loading organisations:', err);
+        },
+      });
+    }
+  }
 
   onCreateRepository() {
     const dto: CreateOfficialRepositoryDTO = {
