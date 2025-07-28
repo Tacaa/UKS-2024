@@ -17,6 +17,7 @@ export class RepositoryPageTagsComponent implements OnInit {
   filteredTags: TagDTO[] = [];
   searchTerm: string = '';
   showToast = false;
+  repositoryId?: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class RepositoryPageTagsComponent implements OnInit {
       const repoId = Number(params.get('id'));
       if (repoId) {
         this.loadTags(repoId);
+        this.repositoryId = repoId;
       }
     });
   }
@@ -76,6 +78,17 @@ export class RepositoryPageTagsComponent implements OnInit {
   }
 
   openAddTagDialog() {
-    this.dialog.open(AddTagComponent);
+    console.log('REPO ID' + this.repositoryId);
+    this.dialog
+      .open(AddTagComponent, {
+        data: { repositoryId: this.repositoryId },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result === true) {
+          this.loadTags(this.repositoryId as number);
+          console.log('Tag successfully created');
+        }
+      });
   }
 }

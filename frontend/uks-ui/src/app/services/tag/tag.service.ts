@@ -12,8 +12,8 @@ export class TagService {
 
   constructor(private http: HttpClient) {}
 
-  createTag(dto: CreateTagDTO): Observable<{ message: string; data: TagDTO }> {
-    return this.http.post<{ message: string; data: TagDTO }>(this.baseUrl, dto);
+  createTag(dto: CreateTagDTO): Observable<Response> {
+    return this.http.post<Response>(this.baseUrl, dto);
   }
 
   getTagsByRepository(repositoryId: number): Observable<TagDTO[]> {
