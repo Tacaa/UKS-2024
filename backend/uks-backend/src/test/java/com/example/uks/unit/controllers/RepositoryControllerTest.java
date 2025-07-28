@@ -1,5 +1,6 @@
-package com.example.uks.controllers;
+package com.example.uks.unit.controllers;
 
+import com.example.uks.controllers.RepositoryController;
 import com.example.uks.dto.repository.*;
 import com.example.uks.dto.util.PagedResponse;
 import com.example.uks.enumeration.Category;

@@ -1,4 +1,4 @@
-package com.example.uks.services;
+package com.example.uks.unit.services;
 
 import com.example.uks.dto.user.BadgeDTO;
 import com.example.uks.dto.user.UpdateUserDTO;
@@ -7,6 +7,7 @@ import com.example.uks.exceptions.AttributeNullException;
 import com.example.uks.exceptions.UserNotFound;
 import com.example.uks.model.User;
 import com.example.uks.repositories.UserRepository;
+import com.example.uks.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

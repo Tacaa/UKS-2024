@@ -1,5 +1,6 @@
-package com.example.uks.controllers;
+package com.example.uks.unit.controllers;
 
+import com.example.uks.controllers.UserController;
 import com.example.uks.dto.user.BadgeDTO;
 import com.example.uks.dto.user.UpdateUserDTO;
 import com.example.uks.dto.user.UserDTO;
@@ -29,7 +30,7 @@ import static org.mockito.Mockito.*;
 class UserControllerTest {
 
     @InjectMocks
-    private  UserController userController;
+    private UserController userController;
 
     @Mock
     private UserService userService;
