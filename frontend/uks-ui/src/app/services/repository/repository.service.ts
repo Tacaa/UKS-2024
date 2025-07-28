@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
 import { UpdateRepositoryDTO } from 'src/app/shared/dto/repository/update-repository.dto';
-import { CreateOfficialRepositoryDTO } from 'src/app/shared/models/create-official-repository-model';
+import { CreateOfficialRepositoryDTO } from 'src/app/shared/dto/repository/create-repository.dto';
 
 export interface PagedResponse<T> {
   content: T[];

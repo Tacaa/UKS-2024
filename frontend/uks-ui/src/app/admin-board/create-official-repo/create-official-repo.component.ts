@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Category } from 'src/app/model/repository';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { RepositoryService } from 'src/app/services/repository/repository.service';
-import { CreateOfficialRepositoryDTO } from 'src/app/shared/models/create-official-repository-model';
+import { CreateOfficialRepositoryDTO } from 'src/app/shared/dto/repository/create-repository.dto';
 
 @Component({
   selector: 'app-create-official-repo',
@@ -15,13 +16,16 @@ export class CreateOfficialRepoComponent {
   prefix: string = '';
   visibility: string = 'PUBLIC';
   personal: boolean = false;
-  ownerId: number = 0;
+  ownerId: number = this.authService.getCurrentUser()?.id as number;
   organisationId: number = 0;
   category: Category = Category.NONE;
 
   categories = Object.keys(Category).filter((key) => isNaN(Number(key)));
 
-  constructor(private repositoryService: RepositoryService) {}
+  constructor(
+    private repositoryService: RepositoryService,
+    private authService: AuthService
+  ) {}
 
   onCreateRepository() {
     const dto: CreateOfficialRepositoryDTO = {
