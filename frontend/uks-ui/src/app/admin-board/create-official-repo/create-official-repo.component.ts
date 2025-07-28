@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/model/repository';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { RepositoryService } from 'src/app/services/repository/repository.service';
@@ -9,7 +9,7 @@ import { CreateOfficialRepositoryDTO } from 'src/app/shared/dto/repository/creat
   templateUrl: './create-official-repo.component.html',
   styleUrls: ['./create-official-repo.component.css'],
 })
-export class CreateOfficialRepoComponent {
+export class CreateOfficialRepoComponent implements OnInit {
   repositoryName: string = '';
   namespace: string = '';
   description: string = '';
@@ -26,6 +26,8 @@ export class CreateOfficialRepoComponent {
     private repositoryService: RepositoryService,
     private authService: AuthService
   ) {}
+
+  ngOnInit(): void {}
 
   onCreateRepository() {
     const dto: CreateOfficialRepositoryDTO = {

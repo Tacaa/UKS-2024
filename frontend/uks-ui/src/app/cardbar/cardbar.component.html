@@ -1,7 +1,7 @@
-<div class="cardbar">
+<div class="cardbar" *ngFor="let repo of filteredRepositories">
   <div
     class="card"
-    routerLink="../r/{{ repo.namespace }}/{{ repo.name }}"
+    routerLink="../r/{{ repo.id }}"
     *ngFor="let repo of repos | slice : 0 : 4"
   >
     <div class="header">
