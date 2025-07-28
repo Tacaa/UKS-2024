@@ -48,4 +48,15 @@ public class TagController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(tagDTOs);
     }
+
+    //poziv --> /api/tags/search?query=cms  (query je rijec koju prosljedjujete za pretragu)
+    //sortira se po vremenu pullovanja
+    @GetMapping("/search")
+    public ResponseEntity<List<TagDTO>> searchTags(@RequestParam String query) {
+        List<Tag> tags = tagService.searchAndSortTags(query);
+
+        return ResponseEntity.ok(tags.stream()
+                .map(TagDTO::from)
+                .collect(Collectors.toList()));
+    }
 }
