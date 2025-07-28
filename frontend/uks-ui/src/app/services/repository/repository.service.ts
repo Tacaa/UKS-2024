@@ -4,7 +4,10 @@ import { map, Observable } from 'rxjs';
 import { OrganisationRepositoryDTO } from 'src/app/shared/dto/repository/organisation-repository.dto';
 import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
 import { UpdateRepositoryDTO } from 'src/app/shared/dto/repository/update-repository.dto';
-import { CreateOfficialRepositoryDTO } from 'src/app/shared/dto/repository/create-repository.dto';
+import {
+  CreateOfficialRepositoryDTO,
+  CreateRepositoryDTO,
+} from 'src/app/shared/dto/repository/create-repository.dto';
 
 export interface PagedResponse<T> {
   content: T[];
@@ -22,6 +25,10 @@ export class RepositoryService {
 
   createOfficialRepository(dto: CreateOfficialRepositoryDTO) {
     return this.http.post(`${this.baseUrl}/official`, dto);
+  }
+
+  createRepository(dto: CreateRepositoryDTO) {
+    return this.http.post(`${this.baseUrl}`, dto);
   }
 
   getRepositoriesByOwner(

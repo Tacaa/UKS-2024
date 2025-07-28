@@ -7,7 +7,7 @@ export interface CreateRepositoryDTO {
   visibility: string;
   personal: boolean;
   ownerId: number;
-  organisationId: number;
+  organisationId: number | null;
   category: Category;
 }
 

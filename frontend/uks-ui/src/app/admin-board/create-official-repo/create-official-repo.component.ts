@@ -17,7 +17,7 @@ export class CreateOfficialRepoComponent implements OnInit {
   visibility: string = 'PUBLIC';
   personal: boolean = false;
   ownerId: number = this.authService.getCurrentUser()?.id as number;
-  organisationId: number = 0;
+  organisationId: number | null = null;
   category: Category = Category.NONE;
 
   categories = Object.keys(Category).filter((key) => isNaN(Number(key)));
