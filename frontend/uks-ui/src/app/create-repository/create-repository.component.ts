@@ -3,6 +3,8 @@ import { RepositoryService } from '../services/repository/repository.service';
 import { Category } from '../model/repository';
 import { AuthService } from '../services/auth/auth.service';
 import { CreateRepositoryDTO } from '../shared/dto/repository/create-repository.dto';
+import { OrganisationDTO } from '../shared/dto/organisation/organisation.dto';
+import { OrganisationService } from '../services/organisation/organisation.service';
 
 @Component({
   selector: 'app-create-repository',
@@ -19,14 +21,29 @@ export class CreateRepositoryComponent implements OnInit {
   organisationId: number | null = null;
   category: Category = Category.NONE;
 
+  userOrganisations: OrganisationDTO[] = [];
+
   categories = Object.keys(Category).filter((key) => isNaN(Number(key)));
 
   constructor(
+    private organisationService: OrganisationService,
     private repositoryService: RepositoryService,
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const userId = this.authService.getCurrentUser()?.id;
+    if (userId) {
+      this.organisationService.getUserOrganisations(userId).subscribe({
+        next: (res) => {
+          this.userOrganisations = res.data;
+        },
+        error: (err) => {
+          console.error('Error loading organisations:', err);
+        },
+      });
+    }
+  }
 
   onCreateRepository() {
     const dto: CreateRepositoryDTO = {

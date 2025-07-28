@@ -25,16 +25,22 @@
       placeholder="Short description"
     ></textarea>
 
-    <label style="margin-top: 15px" for="organisationId"
-      >Organisation ID:
-    </label>
+    <label style="margin-top: 15px" for="organisationId">Organisation: </label>
     <div>
-      <input
-        type="number"
+      <select
         id="organisationId"
         [(ngModel)]="organisationId"
         class="textInput"
-      />
+        *ngIf="userOrganisations.length > 0"
+      >
+        <option [ngValue]="null">-- No organisation --</option>
+        <option *ngFor="let org of userOrganisations" [value]="org.id">
+          {{ org.name }}
+        </option>
+      </select>
+      <div *ngIf="userOrganisations.length === 0">
+        You are not part of any organisation.
+      </div>
     </div>
 
     <label style="margin-top: 15px" for="category">Category: </label>
