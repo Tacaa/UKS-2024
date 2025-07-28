@@ -1,4 +1,4 @@
-package com.example.uks.services;
+package com.example.uks.unit.services;
 
 import com.example.uks.dto.organisation.OrganisationCreateDTO;
 import com.example.uks.dto.organisation.OrganisationUpdateDTO;
@@ -9,6 +9,7 @@ import com.example.uks.model.User;
 import com.example.uks.repositories.OrganisationRepository;
 import com.example.uks.repositories.TeamRepository;
 import com.example.uks.repositories.UserRepository;
+import com.example.uks.services.OrganisationService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

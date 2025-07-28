@@ -1,4 +1,4 @@
-package com.example.uks.services;
+package com.example.uks.unit.services;
 
 import com.example.uks.dto.repository.CreateOfficialRepositoryDTO;
 import com.example.uks.dto.repository.CreateRepositoryDTO;
@@ -16,6 +16,7 @@ import com.example.uks.repositories.OfficialRepositoryRepository;
 import com.example.uks.repositories.OrganisationRepository;
 import com.example.uks.repositories.RepositoryRepository;
 import com.example.uks.repositories.UserRepository;
+import com.example.uks.services.RepositoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

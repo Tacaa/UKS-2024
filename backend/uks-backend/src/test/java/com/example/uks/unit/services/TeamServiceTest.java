@@ -1,4 +1,4 @@
-package com.example.uks.services;
+package com.example.uks.unit.services;
 
 import com.example.uks.dto.organisation.UpdateTeamDTO;
 import com.example.uks.dto.team.CreateTeamDTO;
@@ -12,6 +12,7 @@ import com.example.uks.model.User;
 import com.example.uks.repositories.OrganisationRepository;
 import com.example.uks.repositories.TeamRepository;
 import com.example.uks.repositories.UserRepository;
+import com.example.uks.services.TeamService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
