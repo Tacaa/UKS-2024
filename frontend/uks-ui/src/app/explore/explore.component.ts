@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from '../services/repository/repository.service';
 import { Observable } from 'rxjs';
-import { RepositoryDTO } from '../shared/dto/repository/repository.dto';
+import {
+  OfficialRepositoryDTO,
+  RepositoryDTO,
+} from '../shared/dto/repository/repository.dto';
 import { UserService } from '../services/user/user.service';
 import { User } from '../shared/models/user.model';
 
@@ -12,6 +15,7 @@ import { User } from '../shared/models/user.model';
 })
 export class ExploreComponent implements OnInit {
   repos: RepositoryDTO[] = [];
+  officialRepos: OfficialRepositoryDTO[] = [];
   categories?: string[] = [];
   selectedCategory: string | null = null;
   allUsers: User[] = [];
@@ -34,9 +38,14 @@ export class ExploreComponent implements OnInit {
             ?.map((repo) => repo.categoryString || 'NONE')
             .filter((cat): cat is string => !!cat)
         ),
+        'Official',
       ];
 
       console.log(this.categories);
+    });
+    this.repositoryService.getAllOfficialRepositories().subscribe((repo) => {
+      this.officialRepos = repo;
+      console.log(repo);
     });
     this.loadAllUsers();
   }

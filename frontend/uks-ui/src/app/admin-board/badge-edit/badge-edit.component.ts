@@ -35,7 +35,7 @@ export class BadgeEditComponent implements OnInit {
     this.userService
       .updateUserBadge(userId, { userBadge: badge })
       .subscribe(() => {
-        this.loadAllUsers();
+        this.onSearch();
       });
   }
 
