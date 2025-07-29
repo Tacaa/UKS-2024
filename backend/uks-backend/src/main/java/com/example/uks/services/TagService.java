@@ -2,6 +2,7 @@ package com.example.uks.services;
 
 import com.example.uks.dto.tag.CreateTagDTO;
 import com.example.uks.exceptions.RepositoryNotFoundException;
+import com.example.uks.exceptions.TagNotFoundException;
 import com.example.uks.model.Repository;
 import com.example.uks.model.Tag;
 import com.example.uks.repositories.RepositoryRepository;
@@ -39,7 +40,7 @@ public class TagService {
     }
 
     public List<Tag> getAllTagsByRepository(Long repositoryId) {
-        return tagRepository.findAllByRepositoryId(repositoryId);
+        return tagRepository.findAllByRepositoryIdAndDeletedFalse(repositoryId);
     }
 
     public List<Tag> searchAndSortTags(String query) {
@@ -52,5 +53,12 @@ public class TagService {
         }));
 
         return tags;
+    }
+
+    public void delete(Integer tagId) {
+        Tag tag = tagRepository.findByIdAndDeletedFalse(tagId)
+                .orElseThrow(() -> new TagNotFoundException("Tag not found or already deleted"));
+        tag.setDeleted(true);
+        tagRepository.save(tag);
     }
 }
