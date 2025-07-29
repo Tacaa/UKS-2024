@@ -15,4 +15,5 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
     List<Tag> searchByNameContaining(@Param("query") String query);
 
     Optional<Tag> findByIdAndDeletedFalse(Integer id);
+
 }

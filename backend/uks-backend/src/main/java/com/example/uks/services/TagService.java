@@ -61,4 +61,16 @@ public class TagService {
         tag.setDeleted(true);
         tagRepository.save(tag);
     }
+
+    public List<Tag> searchAndSortTags(String query) {
+        List<Tag> tags = tagRepository.searchByNameContaining(query);
+
+        tags.sort(Comparator.comparingInt(t -> {
+            String pulled = t.getPulled();
+            int index = pulledPriority.indexOf(pulled);
+            return index != -1 ? index : Integer.MAX_VALUE;
+        }));
+
+        return tags;
+    }
 }
