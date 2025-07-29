@@ -1,29 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { RepositoryService } from '../services/repository/repository.service';
-import { Observable } from 'rxjs';
+import { RepositoryService } from 'src/app/services/repository/repository.service';
+import { UserService } from 'src/app/services/user/user.service';
 import {
-  OfficialRepositoryDTO,
   RepositoryDTO,
-} from '../shared/dto/repository/repository.dto';
-import { UserService } from '../services/user/user.service';
-import { User } from '../shared/models/user.model';
+  OfficialRepositoryDTO,
+} from 'src/app/shared/dto/repository/repository.dto';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
-  selector: 'app-explore',
-  templateUrl: './explore.component.html',
-  styleUrls: ['./explore.component.css'],
+  selector: 'app-official-repositories',
+  templateUrl: './official-repositories.component.html',
+  styleUrls: ['./official-repositories.component.css'],
 })
-export class ExploreComponent implements OnInit {
+export class OfficialRepositoriesComponent implements OnInit {
   repos: RepositoryDTO[] = [];
   officialRepos: OfficialRepositoryDTO[] = [];
   categories?: string[] = [];
-  selectedCategory: string | null = null;
+  selectedCategory = 'Official';
   allUsers: User[] = [];
 
   constructor(
     private repositoryService: RepositoryService,
     private userService: UserService
   ) {}
+
   ngOnInit(): void {
     this.repositoryService.getAllRepositories().subscribe((repo) => {
       const reposArray = Array.isArray(repo) ? repo : [repo];
@@ -54,9 +54,5 @@ export class ExploreComponent implements OnInit {
     this.userService.getAllUsers().subscribe((data) => {
       this.allUsers = data;
     });
-  }
-
-  onCategoryClick(category: string): void {
-    this.selectedCategory = category;
   }
 }

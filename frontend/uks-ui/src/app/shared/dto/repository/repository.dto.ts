@@ -1,3 +1,4 @@
+import { Badge } from '../../enum/Badge';
 import { Category } from '../../enum/Category';
 import { Visibility } from '../../enum/Visibility';
 
@@ -19,4 +20,11 @@ export interface RepositoryDTO {
   deleted: boolean;
   owner: OwnerDTO;
   organisation?: RepositoryOrganisationDTO;
+}
+
+export interface OfficialRepositoryDTO {
+  repositoryDTO: RepositoryDTO;
+  prefix: string;
+  badge: Badge;
+  badgeString: string;
 }

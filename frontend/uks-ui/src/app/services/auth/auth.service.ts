@@ -19,7 +19,7 @@ export class AuthService {
 
   private mockLogin(): void {
     //! ⬇️ Change this number to 1, 3, or 4 to simulate different users
-    const mockUserId: number = 3;
+    const mockUserId: number = 4;
     //! ⬆️ Change this number to 1, 3, or 4 to simulate different users
 
     let mockUser: currentUser;

@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RepositoryService } from '../services/repository/repository.service';
-import { RepositoryDTO } from '../shared/dto/repository/repository.dto';
+import {
+  OfficialRepositoryDTO,
+  RepositoryDTO,
+} from '../shared/dto/repository/repository.dto';
 import { Visibility } from '../shared/enum/Visibility';
 import { User } from '../shared/models/user.model';
 import { UserBadge } from '../shared/enum/UserBadge';
@@ -14,12 +17,19 @@ export class CardbarComponent implements OnInit {
   @Input() category: string | null = null;
   @Input() repositories: RepositoryDTO[] = [];
   @Input() allUsers: User[] = [];
+  @Input() ofiicialRepositories: OfficialRepositoryDTO[] = [];
 
-  constructor(private repositoryService: RepositoryService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 
   get filteredRepositories(): RepositoryDTO[] {
+    if (this.category === 'Official') {
+      return this.ofiicialRepositories.map(
+        (officialRepo) => officialRepo.repositoryDTO
+      );
+    }
+
     let filtered = this.repositories;
 
     if (this.category && this.category.trim() !== '') {
@@ -53,5 +63,11 @@ export class CardbarComponent implements OnInit {
       return;
     }
     return user?.userBadge;
+  }
+
+  isOfficialRepository(repoId: number): boolean {
+    return this.ofiicialRepositories.some(
+      (officialRepo) => officialRepo.repositoryDTO.id === repoId
+    );
   }
 }

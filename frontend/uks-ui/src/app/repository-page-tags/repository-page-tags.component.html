@@ -22,7 +22,11 @@
       <div class="topleft">
         <a>{{ tag.name }}</a>
         <span>
-          Last pushed <span class="boldSpan">{{ tag.pushed }} ago</span> by
+          Last pushed
+          <span class="boldSpan"
+            >{{ tag.pushed.replace("now", "a few seconds") }} ago</span
+          >
+          by
           <a>{{ tag.author }}</a>
         </span>
       </div>
@@ -49,7 +53,8 @@
             <td>
               <a>{{ generateDigest(tag.id) }}</a>
             </td>
-            <td>{{ tag.pulled }} ago</td>
+            <td *ngIf="tag.pulled">{{ tag.pulled }} ago</td>
+            <td *ngIf="!tag.pulled">Never</td>
             <td>{{ getCompressedSize(tag.id) }}</td>
           </tr>
         </tbody>

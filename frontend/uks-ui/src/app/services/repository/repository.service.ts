@@ -2,7 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { OrganisationRepositoryDTO } from 'src/app/shared/dto/repository/organisation-repository.dto';
-import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
+import {
+  OfficialRepositoryDTO,
+  RepositoryDTO,
+} from 'src/app/shared/dto/repository/repository.dto';
 import { UpdateRepositoryDTO } from 'src/app/shared/dto/repository/update-repository.dto';
 import {
   CreateOfficialRepositoryDTO,
@@ -27,6 +30,23 @@ export class RepositoryService {
     return this.http.post(`${this.baseUrl}/official`, dto);
   }
 
+  getAllOfficialRepositories(): Observable<OfficialRepositoryDTO[]> {
+    return this.http.get<OfficialRepositoryDTO[]>(
+      `${this.baseUrl}/official/all`
+    );
+  }
+
+  getOfficialRepByOwner(
+    ownerId: number
+  ): Observable<PagedResponse<OfficialRepositoryDTO>> {
+    const params = new HttpParams().set('ownerId', ownerId.toString());
+
+    return this.http.get<PagedResponse<OfficialRepositoryDTO>>(
+      `${this.baseUrl}/official/search`,
+      { params }
+    );
+  }
+
   createRepository(dto: CreateRepositoryDTO) {
     return this.http.post(`${this.baseUrl}`, dto);
   }
@@ -42,6 +62,7 @@ export class RepositoryService {
       }
     );
   }
+
   getRepositoriesByOrganisation(
     organisationId: number
   ): Observable<PagedResponse<RepositoryDTO>> {

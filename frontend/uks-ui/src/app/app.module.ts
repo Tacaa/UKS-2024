@@ -44,6 +44,9 @@ import { TimeAgoPipe } from './shared/pipes/time-ago.pipe';
 import { EditTeamComponent } from './dialogs/edit-team/edit-team.component';
 import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-members-to-team.component';
 import { AddTagComponent } from './dialogs/add-tag/add-tag.component';
+import { AdminPanelComponent } from './admin-board/admin-panel/admin-panel/admin-panel.component';
+import { OfficialRepositoriesComponent } from './admin-board/official-repositories/official-repositories.component';
+import { CreateAdministratorComponent } from './admin-board/create-administrator/create-administrator.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +83,9 @@ import { AddTagComponent } from './dialogs/add-tag/add-tag.component';
     AddMembersToTeamComponent,
     SpaceToUnderscorePipe,
     AddTagComponent,
+    AdminPanelComponent,
+    OfficialRepositoriesComponent,
+    CreateAdministratorComponent,
   ],
   imports: [
     BrowserModule,

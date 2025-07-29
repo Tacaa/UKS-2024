@@ -1,36 +1,34 @@
 <div class="cardbar">
   <div
     class="card"
-    routerLink="../r/{{ repo.id }}"
+    routerLink="/dockerhub/r/{{ repo.id }}"
     *ngFor="let repo of filteredRepositories"
   >
     <div class="header">
       <img src="../../assets/images/logo_beli.png" alt="" />
       <p>
-        {{
-          repo.organisation?.name
-            ? (repo.organisation?.name | spaceToUnderscore | lowercase)
-            : (repo.owner.name | lowercase)
-        }}/{{ repo.name }}
+        <span *ngIf="category === 'Official' || isOfficialRepository(repo.id)">
+          {{ repo.name }}
+        </span>
+        <span *ngIf="category !== 'Official' && !isOfficialRepository(repo.id)">
+          {{
+            repo.organisation?.name
+              ? (repo.organisation?.name | spaceToUnderscore | lowercase)
+              : (repo.owner.name | lowercase)
+          }}/{{ repo.name }}
+        </span>
       </p>
-      <!-- <img
-        style="
-          height: 15px;
-          width: 15px;
-          border-radius: 7.5px;
-          margin-left: auto;
-          margin-right: 0;
-        "
-        matTooltip="Official / Sponsored / Verified"
-        src="../../assets/images/logo_beli.png"
-        alt=""
-      /> -->
 
-      <p
-        style="margin-left: auto; color: #4271e7"
-        matTooltip="Sponsored OSS / Verified Publisher"
-      >
-        {{ getUserBadge(repo.owner.id) | lowercase }}
+      <p style="margin-left: auto; color: #4271e7">
+        <span
+          *ngIf="category === 'Official' || isOfficialRepository(repo.id)"
+          matTooltip="Docker official image"
+        >
+          Docker Official Image
+        </span>
+        <span *ngIf="category !== 'Official' && !isOfficialRepository(repo.id)">
+          {{ getUserBadge(repo.owner.id) | lowercase }}
+        </span>
       </p>
     </div>
     <div class="body">
