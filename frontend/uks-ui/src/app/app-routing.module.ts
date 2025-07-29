@@ -25,6 +25,7 @@ import { BadgeEditComponent } from './admin-board/badge-edit/badge-edit.componen
 import { CreateOfficialRepoComponent } from './admin-board/create-official-repo/create-official-repo.component';
 import { AdminPanelComponent } from './admin-board/admin-panel/admin-panel/admin-panel.component';
 import { OfficialRepositoriesComponent } from './admin-board/official-repositories/official-repositories.component';
+import { CreateAdministratorComponent } from './admin-board/create-administrator/create-administrator.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
@@ -106,6 +107,10 @@ const routes: Routes = [
             component: OfficialRepositoriesComponent,
           },
         ],
+      },
+      {
+        path: 'createAdministrator',
+        component: CreateAdministratorComponent,
       },
       {
         path: 'accountSettings',
