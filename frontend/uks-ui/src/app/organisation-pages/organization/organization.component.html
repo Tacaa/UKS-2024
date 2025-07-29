@@ -1,7 +1,12 @@
 <div class="component">
   <div class="header">
     <div class="information">
-      <img src="../../assets/images/company.png" alt="" />
+      <img
+        src="../../assets/images/{{
+          (organisation.image && organisation.image.trim()) || 'company.png'
+        }}"
+        alt=""
+      />
       <div class="details">
         <h3>{{ organisation.name }}</h3>
         <div class="desc">
