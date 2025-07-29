@@ -2,23 +2,11 @@
 <div class="component">
   <div class="header">
     <div class="filters">
-      <!-- <select name="namespace" id="namespace">
-        <option *ngFor="let namespace of namespaces" value="{{ namespace }}">
-          {{ namespace }}
-        </option>
-      </select> -->
       <input
         type="text"
         placeholder="Search repositories by name"
         [(ngModel)]="searchTerm"
       />
-      <!-- <select name="content" id="content">
-        <option value="1">Da li</option>
-        <option value="2">cemo</option>
-        <option value="3">zdrzati</option>
-        <option value="4">ovo</option>
-        <option value="5">za content</option>
-      </select> -->
     </div>
     <button class="blueButton" routerLink="/dockerhub/create">
       Create a repository
@@ -75,7 +63,12 @@
           }}
         </td>
         <td>{{ repo.organisation?.name }}</td>
-        <td>{{ repo.visibility | titlecase }}</td>
+        <td>
+          <span *ngIf="isOfficial(repo.id)">
+            <span style="font-weight: bold">Official - </span></span
+          >
+          {{ repo.visibility | titlecase }}
+        </td>
         <td>Inactive</td>
       </tr>
     </tbody>

@@ -36,6 +36,17 @@ export class RepositoryService {
     );
   }
 
+  getOfficialRepByOwner(
+    ownerId: number
+  ): Observable<PagedResponse<OfficialRepositoryDTO>> {
+    const params = new HttpParams().set('ownerId', ownerId.toString());
+
+    return this.http.get<PagedResponse<OfficialRepositoryDTO>>(
+      `${this.baseUrl}/official/search`,
+      { params }
+    );
+  }
+
   createRepository(dto: CreateRepositoryDTO) {
     return this.http.post(`${this.baseUrl}`, dto);
   }

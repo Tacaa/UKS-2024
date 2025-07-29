@@ -3,7 +3,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { RepositoryService } from 'src/app/services/repository/repository.service';
-import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
+import {
+  OfficialRepositoryDTO,
+  RepositoryDTO,
+} from 'src/app/shared/dto/repository/repository.dto';
 
 @Pipe({
   name: 'spaceToUnderscore',
@@ -30,6 +33,7 @@ export class RepositoriesComponent implements OnInit {
 
   sortField: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
+  officialRepoIds: Set<number> = new Set();
 
   constructor(
     private repositoryService: RepositoryService,
@@ -39,20 +43,36 @@ export class RepositoriesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const ownerId = this.organisationId
+      ? null
+      : (this.authService.getCurrentUser()?.id as number);
+
     if (this.organisationId) {
       this.repositoryService
         .getRepositoriesByOrganisation(this.organisationId)
         .subscribe((response) => {
           this.handleRepositoryResponse(response);
         });
-    } else {
-      const ownerId = this.authService.getCurrentUser()?.id as number;
+    } else if (ownerId) {
       this.repositoryService
         .getRepositoriesByOwner(ownerId)
         .subscribe((response) => {
           this.handleRepositoryResponse(response);
         });
+
+      // Load official repositories for this owner
+      this.repositoryService.getOfficialRepByOwner(ownerId).subscribe((res) => {
+        this.officialRepoIds = new Set(
+          res.content.map(
+            (official: OfficialRepositoryDTO) => official.repositoryDTO.id
+          )
+        );
+      });
     }
+  }
+
+  isOfficial(repoId: number): boolean {
+    return this.officialRepoIds.has(repoId);
   }
 
   private handleRepositoryResponse(response: {
