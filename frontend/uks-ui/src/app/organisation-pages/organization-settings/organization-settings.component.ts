@@ -45,6 +45,13 @@ export class OrganizationSettingsComponent implements OnInit {
     });
   }
 
+  onImageSelect(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.image = file.name;
+    }
+  }
+
   updateOrganisation() {
     const dto: OrganisationUpdateDTO = {
       description: this.description,
@@ -57,6 +64,7 @@ export class OrganizationSettingsComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log('Updated successfully:', response.data);
+          this.router.navigate([`dockerhub/organizations`]);
         },
         error: (error) => {
           console.error('Update failed:', error);
