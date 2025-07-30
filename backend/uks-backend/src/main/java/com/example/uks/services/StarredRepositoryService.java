@@ -6,9 +6,7 @@ import com.example.uks.exceptions.CanNotStarRepositoryException;
 import com.example.uks.exceptions.RepositoryNotFoundException;
 import com.example.uks.exceptions.StarNotFound;
 import com.example.uks.exceptions.UserNotFound;
-import com.example.uks.model.Repository;
-import com.example.uks.model.StarredRepository;
-import com.example.uks.model.User;
+import com.example.uks.model.*;
 import com.example.uks.repositories.RepositoryRepository;
 import com.example.uks.repositories.StarredRepositoryRepository;
 import com.example.uks.repositories.UserRepository;
@@ -30,20 +28,39 @@ public class StarredRepositoryService {
     @Autowired
     private UserRepository userRepository;
 
+    private boolean isUserMemberOfOrganisation(User user, Organisation organisation) {
+        if (organisation == null) {
+            return false;
+        }
+
+        if (organisation.getMembers().contains(user)) {
+            return true;
+        }
+
+        for (Team team : organisation.getTeams()) {
+            if (team.getMembers().contains(user)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public StarredRepository starRepository(StarDTO starDTO) {
         Repository repo = repositoryRepository.findById(starDTO.getRepositoryId())
                 .orElseThrow(() -> new RepositoryNotFoundException("Repository not found"));
 
-        if (repo.getPersonal() || repo.getOwner().getId().equals(starDTO.getUserId()) || repo.getOrganisation() != null) {
-            throw new CanNotStarRepositoryException("Cannot star your own or organisation’s repository.");
-        }
-
-        if (starredRepoRepo.existsByUserIdAndRepositoryId(starDTO.getUserId(), starDTO.getRepositoryId())) {
-            throw new CanNotStarRepositoryException("Existed star fr this user");
-        }
-
         User user = userRepository.findById(starDTO.getUserId())
                 .orElseThrow(() -> new UserNotFound("User not found"));
+
+        if (starredRepoRepo.existsByUserIdAndRepositoryId(starDTO.getUserId(), starDTO.getRepositoryId())) {
+            throw new CanNotStarRepositoryException("Existed star for this user");
+        }
+
+        Organisation org = repo.getOrganisation();
+        if (this.isUserMemberOfOrganisation(user, org)) {
+            throw new CanNotStarRepositoryException("Cannot star your own or organisation’s repository.");
+        }
 
         StarredRepository starred = new StarredRepository();
         starred.setUser(user);

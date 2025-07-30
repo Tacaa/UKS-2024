@@ -1,5 +1,6 @@
 package com.example.uks.controllers;
 
+import com.example.uks.dto.repository.RepositoryDTO;
 import com.example.uks.dto.star.StarDTO;
 import com.example.uks.dto.star.StarredRepositoryDTO;
 import com.example.uks.dto.tag.TagDTO;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,7 +26,7 @@ public class StarredRepositoryController {
     @Autowired
     private StarredRepositoryService starredRepositoryService;
 
-    @PostMapping("/{repositoryId}")
+    @PostMapping
     public ResponseEntity<Map<String, Object>> starRepository(@RequestBody StarDTO starDTO) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -51,7 +53,7 @@ public class StarredRepositoryController {
 
     @GetMapping("/user")
     public ResponseEntity<List<RepositoryDTO>> getStarredRepositories(@RequestParam Integer userId) {
-        return ResponseEntity.ok(starredService.getStarredRepositories(userId));
+        return ResponseEntity.ok(starredRepositoryService.getStarredRepositories(userId));
     }
 
     @GetMapping("/count/{repositoryId}")
