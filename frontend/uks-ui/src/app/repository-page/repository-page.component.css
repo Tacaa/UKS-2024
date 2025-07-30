@@ -125,10 +125,23 @@ a:hover {
 .bottom {
   color: var(--gray2);
   font-size: 1.7rem;
+  margin-right: 50vw;
+  margin-left: auto;
 }
 
 .bottom span {
   margin-right: 1.3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+.bottom span :hover {
+  scale: 1.2;
+}
+.bottom p {
+  font-size: 2.7rem;
+  margin: 0 1rem;
 }
 
 .header .nav > * {
