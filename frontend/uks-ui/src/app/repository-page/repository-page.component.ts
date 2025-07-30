@@ -45,21 +45,37 @@ export class RepositoryPageComponent implements OnInit {
   }
 
   starClick() {
-    if (!this.repoId || !this.repository) return;
+    if (!this.repoId || !this.repository) {
+      console.error('Repository ID or repository data is missing');
+      return;
+    }
 
     if (this.isStarred) {
-      this.starService.unstarRepository(this.repoId).subscribe(() => {
-        this.isStarred = false;
-        this.repository!.star -= 1;
+      this.starService.unstarRepository(this.repoId).subscribe({
+        next: () => {
+          this.isStarred = false;
+          this.repository!.star -= 1;
+        },
+        error: (error) => {
+          console.error('Failed to unstar repository:', error);
+          alert('Failed to unstar repository: ' + error.error.message);
+        },
       });
     } else {
       const starDTO: StarDTO = {
         userId: this.currentUserId,
         repositoryId: this.repoId,
       };
-      this.starService.starRepository(this.repoId, starDTO).subscribe(() => {
-        this.isStarred = true;
-        this.repository!.star += 1;
+
+      this.starService.starRepository(starDTO).subscribe({
+        next: () => {
+          this.isStarred = true;
+          this.repository!.star += 1;
+        },
+        error: (error) => {
+          console.error('Failed to star repository:', error);
+          alert('Failed to star repository: ' + error.error.message);
+        },
       });
     }
   }

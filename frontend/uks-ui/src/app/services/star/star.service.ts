@@ -12,8 +12,8 @@ export class StarService {
 
   constructor(private http: HttpClient) {}
 
-  starRepository(repositoryId: number, starDTO: StarDTO): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/${repositoryId}`, starDTO);
+  starRepository(starDTO: StarDTO): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}`, starDTO);
   }
 
   unstarRepository(id: number): Observable<string> {
