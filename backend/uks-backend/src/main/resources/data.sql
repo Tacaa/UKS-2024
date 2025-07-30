@@ -330,7 +330,7 @@ INSERT INTO organisations_members (organisation_id, member_id) VALUES
 (20, 3), (20, 2);
 
 
---REPOS WITHOUT ORGANISATION 7, 13, 19, 29, 37, 39 = 6
+--REPOS WITHOUT ORGANISATION 7, 14, 19, 29, 37, 39 = 6
 
 
 -- REPOSITORIES
@@ -517,3 +517,13 @@ INSERT INTO tags (name, docker_pull_command, repository_id, pulled, pushed, auth
 ('performance-tools', 'docker pull system-admin/performance-tools', 39, '2 days', '2 days', 'ivancarter', false),
 ('api-proxy', 'docker pull api-gateway/api-proxy', 40, 'about a month', 'about a month', 'jasminefrost', false),
 ('request-routing', 'docker pull api-gateway/request-routing', 40, '1 day', 'about a month', 'kevinstone', false);
+
+--STARS
+INSERT INTO starred_repositories (user_id, repository_id, starred_at) VALUES
+(1, 7, '2025-01-15 10:30:00'),
+(2, 7, '2025-01-16 14:22:15'),
+(3, 7, '2025-01-18 09:45:30'),
+(4, 7, '2025-01-20 16:12:45'),
+(1, 14, '2025-02-08 17:25:40'),
+(1, 14, '2025-02-10 10:55:15'),
+(1, 40, '2025-02-12 14:30:30');

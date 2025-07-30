@@ -32,4 +32,6 @@ public interface RepositoryRepository extends JpaRepository<Repository, Integer>
     @Query("SELECT r FROM OfficialRepository r WHERE r.badge = :badge")
     List<OfficialRepository> findAllByBadge(@Param("badge") Badge badge);
 
+    List<Repository> findAllByIdIn(List<Integer> ids);
+
 }
