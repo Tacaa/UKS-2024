@@ -26,9 +26,11 @@ import { CreateOfficialRepoComponent } from './admin-board/create-official-repo/
 import { AdminPanelComponent } from './admin-board/admin-panel/admin-panel/admin-panel.component';
 import { OfficialRepositoriesComponent } from './admin-board/official-repositories/official-repositories.component';
 import { CreateAdministratorComponent } from './admin-board/create-administrator/create-administrator.component';
+import { SuperAdminLoginComponent } from './admin-board/super-admin-login/super-admin-login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
+  { path: 'superadminLogin', component: SuperAdminLoginComponent },
   {
     path: 'dockerhub',
     loadComponent: () =>
