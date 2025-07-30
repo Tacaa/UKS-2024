@@ -86,6 +86,7 @@ public class StarredRepositoryService {
         return starredRepoRepo.countByRepositoryId(repositoryId);
     }
 
+
     public void unstarRepository(StarDTO starDTO) {
         // Validate that repository exists
         Repository repo = repositoryRepository.findById(starDTO.getRepositoryId())
@@ -102,6 +103,7 @@ public class StarredRepositoryService {
 
         // Delete the star
         starredRepoRepo.delete(starredRepo);
+
     }
 }
 

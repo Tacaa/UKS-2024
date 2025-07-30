@@ -45,6 +45,7 @@ public class StarredRepositoryController {
         }
     }
 
+
     @DeleteMapping
     public ResponseEntity<Map<String, Object>> unstarRepository(@RequestBody StarDTO starDTO) {
         Map<String, Object> response = new HashMap<>();
@@ -58,6 +59,7 @@ public class StarredRepositoryController {
             response.put("data", null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
+
     }
 
     @GetMapping("/user")
