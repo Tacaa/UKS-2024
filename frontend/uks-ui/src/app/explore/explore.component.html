@@ -11,6 +11,7 @@
       >
         {{ category }}
       </p>
+      <p (click)="seeAllRepos()">All categories</p>
     </mat-expansion-panel>
   </div>
   <div class="main" *ngIf="selectedCategory; else allCategories">
@@ -19,6 +20,7 @@
       [category]="selectedCategory"
       [repositories]="repos"
       [ofiicialRepositories]="officialRepos"
+      [starredRepositories]="starredRepos"
       [allUsers]="allUsers"
     ></app-cardbar>
   </div>
@@ -26,11 +28,12 @@
   <ng-template #allCategories>
     <div class="main">
       <div class="row" *ngFor="let category of categories">
-        <h4>{{ category }}</h4>
+        <h5>{{ category }}</h5>
         <app-cardbar
           [category]="category"
           [repositories]="repos"
           [ofiicialRepositories]="officialRepos"
+          [starredRepositories]="starredRepos"
           [allUsers]="allUsers"
         ></app-cardbar>
       </div>

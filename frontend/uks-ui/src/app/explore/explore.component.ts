@@ -7,6 +7,8 @@ import {
 } from '../shared/dto/repository/repository.dto';
 import { UserService } from '../services/user/user.service';
 import { User } from '../shared/models/user.model';
+import { StarService } from '../services/star/star.service';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-explore',
@@ -16,16 +18,27 @@ import { User } from '../shared/models/user.model';
 export class ExploreComponent implements OnInit {
   repos: RepositoryDTO[] = [];
   officialRepos: OfficialRepositoryDTO[] = [];
+  starredRepos: RepositoryDTO[] = [];
   categories?: string[] = [];
   selectedCategory: string | null = null;
   allUsers: User[] = [];
 
   constructor(
     private repositoryService: RepositoryService,
-    private userService: UserService
+    private userService: UserService,
+    private starService: StarService,
+    private authService: AuthService
   ) {}
   ngOnInit(): void {
-    this.repositoryService.getAllRepositories().subscribe((repo) => {
+    if (this.authService.getCurrentUser()) {
+      this.starService
+        .getStarredRepositories(this.authService.getCurrentUser()?.id as number)
+        .subscribe((repos) => {
+          this.starredRepos = repos;
+        });
+    }
+
+    this.repositoryService.getAllPublicRepositories().subscribe((repo) => {
       const reposArray = Array.isArray(repo) ? repo : [repo];
       this.repos = reposArray.map((r) => ({
         ...r,
@@ -43,10 +56,13 @@ export class ExploreComponent implements OnInit {
 
       console.log(this.categories);
     });
-    this.repositoryService.getAllOfficialRepositories().subscribe((repo) => {
-      this.officialRepos = repo;
-      console.log(repo);
-    });
+    this.repositoryService
+      .getAllPublicOfficialRepositories()
+      .subscribe((repo) => {
+        this.officialRepos = repo;
+        console.log('PublicOfficialRepositories: ');
+        console.log(repo);
+      });
     this.loadAllUsers();
   }
 
@@ -58,5 +74,9 @@ export class ExploreComponent implements OnInit {
 
   onCategoryClick(category: string): void {
     this.selectedCategory = category;
+  }
+
+  seeAllRepos() {
+    this.selectedCategory = null;
   }
 }

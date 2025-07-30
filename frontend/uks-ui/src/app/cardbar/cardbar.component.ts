@@ -18,6 +18,7 @@ export class CardbarComponent implements OnInit {
   @Input() repositories: RepositoryDTO[] = [];
   @Input() allUsers: User[] = [];
   @Input() ofiicialRepositories: OfficialRepositoryDTO[] = [];
+  @Input() starredRepositories: RepositoryDTO[] = [];
 
   constructor() {}
 
@@ -69,5 +70,9 @@ export class CardbarComponent implements OnInit {
     return this.ofiicialRepositories.some(
       (officialRepo) => officialRepo.repositoryDTO.id === repoId
     );
+  }
+
+  isStarred(repoId: number): boolean {
+    return this.starredRepositories.some((repo) => repo.id === repoId);
   }
 }

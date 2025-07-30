@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class CreateFileOnDesktop {
 
@@ -51,8 +51,8 @@ public class CreateFileOnDesktop {
             System.err.println("An error occurred while assigning password from file.");
             e.printStackTrace();
         }
-
-        return new BCryptPasswordEncoder().encode(firstPass);
+        return firstPass;
+       // return new BCryptPasswordEncoder().encode(firstPass);
     }
 
 
