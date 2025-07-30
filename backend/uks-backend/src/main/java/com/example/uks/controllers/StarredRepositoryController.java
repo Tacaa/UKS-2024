@@ -45,10 +45,19 @@ public class StarredRepositoryController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> unstarRepository(@PathVariable Integer id) {
-        starredRepositoryService.unstarRepository(id);
-        return ResponseEntity.ok("It is unstarred!");
+    @DeleteMapping
+    public ResponseEntity<Map<String, Object>> unstarRepository(@RequestBody StarDTO starDTO) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            starredRepositoryService.unstarRepository(starDTO);
+            response.put("message", "Successfully unstarred!");
+            response.put("data", null);
+            return ResponseEntity.ok(response);
+        } catch (RepositoryNotFoundException | UserNotFound e) {
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
     }
 
     @GetMapping("/user")

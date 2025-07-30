@@ -18,6 +18,7 @@ export class RepositoryPageComponent implements OnInit {
   starredRepoIds: number[] = [];
   isStarred: boolean = false;
   currentUserId: number;
+  stars: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +35,10 @@ export class RepositoryPageComponent implements OnInit {
 
     this.repositoryService.getRepositoryById(this.repoId).subscribe((repo) => {
       this.repository = repo;
+      this.starService.countStars(repo.id).subscribe((count) => {
+        this.stars = count;
+        console.log(count);
+      });
     });
 
     this.starService
@@ -51,10 +56,15 @@ export class RepositoryPageComponent implements OnInit {
     }
 
     if (this.isStarred) {
-      this.starService.unstarRepository(this.repoId).subscribe({
+      const starDTO: StarDTO = {
+        userId: this.currentUserId,
+        repositoryId: this.repoId,
+      };
+
+      this.starService.unstarRepository(starDTO).subscribe({
         next: () => {
           this.isStarred = false;
-          this.repository!.star -= 1;
+          this.stars -= 1; // Update stars instead of repository.star
         },
         error: (error) => {
           console.error('Failed to unstar repository:', error);
@@ -70,7 +80,7 @@ export class RepositoryPageComponent implements OnInit {
       this.starService.starRepository(starDTO).subscribe({
         next: () => {
           this.isStarred = true;
-          this.repository!.star += 1;
+          this.stars += 1; // Update stars instead of repository.star
         },
         error: (error) => {
           console.error('Failed to star repository:', error);

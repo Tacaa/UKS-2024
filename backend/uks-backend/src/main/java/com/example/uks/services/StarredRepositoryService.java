@@ -86,10 +86,22 @@ public class StarredRepositoryService {
         return starredRepoRepo.countByRepositoryId(repositoryId);
     }
 
-    public void unstarRepository(Integer id) {
-        StarredRepository star = starredRepoRepo.findById(id)
-                .orElseThrow(() -> new StarNotFound("Star not found"));
-        starredRepoRepo.delete(star);
+    public void unstarRepository(StarDTO starDTO) {
+        // Validate that repository exists
+        Repository repo = repositoryRepository.findById(starDTO.getRepositoryId())
+            .orElseThrow(() -> new RepositoryNotFoundException("Repository not found"));
+
+        // Validate that user exists
+        User user = userRepository.findById(starDTO.getUserId())
+            .orElseThrow(() -> new UserNotFound("User not found"));
+
+        // Find the starred repository
+        StarredRepository starredRepo = starredRepoRepo.findByUserIdAndRepositoryId(
+                starDTO.getUserId(), starDTO.getRepositoryId())
+            .orElseThrow(() -> new RepositoryNotFoundException("Star not found for this user and repository"));
+
+        // Delete the star
+        starredRepoRepo.delete(starredRepo);
     }
 }
 

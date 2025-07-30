@@ -16,8 +16,8 @@ export class StarService {
     return this.http.post<any>(`${this.baseUrl}`, starDTO);
   }
 
-  unstarRepository(id: number): Observable<string> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  unstarRepository(starDTO: StarDTO): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}`, { body: starDTO });
   }
 
   getStarredRepositories(userId: number): Observable<RepositoryDTO[]> {
