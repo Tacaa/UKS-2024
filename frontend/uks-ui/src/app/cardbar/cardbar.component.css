@@ -27,14 +27,6 @@
   transition: 150ms;
 }
 
-.textInput {
-  width: 35rem;
-  padding-left: 0.5rem;
-  height: 2.5rem;
-  border-radius: 0.3rem;
-  border: 1.5px var(--gray3) solid;
-}
-
 .card .header {
   width: 100%;
   display: flex;

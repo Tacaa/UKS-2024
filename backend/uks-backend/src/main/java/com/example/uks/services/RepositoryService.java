@@ -5,7 +5,6 @@ import com.example.uks.dto.repository.CreateRepositoryDTO;
 import com.example.uks.dto.repository.OfficialRepositoryDTO;
 import com.example.uks.dto.repository.UpdateRepositoryDTO;
 import com.example.uks.dto.util.PagedResponse;
-import com.example.uks.enumeration.Badge;
 import com.example.uks.enumeration.Category;
 import com.example.uks.exceptions.AttributeNullException;
 import com.example.uks.exceptions.OrganisationNullException;
@@ -307,14 +306,6 @@ public class RepositoryService {
         }
 
         return officialRepositoryRepository.save(newOfficialRepository);
-    }
-
-    public List<Repository> getRepositoriesByOrganisationId(Integer organisationId) {
-        return repositoryRepository.findByOrganisationId(organisationId);
-    }
-
-    public List<OfficialRepository> getAllOfficialRepositories() {
-        return repositoryRepository.findAllByBadge(Badge.DOCKER_OFFICIAL_IMAGE);
     }
 
 }

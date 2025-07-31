@@ -4,7 +4,6 @@ import com.example.uks.dto.user.BadgeDTO;
 import com.example.uks.dto.user.UpdateUserDTO;
 import com.example.uks.dto.user.UserDTO;
 import com.example.uks.dto.util.PagedResponse;
-import com.example.uks.enumeration.UserBadge;
 import com.example.uks.exceptions.AttributeNotUniqueException;
 import com.example.uks.exceptions.AttributeNullException;
 import com.example.uks.exceptions.RepositoryNotFoundException;
@@ -132,15 +131,4 @@ public class UserController {
         }
     }
 
-    @GetMapping("/badge")
-    public ResponseEntity<List<UserDTO>> getUsersByBadge(@RequestParam UserBadge badge) {
-        List<User> users = userService.getUsersByBadge(badge);
-
-        List<UserDTO> userDTOS = new ArrayList<>();
-        for (User user : users) {
-            userDTOS.add(new UserDTO(user));
-        }
-
-        return new ResponseEntity<>(userDTOS, HttpStatus.OK);
-    }
 }

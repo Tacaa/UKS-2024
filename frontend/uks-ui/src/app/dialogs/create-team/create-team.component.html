@@ -1,25 +1,15 @@
 <div class="component">
   <mat-form-field appearance="fill" style="width: 100%">
     <mat-label>Team name</mat-label>
-    <input matInput placeholder="Start typing..." [(ngModel)]="name" />
+    <input matInput placeholder="Start typing..." />
   </mat-form-field>
 
   <mat-form-field appearance="fill" style="width: 100%">
     <mat-label>Short description</mat-label>
-    <input matInput placeholder="Start typing..." [(ngModel)]="description" />
+    <input matInput placeholder="Start typing..." />
   </mat-form-field>
-
-  <mat-form-field appearance="fill" style="width: 100%">
-    <mat-label>Team Permission</mat-label>
-    <mat-select [(ngModel)]="teamPermission">
-      <mat-option [value]="TeamPermission.READ_ONLY">Read Only</mat-option>
-      <mat-option [value]="TeamPermission.READ_WRITE">Read & Write</mat-option>
-      <mat-option [value]="TeamPermission.ADMIN">Admin</mat-option>
-    </mat-select>
-  </mat-form-field>
-
   <div class="footer">
     <button class="redButton" mat-dialog-close>Cancel</button>
-    <button class="blueButton" (click)="createTeam()">Create</button>
+    <button class="blueButton">Create</button>
   </div>
 </div>

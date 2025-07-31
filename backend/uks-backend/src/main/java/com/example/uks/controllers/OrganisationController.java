@@ -185,4 +185,88 @@ public class OrganisationController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
     }
+  
+    @GetMapping("/{orgId}/teams")
+    public ResponseEntity<Map<String, Object>> getOrganisationTeams(
+            @PathVariable Integer orgId,
+            @RequestParam Integer userId) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        try {
+            List<Team> teams = organisationService.getTeamsForMember(orgId, userId);
+            List<TeamDTO> dtoList = teams.stream()
+                    .map(TeamDTO::from)
+                    .collect(Collectors.toList());
+
+            response.put("message", "");
+            response.put("data", dtoList);
+            return ResponseEntity.ok(response);
+
+        } catch (OrganisationNotFound e) {
+            response.put("message", "Organisation not found");
+            response.put("data", null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (AccessDeniedException e) {
+            response.put("message", e.getMessage());
+            response.put("data", null);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+
+        }
+    }
+
+    @PostMapping("/team")
+    public ResponseEntity<Map<String, Object>> createTeam(
+            @RequestBody CreateTeamDTO dto) {
+
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Team team = organisationService.createTeam(dto);
+            response.put("message", "Team successfully created");
+            response.put("data", TeamDTO.from(team));
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+        } catch (OrganisationNotFound e) {
+            response.put("message", "Organisation not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (AccessDeniedException e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+
+        } catch (IllegalArgumentException e) {
+            response.put("message", "Invalid team permission: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+        } catch (Exception e) {
+            response.put("message", "Unexpected server error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
+    }
+
+    @PostMapping("/team/add_member")
+    public ResponseEntity<Map<String, Object>> addMemberToTeam(
+            @RequestBody AddTeamMemberDTO dto) {
+
+        organisationService.addMemberToTeam(dto.getTeamId(), dto.getMemberId());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Member added to team");
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/team/{teamId}")
+    public ResponseEntity<Map<String, Object>> updateTeam(
+            @PathVariable Integer teamId,
+            @RequestBody UpdateTeamDTO dto) {
+
+        organisationService.updateTeam(teamId, dto);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Team updated successfully");
+        return ResponseEntity.ok(response);
+    }
+
+
 }

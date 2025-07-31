@@ -2,6 +2,7 @@ package com.example.uks.controllers;
 
 import com.example.uks.dto.repository.*;
 import com.example.uks.dto.util.PagedResponse;
+import com.example.uks.enumeration.Category;
 import com.example.uks.exceptions.*;
 import com.example.uks.model.OfficialRepository;
 import com.example.uks.model.Repository;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "api/repositories")
@@ -262,27 +262,6 @@ public class RepositoryController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-    }
-
-    @GetMapping("/organisation/{organisationId}")
-    public ResponseEntity<List<OrganisationRepositoryDTO>> getRepositoriesByOrganisation(@PathVariable Integer organisationId) {
-        List<Repository> repos = repositoryService.getRepositoriesByOrganisationId(organisationId);
-        List<OrganisationRepositoryDTO> dtoList = repos.stream()
-                                        .map(OrganisationRepositoryDTO::from)
-                                        .collect(Collectors.toList());
-        return ResponseEntity.ok(dtoList);
-    }
-
-
-    @GetMapping("/filter-by-badge")
-    public ResponseEntity<List<OfficialRepositoryDTO>> getOfficialRepositories() {
-        List<OfficialRepository> repos = repositoryService.getAllOfficialRepositories();
-
-        List<OfficialRepositoryDTO> dtos = repos.stream()
-                .map(OfficialRepositoryDTO::new)
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(dtos);
     }
 
 

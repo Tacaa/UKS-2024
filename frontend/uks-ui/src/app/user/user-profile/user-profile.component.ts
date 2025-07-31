@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Repository } from 'src/app/shared/models/mock.repository.model';
-import { RepositoryService } from 'src/app/services/mock-repository/repository.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
+import { Repository } from 'src/app/shared/models/Repository';
+import { RepositoryService } from 'src/app/services/repository/repository.service';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css'],
+  styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit{
   name: string = 'ImeKorisnika';
   selectedOption: string = 'repositories';
   repositories: Repository[] = [];
@@ -22,22 +21,16 @@ export class UserProfileComponent implements OnInit {
 
   sortField: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
-
-  constructor(
-    private repositoryService: RepositoryService,
-    private router: Router,
-    private sanitizer: DomSanitizer,
-    private authService: AuthService
+  
+  constructor(private repositoryService: RepositoryService, private router: Router,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
-    const user = this.authService.getCurrentUser();
-    const fullName = `${user?.firstName} ${user?.lastName}`;
-    this.name = fullName;
     this.repositories = this.repositoryService.getAllRepositories(); // Initialize with unsorted data
     this.loadedRepos = this.repositories.length;
     this.namespaces = this.repositoryService.getAllNamespaces();
-    this.showAll();
+    this.showAll()
   }
 
   showAll() {
@@ -46,7 +39,7 @@ export class UserProfileComponent implements OnInit {
 
   showFavorites() {
     //implementorati da li je u omiljenim
-    this.filteredRepos = this.repositories.filter((repo) => repo.star > 33);
+    this.filteredRepos = this.repositories.filter(repo => repo.star>33);
   }
 
   sortTable(field: 'name' | 'updated') {
@@ -79,18 +72,19 @@ export class UserProfileComponent implements OnInit {
   }
 
   openRepo(repoName: string): void {
-    // const url = `https://your-repository-domain.com/${repoName}`;
+    // const url = `https://your-repository-domain.com/${repoName}`; // Replace with your repo URL logic
     // window.open(url, '_blank');
     console.log('Redirect to ' + repoName);
   }
 
-  getRepository() {
+  getRepository(){
     var id = 1;
-    this.repositoryService.getRepository(id).subscribe((result: any) => {
-      if (result != null) {
-        this.testRepository = result;
-        console.log(this.testRepository?.id);
+    this.repositoryService.getRepository(id).subscribe((result:any)=>{
+      if(result!=null){
+
+        this.testRepository=result;
+        console.log(this.testRepository?.id)
       }
-    });
+    })
   }
 }

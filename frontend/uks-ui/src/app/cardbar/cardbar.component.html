@@ -1,35 +1,24 @@
 <div class="cardbar">
   <div
     class="card"
-    routerLink="/dockerhub/r/{{ repo.id }}"
-    *ngFor="let repo of filteredRepositories"
+    routerLink="../r/{{ repo.namespace }}/{{ repo.name }}"
+    *ngFor="let repo of repos | slice : 0 : 4"
   >
     <div class="header">
       <img src="../../assets/images/logo_beli.png" alt="" />
-      <p>
-        <span *ngIf="category === 'Official' || isOfficialRepository(repo.id)">
-          {{ repo.name }}
-        </span>
-        <span *ngIf="category !== 'Official' && !isOfficialRepository(repo.id)">
-          {{
-            repo.organisation?.name
-              ? (repo.organisation?.name | spaceToUnderscore | lowercase)
-              : (repo.owner.name | lowercase)
-          }}/{{ repo.name }}
-        </span>
-      </p>
-
-      <p style="margin-left: auto; color: #4271e7">
-        <span
-          *ngIf="category === 'Official' || isOfficialRepository(repo.id)"
-          matTooltip="Docker official image"
-        >
-          Docker Official Image
-        </span>
-        <span *ngIf="category !== 'Official' && !isOfficialRepository(repo.id)">
-          {{ getUserBadge(repo.owner.id) | lowercase }}
-        </span>
-      </p>
+      <p>{{ repo.name }}/repoTag</p>
+      <img
+        style="
+          height: 15px;
+          width: 15px;
+          border-radius: 7.5px;
+          margin-left: auto;
+          margin-right: 0;
+        "
+        matTooltip="Official / Sponsored / Verified"
+        src="../../assets/images/logo_beli.png"
+        alt=""
+      />
     </div>
     <div class="body">
       {{ repo.description }}
@@ -38,10 +27,7 @@
       <span>
         <i class="fa fa-star" aria-hidden="true"></i> {{ repo.star }}
       </span>
-      <span>
-        <i class="fa fa-download" aria-hidden="true"></i>
-        {{ getDownloadCount(repo.id) }}</span
-      >
+      <span> <i class="fa fa-download" aria-hidden="true"></i>1.5mil </span>
     </div>
   </div>
 </div>

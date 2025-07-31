@@ -2,38 +2,27 @@
   <div class="sidebar">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
+        <mat-panel-title> Catalogs </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>Content</p>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Trusted content </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>Content</p>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
         <mat-panel-title> Categories </mat-panel-title>
       </mat-expansion-panel-header>
-      <p
-        *ngFor="let category of categories"
-        (click)="onCategoryClick(category)"
-        style="cursor: pointer"
-      >
-        {{ category }}
-      </p>
+      <p *ngFor="let category of categories">{{ category }}</p>
     </mat-expansion-panel>
   </div>
-  <div class="main" *ngIf="selectedCategory; else allCategories">
-    <h5>{{ selectedCategory }}</h5>
-    <app-cardbar
-      [category]="selectedCategory"
-      [repositories]="repos"
-      [ofiicialRepositories]="officialRepos"
-      [allUsers]="allUsers"
-    ></app-cardbar>
-  </div>
-
-  <ng-template #allCategories>
-    <div class="main">
-      <div class="row" *ngFor="let category of categories">
-        <h4>{{ category }}</h4>
-        <app-cardbar
-          [category]="category"
-          [repositories]="repos"
-          [ofiicialRepositories]="officialRepos"
-          [allUsers]="allUsers"
-        ></app-cardbar>
-      </div>
+  <div class="main">
+    <div class="row" *ngFor="let category of categories | slice : 0 : 4">
+      <h5>{{ category }}</h5>
+      <app-cardbar></app-cardbar>
     </div>
-  </ng-template>
+  </div>
 </div>

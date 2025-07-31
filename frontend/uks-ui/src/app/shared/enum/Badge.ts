@@ -1,4 +1,0 @@
-export enum Badge {
-  DOCKER_OFFICIAL_IMAGE = 'DOCKER_OFFICIAL_IMAGE',
-  NONE = 'NONE',
-}

@@ -9,45 +9,32 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular_material.module';
 
-import {
-  RepositoriesComponent,
-  SpaceToUnderscorePipe,
-} from './personal-repository-pages/repositories/repositories.component';
+import { RepositoriesComponent } from './menu-pages/repositories/repositories.component';
 import { CreateRepositoryComponent } from './create-repository/create-repository.component';
 import { ExploreComponent } from './explore/explore.component';
 import { CardbarComponent } from './cardbar/cardbar.component';
 import { RepositoryPageComponent } from './repository-page/repository-page.component';
 import { RepositoryPageOverviewComponent } from './repository-page-overview/repository-page-overview.component';
 import { RepositoryPageTagsComponent } from './repository-page-tags/repository-page-tags.component';
-import { PersonalRepositoryPageComponent } from './personal-repository-pages/personal-repository-page/personal-repository-page.component';
-import { PersonalRepositoryPageGeneralComponent } from './personal-repository-pages/personal-repository-page-general/personal-repository-page-general.component';
-import { PersonalRepositoryPageSettingsComponent } from './personal-repository-pages/personal-repository-page-settings/personal-repository-page-settings.component';
-import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-pages/personal-repository-page-collaborators/personal-repository-page-collaborators.component';
-import { PersonalRepositoryPageTagsComponent } from './personal-repository-pages/personal-repository-page-tags/personal-repository-page-tags.component';
+import { PersonalRepositoryPageComponent } from './personal-repository-page/personal-repository-page.component';
+import { PersonalRepositoryPageGeneralComponent } from './personal-repository-page-general/personal-repository-page-general.component';
+import { PersonalRepositoryPageSettingsComponent } from './personal-repository-page-settings/personal-repository-page-settings.component';
+import { PersonalRepositoryPageCollaboratorsComponent } from './personal-repository-page-collaborators/personal-repository-page-collaborators.component';
+import { PersonalRepositoryPageTagsComponent } from './personal-repository-page-tags/personal-repository-page-tags.component';
 import { AccountSettingsComponent } from './user/account-settings/account-settings.component';
 import { UsagePageComponent } from './usage-page/usage-page.component';
-import { OrgsPageComponent } from './organisation-pages/orgs-page/orgs-page.component';
-import { OrgsPageCreateOrgComponent } from './organisation-pages/orgs-page-create-org/orgs-page-create-org.component';
-import { OrganizationComponent } from './organisation-pages/organization/organization.component';
-import { OrganizationMembersComponent } from './organisation-pages/organization-members/organization-members.component';
-import { OrganizationTeamsComponent } from './organisation-pages/organization-teams/organization-teams.component';
-import { OrganizationRepositoriesComponent } from './organisation-pages/organization-repositories/organization-repositories.component';
-import { OrganizationSettingsComponent } from './organisation-pages/organization-settings/organization-settings.component';
+import { OrgsPageComponent } from './orgs-page/orgs-page.component';
+import { OrgsPageCreateOrgComponent } from './orgs-page-create-org/orgs-page-create-org.component';
+import { OrganizationComponent } from './organization/organization.component';
+import { OrganizationMembersComponent } from './organization-members/organization-members.component';
+import { OrganizationTeamsComponent } from './organization-teams/organization-teams.component';
+import { OrganizationRepositoriesComponent } from './organization-repositories/organization-repositories.component';
+import { OrganizationSettingsComponent } from './organization-settings/organization-settings.component';
 import { AddMembersComponent } from './dialogs/add-members/add-members.component';
 import { CreateTeamComponent } from './dialogs/create-team/create-team.component';
 import { PullsOverTimeComponent } from './usage-page/charts/pulls-over-time/pulls-over-time.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
-import { BadgeEditComponent } from './admin-board/badge-edit/badge-edit.component';
-import { CreateOfficialRepoComponent } from './admin-board/create-official-repo/create-official-repo.component';
-import { TimeAgoPipe } from './shared/pipes/time-ago.pipe';
-import { EditTeamComponent } from './dialogs/edit-team/edit-team.component';
-import { AddMembersToTeamComponent } from './dialogs/add-members-to-team/add-members-to-team.component';
-import { AddTagComponent } from './dialogs/add-tag/add-tag.component';
-import { AdminPanelComponent } from './admin-board/admin-panel/admin-panel/admin-panel.component';
-import { OfficialRepositoriesComponent } from './admin-board/official-repositories/official-repositories.component';
-import { CreateAdministratorComponent } from './admin-board/create-administrator/create-administrator.component';
-import { SuperAdminLoginComponent } from './admin-board/super-admin-login/super-admin-login.component';
 
 @NgModule({
   declarations: [
@@ -76,18 +63,7 @@ import { SuperAdminLoginComponent } from './admin-board/super-admin-login/super-
     AddMembersComponent,
     CreateTeamComponent,
     PullsOverTimeComponent,
-    UserProfileComponent,
-    BadgeEditComponent,
-    CreateOfficialRepoComponent,
-    TimeAgoPipe,
-    EditTeamComponent,
-    AddMembersToTeamComponent,
-    SpaceToUnderscorePipe,
-    AddTagComponent,
-    AdminPanelComponent,
-    OfficialRepositoriesComponent,
-    CreateAdministratorComponent,
-    SuperAdminLoginComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -101,6 +77,5 @@ import { SuperAdminLoginComponent } from './admin-board/super-admin-login/super-
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [SpaceToUnderscorePipe],
 })
 export class AppModule {}

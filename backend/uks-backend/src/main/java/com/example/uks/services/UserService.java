@@ -135,20 +135,17 @@ public class UserService {
         return userRepository.save(user);
     }
 
-public void disableUser(Integer id){
+    public void disableUser(Integer id){
         User user = userRepository.findById(id).orElse(null);
+
         if(user != null){
             user.setEnabled(false);
             userRepository.save(user);
         }
     }
-    
+
     public User save(User user){
         return userRepository.save(user);
-    }
-    
-    public List<User> getUsersByBadge(UserBadge badge) {
-        return userRepository.findByUserBadge(badge);
     }
 
 }

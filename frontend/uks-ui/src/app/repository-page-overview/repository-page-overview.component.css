@@ -26,10 +26,6 @@
   margin: 1rem 2rem;
 }
 
-.desc{
-  padding-top: 8px;
-}
-
 .first a {
   text-decoration: underline;
   color: var(--blue-light);
@@ -56,10 +52,4 @@
 .second h3 {
   margin-top: 0;
   margin-bottom: 25px;
-}
-
-.terminal{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
