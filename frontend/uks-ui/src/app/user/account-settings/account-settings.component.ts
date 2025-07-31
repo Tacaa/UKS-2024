@@ -66,7 +66,7 @@ export class AccountSettingsComponent implements OnInit {
         },
         error: (err: HttpErrorResponse) => {
           console.error('Error:', err);
-          alert('Failed to update user.');
+          alert('Failed to update user.' + err.error.message);
         },
       });
     } else {
