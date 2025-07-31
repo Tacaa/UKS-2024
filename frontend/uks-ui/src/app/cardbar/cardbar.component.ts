@@ -7,6 +7,7 @@ import {
 import { Visibility } from '../shared/enum/Visibility';
 import { User } from '../shared/models/user.model';
 import { UserBadge } from '../shared/enum/UserBadge';
+import { StarService } from '../services/star/star.service';
 
 @Component({
   selector: 'app-cardbar',
@@ -18,8 +19,9 @@ export class CardbarComponent implements OnInit {
   @Input() repositories: RepositoryDTO[] = [];
   @Input() allUsers: User[] = [];
   @Input() ofiicialRepositories: OfficialRepositoryDTO[] = [];
+  @Input() starredRepositories: RepositoryDTO[] = [];
 
-  constructor() {}
+  constructor(private starService: StarService) {}
 
   ngOnInit(): void {}
 
@@ -69,5 +71,15 @@ export class CardbarComponent implements OnInit {
     return this.ofiicialRepositories.some(
       (officialRepo) => officialRepo.repositoryDTO.id === repoId
     );
+  }
+
+  isStarred(repoId: number): boolean {
+    return this.starredRepositories.some((repo) => repo.id === repoId);
+  }
+
+  getStars(repoId: number) {
+    this.starService.countStars(repoId).subscribe((count) => {
+      return count;
+    });
   }
 }

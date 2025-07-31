@@ -1,34 +1,39 @@
-<div *ngIf="repository$ | async as repository" class="component">
+<div *ngIf="repository" class="component">
   <div class="header">
     <div class="information">
       <img src="../../assets/images/logo_crni.png" alt="" />
       <div class="details">
         <div class="top">
-          <span>{{ repository?.owner?.name }}/{{ repository?.name }}</span>
+          <span>{{ repository.owner.name }}/{{ repository.name }}</span>
         </div>
         <div class="desc">
-          By {{ repository?.owner?.name }}
+          By {{ repository.owner.name }}
           <span>
-            &nbsp; &#9900; Updated {{ repository?.updated | timeAgo }}
+            &nbsp; &#9900; Updated {{ repository.updated | timeAgo }}
           </span>
         </div>
 
         <div class="tags">
-          <span> {{ repository?.categoryString }} </span>
-        </div>
-        <div class="bottom">
-          <span>
-            <i class="fa fa-star" aria-hidden="true"></i> {{ repository?.star }}
-          </span>
+          <span> {{ repository.categoryString }} </span>
         </div>
       </div>
+      <div class="bottom">
+        <span (click)="starClick()" style="cursor: pointer">
+          <i
+            class="fa fa-star fa-2x"
+            [ngStyle]="{ color: isStarred ? '#4271e7' : '#999999' }"
+            aria-hidden="true"
+          ></i>
+          <p>{{ stars }}</p>
+        </span>
+      </div>
     </div>
+
     <div class="nav">
-      <!-- !!! TODO CHANGE ROUTER LINK TO SOMETHING USABLE LATER !!! -->
       <a routerLink="overview" routerLinkActive="active"> Overview </a>
-      <!-- !!! TODO CHANGE ROUTER LINK TO SOMETHING USABLE LATER  !!! -->
       <a routerLink="tags" routerLinkActive="active"> Tags </a>
     </div>
   </div>
+
   <router-outlet></router-outlet>
 </div>

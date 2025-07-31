@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { OrganisationRepositoryDTO } from 'src/app/shared/dto/repository/organisation-repository.dto';
 import {
   OfficialRepositoryDTO,
@@ -11,6 +11,7 @@ import {
   CreateOfficialRepositoryDTO,
   CreateRepositoryDTO,
 } from 'src/app/shared/dto/repository/create-repository.dto';
+import { Visibility } from 'src/app/shared/enum/Visibility';
 
 export interface PagedResponse<T> {
   content: T[];
@@ -119,5 +120,27 @@ export class RepositoryService {
 
   getAllRepositories(): Observable<RepositoryDTO> {
     return this.http.get<RepositoryDTO>(`${this.baseUrl}/all`);
+  }
+
+  getAllPublicOfficialRepositories(): Observable<OfficialRepositoryDTO[]> {
+    return this.getAllOfficialRepositories().pipe(
+      map((repos) =>
+        repos.filter(
+          (repo) =>
+            repo.repositoryDTO?.visibility?.toString().toUpperCase() ===
+            'PUBLIC'
+        )
+      )
+    );
+  }
+
+  getAllPublicRepositories(): Observable<RepositoryDTO[]> {
+    return this.http
+      .get<RepositoryDTO[]>(`${this.baseUrl}/all`)
+      .pipe(
+        map((repos) =>
+          repos.filter((repo) => repo.visibility === Visibility.PUBLIC)
+        )
+      );
   }
 }

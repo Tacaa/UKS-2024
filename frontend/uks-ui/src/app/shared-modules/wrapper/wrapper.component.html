@@ -11,8 +11,7 @@
     <div class="menu-container">
       <a
         mat-menu-item
-        routerLink="/dockerhub/profile"
-        target="_blank"
+        [routerLink]="['/dockerhub/profile']"
         rel="noopener noreferrer"
       >
         <mat-icon>person</mat-icon>
@@ -21,7 +20,6 @@
       <a
         mat-menu-item
         routerLink="/dockerhub/accountSettings"
-        target="_blank"
         rel="noopener noreferrer"
       >
         <mat-icon>manage_accounts</mat-icon>
