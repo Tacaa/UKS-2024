@@ -1,6 +1,6 @@
 package com.example.uks.appstartup;
 
-import com.example.uks.enumeration.Role;
+import com.example.uks.enumeration.RoleEnum;
 import com.example.uks.enumeration.UserBadge;
 import com.example.uks.model.User;
 import com.example.uks.repositories.UserRepository;
@@ -31,7 +31,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
         String formattedDate = formatter.format(new Date());
         Date date = formatter.parse(formattedDate);
         superAdmin.setJoinedDate(date);
-        superAdmin.setRole(Role.SUPER_ADMIN);
+        superAdmin.setRoleEnum(RoleEnum.SUPER_ADMIN);
         superAdmin.setPasswordChanged(false);
         superAdmin.setUserBadge(UserBadge.NONE);
 
@@ -41,7 +41,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        List<User> superAdmins = userRepository.findByRole(Role.SUPER_ADMIN);
+        List<User> superAdmins = userRepository.findByRoleEnum(RoleEnum.SUPER_ADMIN);
 
         for (User superAdminUser : superAdmins){
             System.out.println("Super-admin is: "+superAdminUser.getUsername());
