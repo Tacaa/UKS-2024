@@ -102,6 +102,7 @@ public class WebSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/repositories/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/stars/count/{repositoryId}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/tags/{repositoryId}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/auth/current-user").permitAll()
 
 
                     // ORGANISATION

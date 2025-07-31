@@ -121,6 +121,31 @@
             <span class="menu-item">Add Administrator</span>
           </button>
         </ng-container>
+
+        <!-- Unauthenticated users see Login and Register -->
+        <ng-container *ngIf="userRole == null">
+          <button
+            class="menu-item-button"
+            mat-menu-item
+            routerLink="/dockerhub/login"
+            routerLinkActive="router-link-active"
+            [class.underline]="selectedButton === 'login'"
+            (click)="setActive('login')"
+          >
+            <span class="menu-item">Login</span>
+          </button>
+
+          <button
+            class="menu-item-button"
+            mat-menu-item
+            routerLink="/dockerhub/register"
+            routerLinkActive="router-link-active"
+            [class.underline]="selectedButton === 'register'"
+            (click)="setActive('register')"
+          >
+            <span class="menu-item">Register</span>
+          </button>
+        </ng-container>
       </div>
 
       <span class="spacer"></span>
@@ -131,17 +156,11 @@
             <mat-icon class="search-icn" matPrefix>search</mat-icon>
             <input matInput placeholder="Type to search..." />
           </mat-form-field>
-          <button
-            class="icon-btn-size-36"
-            mat-icon-button
-            [matMenuTriggerFor]="menu"
-          >
-            <mat-icon style="color: #ffffff !important; padding-top: 3px"
-              >settings</mat-icon
-            >
-          </button>
         </div>
-        <app-user-avatar (onAvatarClick)="rightDrawer.toggle()" />
+        <app-user-avatar
+          *ngIf="hasAtLeast(Role.USER)"
+          (onAvatarClick)="rightDrawer.toggle()"
+        />
       </div>
     </mat-toolbar>
 
