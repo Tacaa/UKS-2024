@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models/user.model';
+import { UpdateUserDTO } from 'src/app/shared/dto/user/update-user.dto';
+import { UserDTO } from 'src/app/shared/dto/user/user.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +29,15 @@ export class UserService {
 
   updateUserBadge(id: number, badge: { userBadge: string }): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/badge/${id}`, badge);
+  }
+
+  updateUser(
+    id: number,
+    updateUserDTO: UpdateUserDTO
+  ): Observable<{ message: string | null; data: UserDTO | null }> {
+    return this.http.put<{ message: string | null; data: UserDTO | null }>(
+      `${this.baseUrl}/${id}`,
+      updateUserDTO
+    );
   }
 }
