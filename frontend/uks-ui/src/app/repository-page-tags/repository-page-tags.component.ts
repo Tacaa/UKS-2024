@@ -91,4 +91,17 @@ export class RepositoryPageTagsComponent implements OnInit {
         }
       });
   }
+
+  deleteTag(id: number) {
+    this.tagService.deleteTag(id).subscribe({
+      next: (message) => {
+        console.log(message);
+        this.loadTags(this.repositoryId as number);
+      },
+      error: (error) => {
+        console.error('Error deleting tag:', error);
+        alert('Error deleting tag: ' + error.error.message);
+      },
+    });
+  }
 }

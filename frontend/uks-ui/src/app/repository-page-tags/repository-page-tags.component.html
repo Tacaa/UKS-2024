@@ -60,5 +60,12 @@
         </tbody>
       </table>
     </div>
+    <button
+      class="redButton"
+      *ngIf="canAddTags && isUserLoggedIn"
+      (click)="deleteTag(tag.id)"
+    >
+      Delete tag
+    </button>
   </div>
 </div>
