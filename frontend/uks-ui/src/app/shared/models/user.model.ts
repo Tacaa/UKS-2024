@@ -20,7 +20,7 @@ export interface User {
   teamMember?: Organisation[];
 }
 
-export interface currentUser {
+export interface CurrentUser {
   id?: number;
   firstName: string;
   lastName: string;

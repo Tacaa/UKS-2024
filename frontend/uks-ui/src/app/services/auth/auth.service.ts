@@ -1,89 +1,115 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Role } from 'src/app/shared/enum/Role';
-import { UserBadge } from 'src/app/shared/enum/UserBadge';
-import { currentUser } from 'src/app/shared/models/user.model';
+import { UserRequest } from 'src/app/shared/models/user-register-request.model';
+import { CurrentUser } from 'src/app/shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
-
-//?? THIS IS ONLY A MOCK SERVICE FOR NOW IN ORDER TO MAKE DEVELOPMENT MORE STREAMLINE
-//?? WILL BE UPDATED WHEN THE AUTH GET PUSHED FOR THE BACKEND
-//?? IT IS USING REAL USER DATA THAT IS CURRENTLY IN THE DATABASE!
-
-//! IN ORDER TO USE CHANGE THE mockUserId VALUE BELOW, 1 = USER, 3= ADMIN , 4= SUPER_ADMIN FOR ITS ROLES
 export class AuthService {
-  constructor() {
-    this.mockLogin(); // Call this during service initialization
+  private tokenKey = 'authToken';
+  private userIdKey = 'userId';
+  private userRoleKey = 'userRole';
+  private apiUrl = 'http://localhost:8081/api/auth'; // Updated port
+  private currentUserSubject = new BehaviorSubject<CurrentUser | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  restoreUser() {
+    const token = this.getToken();
+    if (token) {
+      this.http.get<CurrentUser>(`${this.apiUrl}/current-user`).subscribe(
+        (user) => {
+          this.currentUserSubject.next(user);
+          this.setUserData(user);
+        },
+        (error) => {
+          console.error('Failed to restore user:', error);
+          this.logout();
+        }
+      );
+    }
   }
 
-  private mockLogin(): void {
-    //! ⬇️ Change this number to 1, 3, or 4 to simulate different users
-    const mockUserId: number = 1;
-    //! ⬆️ Change this number to 1, 3, or 4 to simulate different users
+  setToken(token: string) {
+    localStorage.setItem(this.tokenKey, token);
+  }
 
-    let mockUser: currentUser;
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
 
-    switch (mockUserId) {
-      case 1:
-        mockUser = {
-          id: 1,
-          firstName: 'John',
-          lastName: 'Doe',
-          username: 'johndoe',
-          email: 'johndoe@example.com',
-          joinedDate: new Date('2024-12-01T08:00:00'),
-          role: Role.USER,
-          passwordChanged: false,
-          userBadge: UserBadge.VERIFIED_PUBLISHER,
-        };
-        break;
-      case 3:
-        mockUser = {
-          id: 3,
-          firstName: 'Alice',
-          lastName: 'Brown',
-          username: 'alicebrown',
-          email: 'alicebrown@example.com',
-          joinedDate: new Date('2024-12-03T10:30:15'),
-          role: Role.ADMIN,
-          passwordChanged: false,
-          userBadge: UserBadge.VERIFIED_PUBLISHER,
-        };
-        break;
-      case 4:
-        mockUser = {
-          id: 4,
-          firstName: 'Bob',
-          lastName: 'White',
-          username: 'bobwhite',
-          email: 'bobwhite@example.com',
-          joinedDate: new Date('2024-12-04T11:45:45'),
-          role: Role.SUPER_ADMIN,
-          passwordChanged: false,
-          userBadge: UserBadge.NONE,
-        };
-        break;
-      default:
-        throw new Error('Invalid mock user ID selected.');
+  setUserData(user: CurrentUser) {
+    if (user.id !== undefined && user.id !== null) {
+      localStorage.setItem(this.userIdKey, user.id.toString());
+    } else {
+      console.warn('User ID is undefined or null.');
     }
 
-    localStorage.setItem('currentUser', JSON.stringify(mockUser));
+    if (user.role) {
+      localStorage.setItem(this.userRoleKey, user.role);
+    } else {
+      console.warn('User role is undefined.');
+    }
   }
 
-  //?? MOCK METHOD - Will be replaced with actual API call
-  getCurrentUser(): currentUser | null {
-    const userJson = localStorage.getItem('currentUser');
-    return userJson ? JSON.parse(userJson) : null;
+  clearUserData() {
+    localStorage.removeItem(this.userIdKey);
+    localStorage.removeItem(this.userRoleKey);
   }
 
-  //?? MOCK METHOD - Will be replaced with actual API call
+  getUserId(): number | null {
+    const userId = localStorage.getItem(this.userIdKey);
+    return userId ? parseInt(userId, 10) : null;
+  }
+
+  getUserRole(): string | null {
+    return localStorage.getItem(this.userRoleKey);
+  }
+
+  getCurrentUser(): CurrentUser | null {
+    return this.currentUserSubject.value;
+  }
+
   getCurrentUserRole(): Role | null {
     const currentUser = this.getCurrentUser();
     return currentUser ? currentUser.role : null;
   }
 
-  logout(): void {
-    localStorage.removeItem('currentUser');
+  login(username: string, password: string) {
+    this.http
+      .post<{ accessToken: string }>(`${this.apiUrl}/login`, {
+        username,
+        password,
+      })
+      .subscribe((response) => {
+        this.setToken(response.accessToken);
+        this.restoreUser();
+        this.router.navigate(['']);
+      });
+  }
+
+  logout() {
+    this.http.post(`${this.apiUrl}/logout`, {}).subscribe(() => {
+      localStorage.removeItem(this.tokenKey);
+      this.clearUserData();
+      this.currentUserSubject.next(null);
+      this.router.navigate(['/login']);
+    });
+  }
+
+  register(user: UserRequest) {
+    this.http
+      .post<{ accessToken: string }>(`${this.apiUrl}/register`, user)
+      .subscribe((response) => {
+        this.setToken(response.accessToken);
+        this.restoreUser();
+        this.router.navigate(['']);
+      });
   }
 }

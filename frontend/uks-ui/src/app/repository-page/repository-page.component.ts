@@ -64,7 +64,7 @@ export class RepositoryPageComponent implements OnInit {
       this.starService.unstarRepository(starDTO).subscribe({
         next: () => {
           this.isStarred = false;
-          this.stars -= 1; // Update stars instead of repository.star
+          this.stars -= 1;
         },
         error: (error) => {
           console.error('Failed to unstar repository:', error);
@@ -80,11 +80,15 @@ export class RepositoryPageComponent implements OnInit {
       this.starService.starRepository(starDTO).subscribe({
         next: () => {
           this.isStarred = true;
-          this.stars += 1; // Update stars instead of repository.star
+          this.stars += 1;
         },
         error: (error) => {
           console.error('Failed to star repository:', error);
-          alert('Failed to star repository: ' + error.error.message);
+          if (error.error.message == undefined) {
+            alert('Failed to star repository: ' + error.error.error);
+          } else {
+            alert('Failed to star repository: ' + error.error.message);
+          }
         },
       });
     }
