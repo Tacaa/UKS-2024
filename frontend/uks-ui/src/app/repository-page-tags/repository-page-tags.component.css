@@ -16,12 +16,9 @@ a:hover {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   height: 43px;
   margin-bottom: 2rem;
-}
-
-.component .header > * {
-  margin-right: 2.5rem;
 }
 
 .component .header > select,
@@ -100,11 +97,12 @@ input {
 
 .table {
   margin-bottom: 0px;
+  width: 100%;
+  table-layout: fixed; /* Forces equal/defined column sizing */
 }
 
-table td:last-child,
-table th:last-child {
-  text-align: right;
+thead {
+  border-bottom: 1.5px solid #ddd;
 }
 
 tbody tr {
@@ -113,12 +111,44 @@ tbody tr {
   border-bottom: 1.5px solid #ddd;
 }
 
-thead {
-  border-bottom: 1.5px solid #ddd;
-}
-
+/* Column alignment */
 th,
 td {
-  padding-bottom: 0.7rem;
-  padding-top: 0.7rem;
+  padding: 0.7rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  text-align: left;
+  width: 23%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  text-align: center;
+  width: 30%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  text-align: right;
+  width: 30%;
+}
+
+a:hover {
+  cursor: default;
+}
+
+.toast {
+  position: fixed;
+  top: 100px;
+  left: 45vw;
+  background: #333;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 4px;
+  z-index: 1000;
 }

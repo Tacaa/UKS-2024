@@ -1,5 +1,6 @@
 package com.example.uks.repositories;
 
+import com.example.uks.enumeration.Badge;
 import com.example.uks.model.OfficialRepository;
 import com.example.uks.model.Repository;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,5 +26,12 @@ public interface RepositoryRepository extends JpaRepository<Repository, Integer>
 
     @Query("SELECT o FROM Repository o WHERE o.prefix = :prefix ")
     Optional<OfficialRepository> findOfficialRepositoryByPrefix(@Param("prefix") String prefix);
+
+    List<Repository> findByOrganisationId(Integer organisationId);
+
+    @Query("SELECT r FROM OfficialRepository r WHERE r.badge = :badge")
+    List<OfficialRepository> findAllByBadge(@Param("badge") Badge badge);
+
+    List<Repository> findAllByIdIn(List<Integer> ids);
 
 }

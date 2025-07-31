@@ -1,0 +1,5 @@
+export enum UserBadge {
+  VERIFIED_PUBLISHER = 'VERIFIED_PUBLISHER',
+  SPONSORED_OSS = 'SPONSORED_OSS',
+  NONE = 'NONE',
+}

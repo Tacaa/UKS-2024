@@ -1,0 +1,153 @@
+<div class="login-form-container">
+  <h2 style="margin-bottom: 0; color: #4271e7">Dockerhub</h2>
+  <h2 style="margin-top: 7px">First Time Superadmin Setup</h2>
+  <p class="subtitle" style="margin-top: 20px">
+    Please use your generated password and set a new secure password
+  </p>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <div class="form-group">
+      <label for="username">Username *</label>
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        class="form-control"
+        [class.error]="
+          loginForm.get('username')?.invalid &&
+          loginForm.get('username')?.touched
+        "
+        placeholder="Enter your username"
+      />
+      <div
+        class="error-message"
+        *ngIf="
+          loginForm.get('username')?.invalid &&
+          loginForm.get('username')?.touched
+        "
+      >
+        Username is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="generatedPassword">Generated Password *</label>
+      <div class="password-input-container">
+        <input
+          [type]="showGeneratedPassword ? 'text' : 'password'"
+          id="generatedPassword"
+          formControlName="generatedPassword"
+          class="form-control"
+          [class.error]="
+            loginForm.get('generatedPassword')?.invalid &&
+            loginForm.get('generatedPassword')?.touched
+          "
+          placeholder="Enter the generated password"
+        />
+        <button
+          type="button"
+          class="password-toggle"
+          (click)="toggleGeneratedPasswordVisibility()"
+        >
+          {{ showGeneratedPassword ? "👁️" : "👁️‍🗨️" }}
+        </button>
+      </div>
+      <div
+        class="error-message"
+        *ngIf="
+          loginForm.get('generatedPassword')?.invalid &&
+          loginForm.get('generatedPassword')?.touched
+        "
+      >
+        Generated password is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="newPassword">New Password *</label>
+      <div class="password-input-container">
+        <input
+          [type]="showNewPassword ? 'text' : 'password'"
+          id="newPassword"
+          formControlName="newPassword"
+          class="form-control"
+          [class.error]="
+            loginForm.get('newPassword')?.invalid &&
+            loginForm.get('newPassword')?.touched
+          "
+          placeholder="Enter your new password"
+        />
+        <button
+          type="button"
+          class="password-toggle"
+          (click)="toggleNewPasswordVisibility()"
+        >
+          {{ showNewPassword ? "👁️" : "👁️‍🗨️" }}
+        </button>
+      </div>
+      <div
+        class="error-message"
+        *ngIf="
+          loginForm.get('newPassword')?.invalid &&
+          loginForm.get('newPassword')?.touched
+        "
+      >
+        <span *ngIf="loginForm.get('newPassword')?.errors?.['required']"
+          >New password is required</span
+        >
+        <span *ngIf="loginForm.get('newPassword')?.errors?.['minlength']"
+          >Password must be at least 8 characters</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm New Password *</label>
+      <div class="password-input-container">
+        <input
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          class="form-control"
+          [class.error]="
+            loginForm.get('confirmPassword')?.invalid &&
+            loginForm.get('confirmPassword')?.touched
+          "
+          placeholder="Confirm your new password"
+        />
+        <button
+          type="button"
+          class="password-toggle"
+          (click)="toggleConfirmPasswordVisibility()"
+        >
+          {{ showConfirmPassword ? "👁️" : "👁️‍🗨️" }}
+        </button>
+      </div>
+      <div
+        class="error-message"
+        *ngIf="
+          loginForm.get('confirmPassword')?.invalid &&
+          loginForm.get('confirmPassword')?.touched
+        "
+      >
+        <span *ngIf="loginForm.get('confirmPassword')?.errors?.['required']"
+          >Please confirm your password</span
+        >
+        <span
+          *ngIf="loginForm.get('confirmPassword')?.errors?.['passwordMismatch']"
+          >Passwords do not match</span
+        >
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="loginForm.invalid"
+      >
+        Complete Setup
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,22 +1,61 @@
 <div class="component">
   <div class="first">
     <h3 style="font-weight: bold">Create repository</h3>
+
     <div class="header">
       <div>
-        <label for="namespace">Namespace: </label>
-        <select name="namespace" id="namespace">
-          <option *ngFor="let namespace of namespaces" value="{{ namespace }}">
-            {{ namespace }}
-          </option>
-        </select>
-      </div>
-      <div>
         <label for="repo_name">Repository name: </label>
-        <input type="text" id="repo_name" />
+        <input type="text" id="repo_name" [(ngModel)]="repositoryName" />
       </div>
     </div>
-    <p>Short description:</p>
-    <textarea name="" id="" placeholder="Short description"></textarea>
+
+    <label for="namespace">Namespace: </label>
+    <div>
+      <input
+        class="textInput"
+        type="text"
+        id="namespace"
+        [(ngModel)]="namespace"
+      />
+    </div>
+
+    <label style="margin-top: 15px">Short description:</label>
+    <textarea
+      [(ngModel)]="description"
+      placeholder="Short description"
+    ></textarea>
+
+    <label style="margin-top: 15px" for="organisationId">Organisation: </label>
+    <div>
+      <select
+        id="organisationId"
+        [(ngModel)]="organisationId"
+        class="textInput"
+        *ngIf="userOrganisations.length > 0"
+      >
+        <option [ngValue]="null">-- No organisation --</option>
+        <option *ngFor="let org of userOrganisations" [value]="org.id">
+          {{ org.name }}
+        </option>
+      </select>
+      <div *ngIf="userOrganisations.length === 0">
+        You are not part of any organisation.
+      </div>
+    </div>
+
+    <label style="margin-top: 15px" for="category">Category: </label>
+    <div>
+      <select id="category" [(ngModel)]="category" class="textInput">
+        <option
+          *ngFor="let cat of categories"
+          [value]="cat"
+          [selected]="cat === 'NONE'"
+        >
+          {{ cat }}
+        </option>
+      </select>
+    </div>
+
     <h4 style="font-weight: bold">Visibility</h4>
     <div class="radioDiv">
       <div>
@@ -24,25 +63,33 @@
           type="radio"
           id="public"
           name="visibility"
-          value="public"
-          checked="checked"
+          value="PUBLIC"
+          [(ngModel)]="visibility"
         />
-        <label for="public"
-          >Pubilc <i class="fa fa-globe" aria-hidden="true"></i></label
-        ><br />
+        <label for="public">
+          Public <i class="fa fa-globe" aria-hidden="true"></i>
+        </label>
       </div>
       <div>
-        <input type="radio" id="private" name="visibility" value="private" />
-        <label for="private"
-          >Private <i class="fa fa-lock" aria-hidden="true"></i></label
-        ><br />
+        <input
+          type="radio"
+          id="private"
+          name="visibility"
+          value="PRIVATE"
+          [(ngModel)]="visibility"
+        />
+        <label for="private">
+          Private <i class="fa fa-lock" aria-hidden="true"></i>
+        </label>
       </div>
     </div>
+
     <div class="footer">
       <button class="redButton">Cancel</button>
-      <button class="blueButton">Create</button>
+      <button class="blueButton" (click)="onCreateRepository()">Create</button>
     </div>
   </div>
+
   <div class="second">
     <h4 style="font-weight: 600">Pushing images</h4>
     <p>You can push a new image to this repository using the CLI:</p>

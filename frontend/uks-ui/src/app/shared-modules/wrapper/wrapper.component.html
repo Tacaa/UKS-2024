@@ -48,6 +48,7 @@
       <span class="name-second-part">hub</span>
 
       <div class="menu-items">
+        <!-- Everyone sees "Explore" -->
         <button
           class="menu-item-button"
           mat-menu-item
@@ -58,36 +59,70 @@
         >
           <span class="menu-item">Explore</span>
         </button>
-        <button
-          class="menu-item-button"
-          mat-menu-item
-          routerLink="/dockerhub/repository"
-          routerLinkActive="router-link-active"
-          [class.underline]="selectedButton === 'repositories'"
-          (click)="setActive('repositories')"
-        >
-          <span class="menu-item">Repositories</span>
-        </button>
-        <button
-          class="menu-item-button"
-          mat-menu-item
-          routerLink="/dockerhub/organizations"
-          routerLinkActive="router-link-active"
-          [class.underline]="selectedButton === 'organizations'"
-          (click)="setActive('organizations')"
-        >
-          <span class="menu-item">Organizations</span>
-        </button>
-        <button
-          class="menu-item-button"
-          mat-menu-item
-          routerLink="/dockerhub/usage"
-          routerLinkActive="router-link-active"
-          [class.underline]="selectedButton === 'usage'"
-          (click)="setActive('usage')"
-        >
-          <span class="menu-item">Usage</span>
-        </button>
+
+        <!-- USER and above -->
+        <ng-container *ngIf="hasAtLeast(Role.USER)">
+          <button
+            class="menu-item-button"
+            mat-menu-item
+            routerLink="/dockerhub/repository"
+            routerLinkActive="router-link-active"
+            [class.underline]="selectedButton === 'repositories'"
+            (click)="setActive('repositories')"
+          >
+            <span class="menu-item">Repositories</span>
+          </button>
+
+          <button
+            class="menu-item-button"
+            mat-menu-item
+            routerLink="/dockerhub/organizations"
+            routerLinkActive="router-link-active"
+            [class.underline]="selectedButton === 'organizations'"
+            (click)="setActive('organizations')"
+          >
+            <span class="menu-item">Organizations</span>
+          </button>
+
+          <button
+            class="menu-item-button"
+            mat-menu-item
+            routerLink="/dockerhub/usage"
+            routerLinkActive="router-link-active"
+            [class.underline]="selectedButton === 'usage'"
+            (click)="setActive('usage')"
+          >
+            <span class="menu-item">Usage</span>
+          </button>
+        </ng-container>
+
+        <!-- ADMIN and SUPER_ADMIN -->
+        <ng-container *ngIf="hasAtLeast(Role.ADMIN)">
+          <button
+            class="menu-item-button"
+            mat-menu-item
+            routerLink="/dockerhub/adminPanel"
+            routerLinkActive="router-link-active"
+            [class.underline]="selectedButton === 'adminPanel'"
+            (click)="setActive('adminPanel')"
+          >
+            <span class="menu-item">Admin Panel</span>
+          </button>
+        </ng-container>
+
+        <!-- SUPER_ADMIN only -->
+        <ng-container *ngIf="hasRole(Role.SUPER_ADMIN)">
+          <button
+            class="menu-item-button"
+            mat-menu-item
+            routerLink="/dockerhub/createAdministrator"
+            routerLinkActive="router-link-active"
+            [class.underline]="selectedButton === 'addAdministrator'"
+            (click)="setActive('addAdministrator')"
+          >
+            <span class="menu-item">Add Administrator</span>
+          </button>
+        </ng-container>
       </div>
 
       <span class="spacer"></span>
