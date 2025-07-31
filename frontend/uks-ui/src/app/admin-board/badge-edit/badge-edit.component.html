@@ -1,0 +1,70 @@
+<div class="component">
+  <h3>Edit user badges</h3>
+
+  <form (submit)="onSearch(); $event.preventDefault()">
+    <input
+      type="text"
+      placeholder="First Name"
+      [(ngModel)]="searchParams.firstName"
+      name="firstName"
+    />
+    <input
+      type="text"
+      placeholder="Last Name"
+      [(ngModel)]="searchParams.lastName"
+      name="lastName"
+    />
+    <input
+      type="text"
+      placeholder="Username"
+      [(ngModel)]="searchParams.username"
+      name="username"
+    />
+    <input
+      type="text"
+      placeholder="Role"
+      [(ngModel)]="searchParams.role"
+      name="role"
+    />
+    <select [(ngModel)]="searchParams.userBadge" name="userBadge">
+      <option value="">All badges</option>
+      <option value="SPONSORED_OSS">Sponsored oss</option>
+      <option value="VERIFIED_PUBLISHER">Verified publisher</option>
+      <option value="NONE">No Badge</option>
+    </select>
+    <button type="submit">Search</button>
+  </form>
+
+  <div
+    *ngFor="let user of allUsers"
+    style="border-bottom: 1px solid #ccc; padding: 8px 0"
+  >
+    <div><strong>First Name:</strong> {{ user.firstName }}</div>
+    <div><strong>Last Name:</strong> {{ user.lastName }}</div>
+    <div><strong>Username:</strong> {{ user.username }}</div>
+    <div><strong>Role:</strong> {{ user.role }}</div>
+    <div><strong>Badge:</strong> {{ user.userBadge }}</div>
+    <div *ngIf="user.id" style="margin-top: 4px">
+      <span
+        (click)="changeBadge(user.id, 'SPONSORED_OSS')"
+        style="cursor: pointer; color: darkgreen; font-weight: bold"
+      >
+        Make Sponsored OSS
+      </span>
+      |
+      <span
+        (click)="changeBadge(user.id, 'VERIFIED_PUBLISHER')"
+        style="cursor: pointer; color: darkblue; font-weight: bold"
+      >
+        Make Verified Publisher
+      </span>
+      |
+      <span
+        (click)="changeBadge(user.id, 'NONE')"
+        style="cursor: pointer; color: darkred; font-weight: bold"
+      >
+        Remove Badge
+      </span>
+    </div>
+  </div>
+</div>

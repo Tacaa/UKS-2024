@@ -1,6 +1,6 @@
 package com.example.uks.dto.team;
 
-import com.example.uks.enumeration.TeamPersmission;
+import com.example.uks.enumeration.TeamPermission;
 import lombok.*;
 
 @Getter
@@ -11,7 +11,7 @@ import lombok.*;
 public class CreateTeamDTO {
     private String name;
     private String description;
-    private TeamPersmission teamPersmission;
+    private TeamPermission teamPermission;
     private Integer ownerId;
     private Integer organisationId;
 }

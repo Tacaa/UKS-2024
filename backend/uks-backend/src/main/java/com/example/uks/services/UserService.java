@@ -134,7 +134,7 @@ public class UserService {
 
         return userRepository.save(user);
     }
-
+  
     public void disableUser(Integer id){
         User user = userRepository.findById(id).orElse(null);
 
@@ -146,6 +146,10 @@ public class UserService {
 
     public User save(User user){
         return userRepository.save(user);
+    }
+  
+    public List<User> getUsersByBadge(UserBadge badge) {
+        return userRepository.findByUserBadge(badge);
     }
 
 }

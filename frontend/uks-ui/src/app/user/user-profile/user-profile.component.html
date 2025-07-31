@@ -4,7 +4,8 @@
       <img src="assets/svg/uuser_placeholder.svg" alt="Slika" />
     </div>
     <div class="image-name">
-      {{ name }}
+      {{ name?.firstName }}
+      {{ name?.lastName }}
       <a
         routerLink="/dockerhub/accountSettings"
         target="_blank"
@@ -21,96 +22,48 @@
     <button
       class="menu-item-button"
       mat-menu-item
-      [class.active]="selectedOption === 'repositories'"
-      (click)="selectedOption = 'repositories'"
-      (click)="showAll()"
-    >
-      <span class="menu-item">Repositories</span>
-    </button>
-    <button
-      class="menu-item-button"
-      mat-menu-item
       [class.active]="selectedOption === 'starred'"
       (click)="selectedOption = 'starred'"
-      (click)="showFavorites()"
     >
       <span class="menu-item">Starred</span>
     </button>
   </div>
 
   <div class="content">
-    <div *ngIf="selectedOption === 'repositories'">
-      <ng-container *ngIf="filteredRepos.length > 0; else noRepos">
-        <ng-container *ngTemplateOutlet="myTable"></ng-container>
-      </ng-container>
+    <div class="component">
+      <h2>Starred Repositories</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Last Pushed</th>
+            <th>Organisation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let repo of starredRepos"
+            [routerLink]="['/dockerhub/r', repo.id]"
+          >
+            <td>
+              {{
+                repo.organisation?.name
+                  ? (repo.organisation?.name | spaceToUnderscore | lowercase)
+                  : (repo.owner.name | lowercase)
+              }}/{{ repo.name }}
+            </td>
+            <td>
+              {{
+                repo.updated
+                  ? (repo.updated | date : "mediumDate")
+                  : (repo.created | date : "mediumDate")
+              }}
+            </td>
+            <td>{{ repo.organisation?.name }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <div *ngIf="selectedOption === 'starred'">
-      <ng-container *ngIf="filteredRepos.length > 0; else noReposStar">
-        <ng-container *ngTemplateOutlet="myTable"></ng-container>
-      </ng-container>
-    </div>
-
-    <ng-template #noRepos>
-      <div class="no-repos">No repositories</div>
-    </ng-template>
-
-    <ng-template #noReposStar>
-      <div class="no-repos">No starred repositories</div>
-    </ng-template>
   </div>
-
-  <ng-template #myTable showstarred="starred">
-    <table style="border-collapse: collapse; width: 100%">
-      <thead>
-        <tr>
-          <th
-            class="sortableTh"
-            (click)="sortTable('name')"
-            style="cursor: pointer"
-          >
-            Name
-            <span *ngIf="sortField === 'name'">
-              {{ sortDirection === "asc" ? "▲" : "▼" }}
-            </span>
-          </th>
-          <th
-            class="sortableTh"
-            (click)="sortTable('updated')"
-            style="cursor: pointer"
-          >
-            Last Pushed
-            <span *ngIf="sortField === 'updated'">
-              {{ sortDirection === "asc" ? "▲" : "▼" }}
-            </span>
-          </th>
-          <th>Contains</th>
-          <th>Visibility</th>
-          <th>Scout</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let repo of filteredRepos"
-          (click)="openRepo(repo.name)"
-          routerLink="/dockerhub/repository/{{ repo.namespace }}/{{
-            repo.name
-          }}"
-          style="cursor: pointer; border-bottom: 1px solid #ddd"
-        >
-          <td>{{ repo.name }}</td>
-          <td>
-            {{
-              repo.updated
-                ? (repo.updated | date : "mediumDate")
-                : (repo.created | date : "mediumDate")
-            }}
-          </td>
-          <td>Some data</td>
-          <td>{{ repo.visibility ? "Public" : "Private" }}</td>
-          <td>Scout Data</td>
-        </tr>
-      </tbody>
-    </table>
-  </ng-template>
 </div>

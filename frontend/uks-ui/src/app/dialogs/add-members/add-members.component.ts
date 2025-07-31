@@ -1,45 +1,87 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { OrganisationService } from 'src/app/services/organisation/organisation.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-add-members',
   templateUrl: './add-members.component.html',
   styleUrls: ['./add-members.component.css'],
 })
-export class AddMembersComponent {
-  usernames: string[] = ['alice', 'bob', 'charlie', 'diana', 'eve', 'frank']; // All available members
-  searchControl = new FormControl('');
-  filteredUsernames: string[] = this.usernames;
-  addedMembers: string[] = []; // Members in current organization
+export class AddMembersComponent implements OnInit {
+  allUsers: User[] = [];
+  filteredUsers: User[] = [];
+  addedMembers: User[] = [];
 
-  constructor() {
-    this.searchControl.valueChanges.subscribe((searchText) => {
-      const query = searchText ?? ''; // Ensure `searchText` is not null
-      this.filteredUsernames = this.usernames.filter((username) =>
-        username.toLowerCase().includes(query.toLowerCase())
-      );
+  searchControl = new FormControl('');
+
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private dialogRef: MatDialogRef<AddMembersComponent>,
+    private organisationService: OrganisationService,
+    @Inject(MAT_DIALOG_DATA) public data: { orgId: number }
+  ) {}
+
+  ngOnInit(): void {
+    this.userService.getAllUsers().subscribe((users) => {
+      this.allUsers = users;
+      this.filteredUsers = users;
+
+      this.searchControl.valueChanges.subscribe((searchText) => {
+        const query = (searchText ?? '').toLowerCase();
+        this.filteredUsers = this.allUsers.filter((user) =>
+          user.username.toLowerCase().includes(query)
+        );
+      });
     });
   }
 
-  setSearch(username: string): void {
-    this.searchControl.setValue(username); // Set the clicked username in the search bar
+  setSearch(user: User): void {
+    this.searchControl.setValue(user.username);
   }
 
   addMember(): void {
-    const searchValue = this.searchControl.value?.trim() || ''; // Fallback to empty string if undefined
-    if (searchValue === '') {
+    const username = this.searchControl.value?.trim();
+    if (!username) {
       alert('Please enter a valid username.');
       return;
     }
-    if (this.usernames.includes(searchValue)) {
-      if (!this.addedMembers.includes(searchValue)) {
-        this.addedMembers.push(searchValue);
-        alert(`${searchValue} added successfully!`);
-      } else {
-        alert(`${searchValue} is already added.`);
-      }
-    } else {
-      alert(`${searchValue} does not exist.`);
+
+    const user = this.allUsers.find((u) => u.username === username);
+    if (!user) {
+      alert(`${username} does not exist.`);
+      return;
     }
+
+    if (this.addedMembers.find((m) => m.id === user.id)) {
+      alert(`${username} is already added.`);
+      return;
+    }
+
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser?.id) {
+      alert('Unauthorized.');
+      return;
+    }
+
+    this.organisationService
+      .addMemberToOrganisation(
+        this.data.orgId,
+        currentUser.id,
+        user.id as number
+      )
+      .subscribe({
+        next: () => {
+          this.addedMembers.push(user);
+          alert(`${username} added successfully!`);
+        },
+        error: (err) => {
+          alert(err.error?.message || 'Error adding user.');
+        },
+      });
   }
 }

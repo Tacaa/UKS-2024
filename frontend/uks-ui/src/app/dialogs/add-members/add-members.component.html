@@ -11,12 +11,13 @@
 
   <mat-list>
     <mat-list-item
-      *ngFor="let username of filteredUsernames | slice : 0 : 4"
-      (click)="setSearch(username)"
+      *ngFor="let user of filteredUsers | slice : 0 : 8"
+      (click)="setSearch(user)"
     >
-      {{ username }}
+      {{ user.username }}
     </mat-list-item>
   </mat-list>
+
   <div class="footer">
     <button class="redButton" mat-dialog-close>Cancel</button>
     <button class="blueButton" (click)="addMember()">Add Member</button>
