@@ -6,5 +6,5 @@ export interface UserRequest {
   firstname: string;
   lastname: string;
   email: string;
-  roleEnumEnum: RoleEnum;
+  roleEnum: RoleEnum;
 }
