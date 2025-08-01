@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user/user.service';
 import { UpdateUserDTO } from 'src/app/shared/dto/user/update-user.dto';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-settings',
@@ -16,7 +17,8 @@ export class AccountSettingsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     // Initialize the form group with default values and validators
     this.accountForm = this.fb.group({
@@ -29,6 +31,9 @@ export class AccountSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
+    if (currentUser == null) {
+      this.router.navigate(['dockerhub/login']);
+    }
     const userId = currentUser?.id;
 
     if (!userId) {
@@ -63,6 +68,9 @@ export class AccountSettingsComponent implements OnInit {
           const updatedUser = response.data;
           console.log('User updated:', updatedUser);
           alert(response.message || 'Profile updated successfully!');
+          this.authService.restoreUser();
+          this.authService.clearUserData();
+          window.location.reload();
         },
         error: (err: HttpErrorResponse) => {
           console.error('Error:', err);

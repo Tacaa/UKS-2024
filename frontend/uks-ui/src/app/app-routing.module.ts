@@ -27,6 +27,7 @@ import { AdminPanelComponent } from './admin-board/admin-panel/admin-panel/admin
 import { OfficialRepositoriesComponent } from './admin-board/official-repositories/official-repositories.component';
 import { CreateAdministratorComponent } from './admin-board/create-administrator/create-administrator.component';
 import { SuperAdminLoginComponent } from './admin-board/super-admin-login/super-admin-login.component';
+import { LogSearchComponent } from './log-search/log-search.component';
 import { LoginComponent } from './auth-pages/login/login.component';
 import { RegisterComponent } from './auth-pages/register/register.component';
 import { Injectable, Component, OnInit } from '@angular/core';
@@ -77,6 +78,7 @@ export class AuthGuard implements CanActivate {
 const routes: Routes = [
   { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
   { path: 'superadminLogin', component: SuperAdminLoginComponent },
+  // TODO: Podesiti rutu LogSearchComponent-e!
   {
     path: 'dockerhub',
     loadComponent: () =>
@@ -154,6 +156,7 @@ const routes: Routes = [
             path: 'officialRepoList',
             component: OfficialRepositoriesComponent,
           },
+          { path: 'logs', component: LogSearchComponent },
         ],
       },
       { path: 'login', component: LoginComponent },

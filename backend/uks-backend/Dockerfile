@@ -14,6 +14,9 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 
+# Create the logs directory
+RUN mkdir -p /app/logs
+
 # Copy the built JAR from the Maven image
 COPY --from=build /app/target/uks-0.0.1-SNAPSHOT.jar /app/uks.jar
 
@@ -21,4 +24,4 @@ COPY --from=build /app/target/uks-0.0.1-SNAPSHOT.jar /app/uks.jar
 EXPOSE 8081
 
 # Command to run the JAR
-ENTRYPOINT ["java", "-jar", "/app/uks.jar"]
+ENTRYPOINT ["sh", "-c", "sleep 60 && java -jar /app/uks.jar"]
