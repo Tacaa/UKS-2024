@@ -92,10 +92,18 @@ public class WebSecurityConfig {
 
         http.authorizeHttpRequests(request -> {
             request.requestMatchers(new AntPathRequestMatcher("/api/auth/login")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/api/auth/register")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/api/auth/logout")).authenticated()
-                    .requestMatchers(new AntPathRequestMatcher("/error")).permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/api/auth/current-user")).authenticated()
+                .requestMatchers(new AntPathRequestMatcher("/api/auth/register")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/auth/logout")).authenticated()
+                .requestMatchers(new AntPathRequestMatcher("/error")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/auth/current-user")).authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/users/all").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/repositories/all").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/repositories/official/all").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/repositories/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/stars/count/{repositoryId}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/tags/{repositoryId}").permitAll()
+                
+
 
                     // ORGANISATION
                     .requestMatchers(HttpMethod.PUT, "/api/organisation/{orgId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
@@ -115,7 +123,7 @@ public class WebSecurityConfig {
                     //REPOSITORIES
                     .requestMatchers(HttpMethod.GET, "/api/repositories").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/repositories/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/repositories/all").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/all").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/repositories/search").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/repositories").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/repositories/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
@@ -126,7 +134,7 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/repositories/official").hasAnyRole( "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/repositories/official/{id}").hasAnyRole( "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/repositories/official/all").hasAnyRole( "ADMIN", "SUPER_ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/repositories/official/search").hasAnyRole( "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/official/search").hasAnyRole( "USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/repositories/official").hasAnyRole( "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/repositories/official/{id}").hasAnyRole( "ADMIN", "SUPER_ADMIN")
                     
@@ -154,6 +162,22 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/users/search").hasAnyRole( "USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/users/badge/{id}").hasAnyRole(  "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasAnyRole(  "USER", "ADMIN", "SUPER_ADMIN")
+
+
+                    // STARS
+                    .requestMatchers(HttpMethod.POST, "/api/stars").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/stars").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/stars/user").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+
+
+                    // TAGS
+                    .requestMatchers(HttpMethod.POST, "/api/tags").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/tags/{repositoryId}").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/tags/search").permitAll()
+                    .requestMatchers(HttpMethod.DELETE, "/api/tags/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+
+
+
                     .requestMatchers(HttpMethod.GET, "/api/users/badge").hasAnyRole(  "USER", "ADMIN", "SUPER_ADMIN")
                     .anyRequest().authenticated();
         });
@@ -179,7 +203,7 @@ public class WebSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:4201"));
         configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "GET", "OPTIONS", "DELETE", "PATCH")); // or simply "*"
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

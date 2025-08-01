@@ -14,7 +14,7 @@ export class BadgeEditComponent implements OnInit {
     firstName: '',
     lastName: '',
     username: '',
-    role: '',
+    roleEnum: '',
     userBadge: '',
   };
 

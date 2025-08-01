@@ -27,6 +27,52 @@ import { AdminPanelComponent } from './admin-board/admin-panel/admin-panel/admin
 import { OfficialRepositoriesComponent } from './admin-board/official-repositories/official-repositories.component';
 import { CreateAdministratorComponent } from './admin-board/create-administrator/create-administrator.component';
 import { SuperAdminLoginComponent } from './admin-board/super-admin-login/super-admin-login.component';
+import { LoginComponent } from './auth-pages/login/login.component';
+import { RegisterComponent } from './auth-pages/register/register.component';
+import { Injectable, Component, OnInit } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+import { AuthService } from './services/auth/auth.service';
+
+// Redirect Component to handle the authentication logic
+@Component({
+  template: '',
+})
+export class AuthRedirectComponent implements OnInit {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    const userRole = this.authService.getCurrentUserRoleEnum();
+
+    if (userRole === null || userRole === undefined) {
+      // User is not authenticated, redirect to explore
+      this.router.navigate(['/dockerhub/explore']);
+    } else {
+      // User is authenticated, redirect to repository
+      this.router.navigate(['/dockerhub/repository']);
+    }
+  }
+}
+
+// Auth Guard for protecting routes that require authentication
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivate(): boolean {
+    const userRole = this.authService.getCurrentUserRoleEnum();
+
+    if (userRole === null || userRole === undefined) {
+      // User is not authenticated, redirect to explore
+      this.router.navigate(['/dockerhub/explore']);
+      return false;
+    }
+
+    // User is authenticated, allow access
+    return true;
+  }
+}
 
 const routes: Routes = [
   { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
@@ -41,13 +87,13 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'repository',
-        pathMatch: 'full',
+        component: AuthRedirectComponent,
       },
       {
         path: 'repository',
         component: RepositoriesComponent,
         title: 'Home',
+        canActivate: [AuthGuard],
       },
       {
         path: 'create',
@@ -110,6 +156,8 @@ const routes: Routes = [
           },
         ],
       },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
       {
         path: 'createAdministrator',
         component: CreateAdministratorComponent,

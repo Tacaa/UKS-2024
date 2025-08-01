@@ -30,9 +30,9 @@ export class ExploreComponent implements OnInit {
     private authService: AuthService
   ) {}
   ngOnInit(): void {
-    if (this.authService.getCurrentUser()) {
+    if (this.authService.getUserId()) {
       this.starService
-        .getStarredRepositories(this.authService.getCurrentUser()?.id as number)
+        .getStarredRepositories(this.authService.getUserId() as number)
         .subscribe((repos) => {
           this.starredRepos = repos;
         });
