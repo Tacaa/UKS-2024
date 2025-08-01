@@ -110,11 +110,11 @@ public class AuthenticationController {
 
         List<Role> roles;
         if(userRequest.getRoleEnum() == RoleEnum.SUPER_ADMIN){
-            roles = roleService.findByName("SUPER_ADMIN");
+            roles = roleService.findByName("ROLE_SUPER_ADMIN");
         }else if(userRequest.getRoleEnum() == RoleEnum.ADMIN){
-            roles = roleService.findByName("ADMIN");
+            roles = roleService.findByName("ROLE_ADMIN");
         }else{
-            roles = roleService.findByName("USER");
+            roles = roleService.findByName("ROLE_USER");
         }
 
         User user = User.builder()
