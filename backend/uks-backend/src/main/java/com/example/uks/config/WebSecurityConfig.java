@@ -106,7 +106,7 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/api/organisation/{orgId}/members").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/organisation/{orgId}/members").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
 
-                    //TEAMS - kad se spoji sa develop
+                    //TEAMS
                     .requestMatchers(HttpMethod.GET, "/api/team/{orgId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/team").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/team/add_member").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
@@ -129,6 +129,23 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/repositories/official/search").hasAnyRole( "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/repositories/official").hasAnyRole( "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/repositories/official/{id}").hasAnyRole( "ADMIN", "SUPER_ADMIN")
+                    
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/organisation/{organisationId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/filter-by-badge").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+
+                    //STARS
+                    .requestMatchers(HttpMethod.POST, "/api/stars").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/stars").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/stars/user").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/stars/count/{repositoryId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    
+
+                    //TAGS
+                    .requestMatchers(HttpMethod.POST, "/api/tags").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/tags/{repositoryId}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/tags/search").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/tags/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")    
+
 
                     //USERS
                     .requestMatchers(HttpMethod.GET, "/api/users").hasAnyRole( "USER", "ADMIN", "SUPER_ADMIN")
@@ -137,7 +154,7 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/users/search").hasAnyRole( "USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/users/badge/{id}").hasAnyRole(  "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasAnyRole(  "USER", "ADMIN", "SUPER_ADMIN")
-
+                    .requestMatchers(HttpMethod.GET, "/api/users/badge").hasAnyRole(  "USER", "ADMIN", "SUPER_ADMIN")
                     .anyRequest().authenticated();
         });
         http.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userDetailsService()), UsernamePasswordAuthenticationFilter.class);
