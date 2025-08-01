@@ -1,14 +1,10 @@
 package com.example.uks.dto.user;
 
-import com.example.uks.enumeration.Role;
-import com.example.uks.enumeration.UserBadge;
 import com.example.uks.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Getter
 @Setter

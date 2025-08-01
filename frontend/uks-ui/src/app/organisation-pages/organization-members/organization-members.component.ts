@@ -26,7 +26,7 @@ export class OrganizationMembersComponent implements OnInit {
     teams: [],
   };
 
-  members: { user: any; role: string }[] = [];
+  members: { user: any; roleEnum: string }[] = [];
   isOwner: boolean = false;
 
   constructor(
@@ -57,9 +57,9 @@ export class OrganizationMembersComponent implements OnInit {
           this.organisation.members.forEach((memberId) => {
             this.userService.getUserById(memberId).subscribe((res) => {
               const user = res;
-              const role =
+              const roleEnum =
                 user.id === this.organisation.ownerId ? 'Owner' : 'Member';
-              this.members.push({ user, role });
+              this.members.push({ user, roleEnum });
             });
           });
         });

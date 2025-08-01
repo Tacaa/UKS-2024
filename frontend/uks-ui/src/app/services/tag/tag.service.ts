@@ -19,4 +19,8 @@ export class TagService {
   getTagsByRepository(repositoryId: number): Observable<TagDTO[]> {
     return this.http.get<TagDTO[]>(`${this.baseUrl}/${repositoryId}`);
   }
+
+  deleteTag(id: number): Observable<string> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  }
 }

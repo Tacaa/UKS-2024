@@ -17,7 +17,7 @@ export class CreateRepositoryComponent implements OnInit {
   description: string = '';
   visibility: string = 'PUBLIC';
   personal: boolean = false;
-  ownerId: number = this.authService.getCurrentUser()?.id as number;
+  ownerId: number = this.authService.getUserId() as number;
   organisationId: number | null = null;
   category: Category = Category.NONE;
 
@@ -32,7 +32,7 @@ export class CreateRepositoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const userId = this.authService.getCurrentUser()?.id;
+    const userId = this.authService.getUserId();
     if (userId) {
       this.organisationService.getUserOrganisations(userId).subscribe({
         next: (res) => {

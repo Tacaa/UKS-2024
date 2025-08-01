@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { RepositoryDTO } from 'src/app/shared/dto/repository/repository.dto';
 import { StarDTO } from 'src/app/shared/dto/star/star.dto';
 
@@ -20,9 +20,24 @@ export class StarService {
     return this.http.delete<any>(`${this.baseUrl}`, { body: starDTO });
   }
 
-  getStarredRepositories(userId: number): Observable<RepositoryDTO[]> {
+  getStarredRepositories(
+    userId: number | undefined
+  ): Observable<RepositoryDTO[]> {
+    if (userId == null) {
+      // Return an empty list silently if userId is missing
+      return of([]);
+    }
+
     const params = new HttpParams().set('userId', userId.toString());
-    return this.http.get<RepositoryDTO[]>(`${this.baseUrl}/user`, { params });
+
+    return this.http
+      .get<RepositoryDTO[]>(`${this.baseUrl}/user`, { params })
+      .pipe(
+        catchError(() => {
+          // On HTTP error, also return an empty list silently
+          return of([]);
+        })
+      );
   }
 
   countStars(repositoryId: number): Observable<number> {
