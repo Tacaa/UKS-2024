@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Log Search</h2>
+
+  <label for="query"><strong>Search Query:</strong></label>
+  <input
+    id="query"
+    type="text"
+    [(ngModel)]="query"
+    placeholder='(npr.) level:INFO AND message:"Started"'
+    (keydown.enter)="onSearch()"
+  />
+
+  <button (click)="onSearch()">Search</button>
+
+  <div class="log-result" *ngIf="results.length > 0">
+    <div *ngFor="let log of results" class="log-entry">
+      <p>
+        <strong>Time:</strong> {{ log.timestamp | date : "short" }} ({{
+          log.timestamp
+        }})
+      </p>
+      <p><strong>Level:</strong> {{ log.level }}</p>
+      <p><strong>Thread:</strong> {{ log.thread }}</p>
+      <p><strong>Message:</strong> {{ log.message }}</p>
+    </div>
+  </div>
+
+  <p *ngIf="results.length === 0 && searched">No results found.</p>
+</div>

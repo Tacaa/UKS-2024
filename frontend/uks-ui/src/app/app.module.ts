@@ -48,6 +48,7 @@ import { AdminPanelComponent } from './admin-board/admin-panel/admin-panel/admin
 import { OfficialRepositoriesComponent } from './admin-board/official-repositories/official-repositories.component';
 import { CreateAdministratorComponent } from './admin-board/create-administrator/create-administrator.component';
 import { SuperAdminLoginComponent } from './admin-board/super-admin-login/super-admin-login.component';
+import { LogSearchComponent } from './log-search/log-search.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { SuperAdminLoginComponent } from './admin-board/super-admin-login/super-
     OfficialRepositoriesComponent,
     CreateAdministratorComponent,
     SuperAdminLoginComponent,
+    LogSearchComponent,
   ],
   imports: [
     BrowserModule,
