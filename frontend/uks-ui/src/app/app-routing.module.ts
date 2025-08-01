@@ -75,12 +75,10 @@ export class AuthGuard implements CanActivate {
   }
 }
 
-
 const routes: Routes = [
   { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
   { path: 'superadminLogin', component: SuperAdminLoginComponent },
   // TODO: Podesiti rutu LogSearchComponent-e!
-  { path: 'admin/logs', component: LogSearchComponent },
   {
     path: 'dockerhub',
     loadComponent: () =>
@@ -158,6 +156,7 @@ const routes: Routes = [
             path: 'officialRepoList',
             component: OfficialRepositoriesComponent,
           },
+          { path: 'logs', component: LogSearchComponent },
         ],
       },
       { path: 'login', component: LoginComponent },

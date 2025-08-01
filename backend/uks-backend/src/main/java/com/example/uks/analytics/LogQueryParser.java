@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 @Component
 public class LogQueryParser {
 
-    private static final Pattern TOKEN_PATTERN = Pattern.compile("\\(|\\)|AND|OR|NOT|\\w+:\"[^\"]+\"|\\w+:[^\\s()]+");
+    private static final Pattern TOKEN_PATTERN = Pattern.compile("\\(|\\)|\\bAND\\b|\\bOR\\b|\\bNOT\\b|\\w+\\s*:\\s*\"[^\"]+\"|\\w+\\s*:\\s*\\w+");
 
     public CriteriaQuery parseToCriteriaQuery(String input) {
         List<String> tokens = tokenize(input);

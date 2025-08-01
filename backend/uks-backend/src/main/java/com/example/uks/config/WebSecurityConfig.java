@@ -177,6 +177,9 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.DELETE, "/api/tags/{id}").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
 
 
+                    // LOGS
+                    .requestMatchers(HttpMethod.GET, "/api/logs/search").hasAnyRole(  "ADMIN", "SUPER_ADMIN")
+
 
                     .requestMatchers(HttpMethod.GET, "/api/users/badge").hasAnyRole(  "USER", "ADMIN", "SUPER_ADMIN")
                     .anyRequest().authenticated();
@@ -192,18 +195,17 @@ public class WebSecurityConfig {
         // Autentifikacija ce biti ignorisana ispod navedenih putanja (kako bismo ubrzali pristup resursima)
         // Zahtevi koji se mecuju za web.ignoring().antMatchers() nemaju pristup SecurityContext-u
         // Dozvoljena POST metoda na ruti /auth/login, za svaki drugi tip HTTP metode greska je 401 Unauthorized
-        return (web) -> web.ignoring().requestMatchers(HttpMethod.POST, "/auth/login")
-
-
-                // Ovim smo dozvolili pristup statickim resursima aplikacije
-                .requestMatchers(HttpMethod.GET, "/", "/webjars/*", "/*.html", "favicon.ico",
-                        "/*/*.html", "/*/*.css", "/*/*.js");
+        return (web) -> web.ignoring()
+            .requestMatchers(HttpMethod.POST, "/auth/login")
+            .requestMatchers(HttpMethod.GET, "/api/logs/search") // Add this line
+            .requestMatchers(HttpMethod.GET, "/", "/webjars/*", "/*.html", "favicon.ico",
+                "/*/*.html", "/*/*.css", "/*/*.js");
 
     }
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:4201"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:4201", "http://localhost:9200"));
         configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "GET", "OPTIONS", "DELETE", "PATCH")); // or simply "*"
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
