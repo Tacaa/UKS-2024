@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Role } from 'src/app/shared/enum/Role';
+import { UserDTO } from 'src/app/shared/dto/user/user.dto';
+import { RoleEnum } from 'src/app/shared/enum/RoleEnum';
 import { UserRequest } from 'src/app/shared/models/user-register-request.model';
 import { CurrentUser } from 'src/app/shared/models/user.model';
 
@@ -13,20 +14,27 @@ import { CurrentUser } from 'src/app/shared/models/user.model';
 export class AuthService {
   private tokenKey = 'authToken';
   private userIdKey = 'userId';
-  private userRoleKey = 'userRole';
-  private apiUrl = 'http://localhost:8081/api/auth'; // Updated port
-  private currentUserSubject = new BehaviorSubject<CurrentUser | null>(null);
+  private userRoleEnumKey = 'userRoleEnum';
+  private apiUrl = 'http://localhost:8081/api/auth';
+  private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    this.clearAllStorageOnStartup();
+  }
+
+  private clearAllStorageOnStartup() {
+    console.log('🧹 Clearing localStorage on application startup');
+    localStorage.clear();
+  }
 
   restoreUser() {
     const token = this.getToken();
     if (token) {
-      this.http.get<CurrentUser>(`${this.apiUrl}/current-user`).subscribe(
+      this.http.get<UserDTO>(`${this.apiUrl}/current-user`).subscribe(
         (user) => {
           this.currentUserSubject.next(user);
-          this.setUserData(user);
+          this.setUserData(user); // ✅ Store user ID & roleEnum in localStorage
         },
         (error) => {
           console.error('Failed to restore user:', error);
@@ -44,23 +52,26 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
-  setUserData(user: CurrentUser) {
+  setUserData(user: UserDTO) {
     if (user.id !== undefined && user.id !== null) {
       localStorage.setItem(this.userIdKey, user.id.toString());
     } else {
       console.warn('User ID is undefined or null.');
     }
 
-    if (user.role) {
-      localStorage.setItem(this.userRoleKey, user.role);
+    // Handle both 'role' and 'roleEnum' properties from backend
+    const roleValue = user.roleEnum || (user as any).role;
+    if (roleValue) {
+      console.log('localStorage set item userRoleEnum:', roleValue);
+      localStorage.setItem(this.userRoleEnumKey, roleValue);
     } else {
-      console.warn('User role is undefined.');
+      console.warn('User roleEnum is undefined.');
     }
   }
 
   clearUserData() {
     localStorage.removeItem(this.userIdKey);
-    localStorage.removeItem(this.userRoleKey);
+    localStorage.removeItem(this.userRoleEnumKey);
   }
 
   getUserId(): number | null {
@@ -69,16 +80,16 @@ export class AuthService {
   }
 
   getUserRole(): string | null {
-    return localStorage.getItem(this.userRoleKey);
+    return localStorage.getItem(this.userRoleEnumKey);
   }
 
-  getCurrentUser(): CurrentUser | null {
+  getCurrentUser(): UserDTO | null {
     return this.currentUserSubject.value;
   }
 
-  getCurrentUserRole(): Role | null {
-    const currentUser = this.getCurrentUser();
-    return currentUser ? currentUser.role : null;
+  getCurrentUserRoleEnum(): RoleEnum | null {
+    const role = this.getUserRole();
+    return (role as RoleEnum) || null;
   }
 
   login(username: string, password: string) {
@@ -89,8 +100,8 @@ export class AuthService {
       })
       .subscribe((response) => {
         this.setToken(response.accessToken);
-        this.restoreUser();
-        this.router.navigate(['']);
+        this.restoreUser(); // ✅ Fetch and set user immediately after login
+        this.router.navigate(['/dockerhub/repository']);
       });
   }
 
@@ -99,7 +110,7 @@ export class AuthService {
       localStorage.removeItem(this.tokenKey);
       this.clearUserData();
       this.currentUserSubject.next(null);
-      this.router.navigate(['/login']);
+      this.router.navigate(['/dockerhub/explore']);
     });
   }
 
@@ -108,7 +119,7 @@ export class AuthService {
       .post<{ accessToken: string }>(`${this.apiUrl}/register`, user)
       .subscribe((response) => {
         this.setToken(response.accessToken);
-        this.restoreUser();
+        this.restoreUser(); // ✅ Fetch and set user immediately after register
         this.router.navigate(['']);
       });
   }

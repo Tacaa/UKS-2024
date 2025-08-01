@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -50,6 +50,7 @@ import { CreateAdministratorComponent } from './admin-board/create-administrator
 import { SuperAdminLoginComponent } from './admin-board/super-admin-login/super-admin-login.component';
 import { LoginComponent } from './auth-pages/login/login.component';
 import { RegisterComponent } from './auth-pages/register/register.component';
+import { AuthInterceptor } from './services/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,13 @@ import { RegisterComponent } from './auth-pages/register/register.component';
     ReactiveFormsModule,
     NgxChartsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
   exports: [SpaceToUnderscorePipe],
 })

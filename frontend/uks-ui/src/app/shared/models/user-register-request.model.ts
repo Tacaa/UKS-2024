@@ -1,4 +1,4 @@
-import { Role } from '../enum/Role';
+import { RoleEnum } from '../enum/RoleEnum';
 
 export interface UserRequest {
   username: string;
@@ -6,5 +6,5 @@ export interface UserRequest {
   firstname: string;
   lastname: string;
   email: string;
-  roleEnum: Role;
+  roleEnumEnum: RoleEnum;
 }

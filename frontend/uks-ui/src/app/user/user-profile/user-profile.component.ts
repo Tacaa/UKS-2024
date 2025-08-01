@@ -27,7 +27,7 @@ export class UserProfileComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     const fullName = `${user?.firstName} ${user?.lastName}`;
     this.starService
-      .getStarredRepositories(this.authService.getCurrentUser()?.id as number)
+      .getStarredRepositories(this.authService.getUserId() as number)
       .subscribe((repos) => {
         this.starredRepos = repos;
       });

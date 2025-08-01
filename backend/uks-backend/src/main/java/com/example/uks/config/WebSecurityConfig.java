@@ -134,7 +134,7 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/repositories/official").hasAnyRole( "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/repositories/official/{id}").hasAnyRole( "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.GET, "/api/repositories/official/all").hasAnyRole( "ADMIN", "SUPER_ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/repositories/official/search").hasAnyRole( "ADMIN", "SUPER_ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/repositories/official/search").hasAnyRole( "USER", "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/repositories/official").hasAnyRole( "ADMIN", "SUPER_ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/repositories/official/{id}").hasAnyRole( "ADMIN", "SUPER_ADMIN")
 

@@ -26,7 +26,7 @@ export class RepositoryPageComponent implements OnInit {
     private authService: AuthService,
     private starService: StarService
   ) {
-    this.currentUserId = this.authService.getCurrentUser()?.id as number;
+    this.currentUserId = this.authService.getUserId() as number;
   }
 
   ngOnInit() {

@@ -16,13 +16,13 @@ export class LoginComponent {
   constructor(private authService: AuthService) {}
 
   onSubmit() {
-    // if (this.loginForm.valid) {
-    //   this.authService.login(
-    //     this.loginForm.get('username')?.value as string,
-    //     this.loginForm.get('password')?.value as string
-    //   );
-    // } else {
-    //   console.log('Form is invalid');
-    // }
+    if (this.loginForm.valid) {
+      this.authService.login(
+        this.loginForm.get('username')?.value as string,
+        this.loginForm.get('password')?.value as string
+      );
+    } else {
+      console.log('Form is invalid');
+    }
   }
 }

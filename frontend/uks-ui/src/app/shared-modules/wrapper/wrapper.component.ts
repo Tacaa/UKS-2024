@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +11,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { UserAvatarComponent } from '../components/user-avatar/user-avatar.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { Role } from 'src/app/shared/enum/Role';
+import { RoleEnum } from 'src/app/shared/enum/RoleEnum';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wrapper',
@@ -32,30 +33,59 @@ import { Role } from 'src/app/shared/enum/Role';
   templateUrl: './wrapper.component.html',
   styleUrls: ['./wrapper.component.css'],
 })
-export class WrapperComponent implements OnInit {
+export class WrapperComponent implements OnInit, OnDestroy {
   selectedButton: string = 'dockerhub/repository';
-  userRole: Role | null = null;
-  Role = Role;
+  userRoleEnum: RoleEnum | undefined | null = null;
+  RoleEnum = RoleEnum;
 
-  constructor(private authService: AuthService) {}
+  private userSubscription: Subscription | null = null;
+
+  constructor(private authService: AuthService, private r: Router) {}
 
   ngOnInit(): void {
-    this.userRole = this.authService.getCurrentUserRole();
+    this.userSubscription = this.authService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.userRoleEnum =
+          user.roleEnum || this.authService.getCurrentUserRoleEnum();
+        console.log('User role updated:', this.userRoleEnum);
+      } else {
+        this.userRoleEnum = null;
+        console.log('No user logged in');
+      }
+    });
+
+    this.authService.restoreUser();
+  }
+
+  ngOnDestroy(): void {
+    // Clean up subscription
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   setActive(buttonName: string): void {
     this.selectedButton = buttonName;
   }
 
-  hasRole(role: Role): boolean {
-    return this.userRole === role;
+  hasRoleEnum(roleEnum: RoleEnum): boolean {
+    return this.userRoleEnum === roleEnum;
   }
 
-  hasAtLeast(role: Role): boolean {
-    const roleOrder: Role[] = [Role.USER, Role.ADMIN, Role.SUPER_ADMIN];
+  hasAtLeast(roleEnum: RoleEnum): boolean {
+    const roleEnumOrder: RoleEnum[] = [
+      RoleEnum.USER,
+      RoleEnum.ADMIN,
+      RoleEnum.SUPER_ADMIN,
+    ];
     return (
-      this.userRole != null &&
-      roleOrder.indexOf(this.userRole) >= roleOrder.indexOf(role)
+      this.userRoleEnum != null &&
+      roleEnumOrder.indexOf(this.userRoleEnum) >=
+        roleEnumOrder.indexOf(roleEnum)
     );
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

@@ -1,4 +1,4 @@
-import { Role } from '../../enum/Role';
+import { RoleEnum } from '../../enum/RoleEnum';
 import { UserBadge } from '../../enum/UserBadge';
 
 export interface UserDTO {
@@ -8,6 +8,6 @@ export interface UserDTO {
   username: string;
   email: string;
   joinedDate: Date;
-  role: Role;
+  roleEnum: RoleEnum;
   userBadge: UserBadge;
 }
