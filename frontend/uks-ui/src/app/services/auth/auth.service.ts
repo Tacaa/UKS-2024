@@ -148,6 +148,7 @@ export class AuthService {
       });
   }
 
+
   setSuperAdminInitialized(value: boolean): void {
     this.superAdminInitialized = value;
   }
@@ -166,5 +167,9 @@ export class AuthService {
 
   triggerRoleUpdate(): void {
     this.roleUpdated$.next();
+  }
+  
+  registerAdmin(user: UserRequest) {
+    return this.http.post<Response>(`${this.apiUrl}/register-admin`, user);
   }
 }

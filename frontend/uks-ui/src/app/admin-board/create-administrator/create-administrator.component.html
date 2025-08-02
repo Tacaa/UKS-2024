@@ -1,148 +1,94 @@
 <div class="admin-form-container">
-  <h2>Create New Administrator</h2>
+  <div class="register-box">
+    <h2>Create New Administrator</h2>
 
-  <form [formGroup]="adminForm" (ngSubmit)="onSubmit()" class="admin-form">
-    <!-- First Name -->
-    <div class="form-group">
-      <label for="firstName">First Name *</label>
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      class="register-form"
+    >
       <input
         type="text"
-        id="firstName"
-        formControlName="firstName"
-        class="form-control"
-        [class.error]="
-          adminForm.get('firstName')?.invalid &&
-          adminForm.get('firstName')?.touched
-        "
-        placeholder="Enter first name"
-      />
-      <div
-        class="error-message"
-        *ngIf="
-          adminForm.get('firstName')?.invalid &&
-          adminForm.get('firstName')?.touched
-        "
-      >
-        First name is required
-      </div>
-    </div>
-
-    <!-- Last Name -->
-    <div class="form-group">
-      <label for="lastName">Last Name *</label>
-      <input
-        type="text"
-        id="lastName"
-        formControlName="lastName"
-        class="form-control"
-        [class.error]="
-          adminForm.get('lastName')?.invalid &&
-          adminForm.get('lastName')?.touched
-        "
-        placeholder="Enter last name"
-      />
-      <div
-        class="error-message"
-        *ngIf="
-          adminForm.get('lastName')?.invalid &&
-          adminForm.get('lastName')?.touched
-        "
-      >
-        Last name is required
-      </div>
-    </div>
-
-    <!-- Username -->
-    <div class="form-group">
-      <label for="username">Username *</label>
-      <input
-        type="text"
-        id="username"
         formControlName="username"
-        class="form-control"
-        [class.error]="
-          adminForm.get('username')?.invalid &&
-          adminForm.get('username')?.touched
-        "
-        placeholder="Enter username"
+        placeholder="Username"
+        class="register-input"
       />
       <div
-        class="error-message"
         *ngIf="
-          adminForm.get('username')?.invalid &&
-          adminForm.get('username')?.touched
+          registerForm.controls.username?.invalid &&
+          registerForm.controls.username?.touched
         "
       >
-        <span *ngIf="adminForm.get('username')?.errors?.['required']"
-          >Username is required</span
-        >
+        Username is required
       </div>
-    </div>
 
-    <!-- Email -->
-    <div class="form-group">
-      <label for="email">Email *</label>
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        class="form-control"
-        [class.error]="
-          adminForm.get('email')?.invalid && adminForm.get('email')?.touched
-        "
-        placeholder="Enter email address"
-      />
-      <div
-        class="error-message"
-        *ngIf="
-          adminForm.get('email')?.invalid && adminForm.get('email')?.touched
-        "
-      >
-        <span *ngIf="adminForm.get('email')?.errors?.['required']"
-          >Email is required</span
-        >
-        <span *ngIf="adminForm.get('email')?.errors?.['email']"
-          >Please enter a valid email address</span
-        >
-      </div>
-    </div>
-
-    <!-- Password -->
-    <div class="form-group">
-      <label for="password">Password *</label>
       <input
         type="password"
-        id="password"
         formControlName="password"
-        class="form-control"
-        [class.error]="
-          adminForm.get('password')?.invalid &&
-          adminForm.get('password')?.touched
-        "
-        placeholder="Enter password"
+        placeholder="Password"
+        class="register-input"
       />
       <div
-        class="error-message"
         *ngIf="
-          adminForm.get('password')?.invalid &&
-          adminForm.get('password')?.touched
+          registerForm.controls.password?.invalid &&
+          registerForm.controls.password?.touched
         "
       >
-        <span *ngIf="adminForm.get('password')?.errors?.['required']"
-          >Password is required</span
-        >
+        Password is required
       </div>
-    </div>
 
-    <!-- Form Actions -->
-    <div class="form-actions">
+      <input
+        type="text"
+        formControlName="firstname"
+        placeholder="First Name"
+        class="register-input"
+      />
+      <div
+        *ngIf="
+          registerForm.controls.firstname?.invalid &&
+          registerForm.controls.firstname?.touched
+        "
+      >
+        First Name is required
+      </div>
+
+      <input
+        type="text"
+        formControlName="lastname"
+        placeholder="Last Name"
+        class="register-input"
+      />
+      <div
+        *ngIf="
+          registerForm.controls.lastname?.invalid &&
+          registerForm.controls.lastname?.touched
+        "
+      >
+        Last Name is required
+      </div>
+
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="Email"
+        class="register-input"
+      />
+      <div
+        *ngIf="
+          registerForm.controls.email?.invalid &&
+          registerForm.controls.email?.touched
+        "
+      >
+        Valid Email is required
+      </div>
+
       <button
         type="submit"
-        class="btn btn-primary"
-        [disabled]="adminForm.invalid"
+        [disabled]="registerForm.invalid"
+        class="register-button"
       >
-        Create Administrator
+        Register Admin
       </button>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

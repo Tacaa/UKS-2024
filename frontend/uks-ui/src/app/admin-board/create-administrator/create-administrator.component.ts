@@ -4,7 +4,12 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  FormControl,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { RoleEnum } from 'src/app/shared/enum/RoleEnum';
+import { UserRequest } from 'src/app/shared/models/user-register-request.model';
 
 @Component({
   selector: 'app-create-administrator',
@@ -12,34 +17,45 @@ import {
   styleUrls: ['./create-administrator.component.css'],
 })
 export class CreateAdministratorComponent {
-  adminForm: FormGroup;
+  registerForm = new FormGroup({
+    firstname: new FormControl('', Validators.required),
+    lastname: new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required),
+  });
 
-  constructor(private formBuilder: FormBuilder) {
-    this.adminForm = this.formBuilder.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      username: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-    });
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
-    if (this.adminForm.valid) {
-      const adminData = this.adminForm.value;
-      console.log('Admin data:', adminData);
+    if (this.registerForm.valid) {
+      const formValues = this.registerForm.value;
 
-      // TODO Here you would typically call a service to create the administrator
-      // this.adminService.createAdmin(adminData).subscribe(...)
+      const userRequest: UserRequest = {
+        username: formValues.username!,
+        password: formValues.password!,
+        firstname: formValues.firstname!,
+        lastname: formValues.lastname!,
+        email: formValues.email!,
+        roleEnum: RoleEnum.ADMIN,
+      };
 
-      // For now, just log the data and reset the form
-      alert('Administrator created successfully!');
-      this.adminForm.reset();
-    } else {
-      // Mark all fields as touched to show validation errors
-      Object.keys(this.adminForm.controls).forEach((key) => {
-        this.adminForm.get(key)?.markAsTouched();
+      this.authService.registerAdmin(userRequest).subscribe({
+        next: (response) => {
+          console.log('Admin registered successfully:', response);
+          alert('Admin registered successfully:');
+        },
+        error: (error) => {
+          console.error('Error registering admin:', error);
+          alert(
+            "'Error registering admin:'" +
+              error.error.error +
+              ': User with that username already exists'
+          );
+        },
       });
+    } else {
+      console.log('Form is invalid');
     }
   }
 }
