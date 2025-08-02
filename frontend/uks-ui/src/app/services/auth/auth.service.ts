@@ -123,4 +123,8 @@ export class AuthService {
         this.router.navigate(['']);
       });
   }
+
+  registerAdmin(user: UserRequest) {
+    return this.http.post<Response>(`${this.apiUrl}/register-admin`, user);
+  }
 }

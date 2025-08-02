@@ -141,6 +141,53 @@ public class AuthenticationController {
         return new ResponseEntity<>(token, HttpStatus.CREATED);
     }
 
+    @PostMapping("/register-admin")
+    public ResponseEntity<?> addAdmin(@RequestBody UserRequest userRequest) {
+        if(userRequest.getFirstname() == null || userRequest.getLastname() == null || userRequest.getUsername() == null
+            || userRequest.getPassword() == null || userRequest.getEmail() == null || userRequest.getRoleEnum() == null){
+            return new ResponseEntity<>("All fields are required", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            User existUser = this.userService.findByUsername(userRequest.getUsername());
+
+            if (existUser != null) {
+                return new ResponseEntity<>("Username already exists", HttpStatus.CONFLICT);
+            }
+
+            existUser = this.userService.findByEmail(userRequest.getEmail());
+
+            if (existUser != null) {
+                return new ResponseEntity<>("Email already exists", HttpStatus.CONFLICT);
+            }
+
+            // Force ADMIN role regardless of what's sent in the request
+            List<Role> roles = roleService.findByName("ROLE_ADMIN");
+
+            User user = User.builder()
+                .firstName(userRequest.getFirstname())
+                .lastName(userRequest.getLastname())
+                .email(userRequest.getEmail())
+                .username(userRequest.getUsername())
+                .password(passwordEncoder.encode(userRequest.getPassword()))
+                .joinedDate(new Date())
+                .roleEnum(RoleEnum.ADMIN)  // Force ADMIN role
+                .roles(roles)
+                .enabled(true)
+                .passwordChanged(false)
+                .userBadge(UserBadge.NONE)
+                .lastPasswordResetDate(new Timestamp(System.currentTimeMillis()))
+                .build();
+
+            user = this.userService.save(user);
+
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while creating admin user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request) {
