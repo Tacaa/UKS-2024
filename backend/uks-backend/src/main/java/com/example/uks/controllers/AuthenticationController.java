@@ -80,6 +80,19 @@ public class AuthenticationController {
         return ResponseEntity.ok(token);
     }
 
+    @PostMapping("/super-admin-login")
+    public ResponseEntity<UserTokenState> superAdminLogin(
+            @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
+
+        User user = this.userService.findByUsername(authenticationRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(authenticationRequest.getPassword()));
+        userService.save(user);
+
+
+        UserTokenState token = this.login(authenticationRequest);
+        return ResponseEntity.ok(token);
+    }
+
 
     @GetMapping("/current-user")
     public ResponseEntity<UserDTO> getCurrentUser() {

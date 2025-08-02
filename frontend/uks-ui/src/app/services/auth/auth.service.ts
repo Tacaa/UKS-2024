@@ -116,9 +116,9 @@ export class AuthService {
     //!!
 
     return this.http
-      .post<{ accessToken: string }>(`${this.apiUrl}/login`, {
+      .post<{ accessToken: string }>(`${this.apiUrl}/super-admin-login`, {
         username,
-        password,
+        newPassword,
       })
       .pipe(
         tap((response) => {
