@@ -12,6 +12,8 @@ import { CurrentUser } from 'src/app/shared/models/user.model';
   providedIn: 'root',
 })
 export class AuthService {
+  private superAdminInitialized = false;
+
   private tokenKey = 'authToken';
   private userIdKey = 'userId';
   private userRoleEnumKey = 'userRoleEnum';
@@ -105,6 +107,27 @@ export class AuthService {
       });
   }
 
+  firstAdminLogin(username: string, password: string, newPassword: string) {
+    //!!
+    //!! OVO JE SAMO KOPIJA OBICNE LOGIN METODE OD GORE
+    //!! POTREBNA JE ZATO STO VRACA RESPONSE - (zbog .subscribe())
+    //!! KAD SE NAPRAVI ENDPOINT NA BEKU, TREBA DA SE POVEZE SA OVOM FUNKCIJOM!!!! firstAdminLogin( usernname: string, password: string, newPassword: string )
+    //!!
+
+    return this.http
+      .post<{ accessToken: string }>(`${this.apiUrl}/login`, {
+        username,
+        password,
+      })
+      .pipe(
+        tap((response) => {
+          this.setToken(response.accessToken);
+          this.restoreUser(); // ✅ Fetch and set user immediately after login
+          this.router.navigate(['/dockerhub/repository']);
+        })
+      );
+  }
+
   logout() {
     this.http.post(`${this.apiUrl}/logout`, {}).subscribe(() => {
       localStorage.removeItem(this.tokenKey);
@@ -122,5 +145,17 @@ export class AuthService {
         this.restoreUser(); // ✅ Fetch and set user immediately after register
         this.router.navigate(['']);
       });
+  }
+
+  setSuperAdminInitialized(value: boolean): void {
+    this.superAdminInitialized = value;
+  }
+
+  isSuperAdminInitialized(): boolean {
+    return this.superAdminInitialized;
+  }
+
+  resetSuperAdminFlag(): void {
+    this.superAdminInitialized = false;
   }
 }
