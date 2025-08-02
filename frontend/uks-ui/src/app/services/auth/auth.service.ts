@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UserDTO } from 'src/app/shared/dto/user/user.dto';
 import { RoleEnum } from 'src/app/shared/enum/RoleEnum';
@@ -20,12 +20,13 @@ export class AuthService {
   private apiUrl = 'http://localhost:8081/api/auth';
   private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
+  private roleUpdated$ = new Subject<void>();
 
   constructor(private http: HttpClient, private router: Router) {
     this.clearAllStorageOnStartup();
   }
 
-  private clearAllStorageOnStartup() {
+  public clearAllStorageOnStartup() {
     console.log('🧹 Clearing localStorage on application startup');
     localStorage.clear();
   }
@@ -157,5 +158,13 @@ export class AuthService {
 
   resetSuperAdminFlag(): void {
     this.superAdminInitialized = false;
+  }
+
+  getRoleUpdateTrigger() {
+    return this.roleUpdated$.asObservable();
+  }
+
+  triggerRoleUpdate(): void {
+    this.roleUpdated$.next();
   }
 }
