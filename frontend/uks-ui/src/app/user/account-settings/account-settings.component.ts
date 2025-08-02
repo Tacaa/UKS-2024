@@ -69,8 +69,10 @@ export class AccountSettingsComponent implements OnInit {
           console.log('User updated:', updatedUser);
           alert(response.message || 'Profile updated successfully!');
           this.authService.restoreUser();
-          this.authService.clearUserData();
-          window.location.reload();
+          this.authService.clearAllStorageOnStartup();
+          this.authService.setSuperAdminInitialized(true);
+          this.authService.triggerRoleUpdate();
+          this.router.navigate(['dockerhub/login']);
         },
         error: (err: HttpErrorResponse) => {
           console.error('Error:', err);

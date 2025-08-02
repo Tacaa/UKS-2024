@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
+
+export interface AdminFitstLoginRequest {
+  username: string;
+  password: string;
+  newPassword: string;
+}
 
 @Component({
   selector: 'app-super-admin-login',
@@ -12,7 +20,11 @@ export class SuperAdminLoginComponent {
   showNewPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.formBuilder.group(
       {
         username: ['', [Validators.required]],
@@ -61,22 +73,38 @@ export class SuperAdminLoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const loginData = {
+      const loginData: AdminFitstLoginRequest = {
         username: this.loginForm.value.username,
-        generatedPassword: this.loginForm.value.generatedPassword,
+        password: this.loginForm.value.generatedPassword,
         newPassword: this.loginForm.value.newPassword,
       };
 
       console.log('First superadmin login data:', loginData);
 
-      // TODO Here you would typically call a service to handle the first-time login
-      // this.authService.firstSuperadminLogin(loginData).subscribe(...)
+      //!! ⬇⬇⬇ .firstAdminLogin() SHIFT CLICK --- PROCITAJ U SERVISU STA PISE!! ⬇⬇⬇
+      this.authService
+        .firstAdminLogin(
+          this.loginForm.get('username')?.value as string,
+          this.loginForm.get('generatedPassword')?.value as string,
+          this.loginForm.get('newPassword')?.value as string
+        )
+        //!! .subscribe OSTAJE, ON MENJA FLEG U SERVISU DA MOZE DA SE KORISTI OSTATAK APLIKACIJE
+        .subscribe({
+          next: (response) => {
+            // Login successful, set the superadmin flag in the service
+            this.authService.setSuperAdminInitialized(true);
+            alert(
+              'Setup completed successfully! You can now login with your new password.'
+            );
 
-      alert(
-        'Setup completed successfully! You can now login with your new password.'
-      );
+            this.router.navigate(['/dockerhub']);
+          },
+          error: (error) => {
+            console.error('Superadmin login failed:', error);
+            alert('Login failed. Please check your credentials.');
+          },
+        });
     } else {
-      // Mark all fields as touched to show validation errors
       Object.keys(this.loginForm.controls).forEach((key) => {
         this.loginForm.get(key)?.markAsTouched();
       });
