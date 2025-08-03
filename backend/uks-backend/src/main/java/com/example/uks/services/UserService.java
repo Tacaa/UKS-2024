@@ -2,7 +2,7 @@ package com.example.uks.services;
 
 import com.example.uks.dto.user.BadgeDTO;
 import com.example.uks.dto.user.UpdateUserDTO;
-import com.example.uks.enumeration.Role;
+import com.example.uks.enumeration.RoleEnum;
 import com.example.uks.enumeration.UserBadge;
 import com.example.uks.exceptions.AttributeNullException;
 import com.example.uks.exceptions.UserNotFound;
@@ -12,6 +12,8 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +24,12 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleService roleService;
 
     public User findUserById(Integer id){
         return userRepository.findById(id).orElse(null);
@@ -52,7 +60,7 @@ public class UserService {
             }
 
             if (role != null) {
-                predicates.add(criteriaBuilder.equal(root.get("role"), Role.valueOf(role)));
+                predicates.add(criteriaBuilder.equal(root.get("role"), RoleEnum.valueOf(role)));
             }
 
             if (userBadge != null) {
@@ -62,6 +70,14 @@ public class UserService {
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         }, pageable);
+    }
+
+    public User findByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
+    }
+
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
     public User addBadge(Integer id, BadgeDTO badgeDTO){
@@ -118,6 +134,22 @@ public class UserService {
 
         return userRepository.save(user);
     }
+  
+    public void disableUser(Integer id){
+        User user = userRepository.findById(id).orElse(null);
 
+        if(user != null){
+            user.setEnabled(false);
+            userRepository.save(user);
+        }
+    }
+
+    public User save(User user){
+        return userRepository.save(user);
+    }
+  
+    public List<User> getUsersByBadge(UserBadge badge) {
+        return userRepository.findByUserBadge(badge);
+    }
 
 }

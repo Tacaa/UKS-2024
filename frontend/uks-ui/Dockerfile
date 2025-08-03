@@ -2,15 +2,17 @@
 FROM node:18 as build
 WORKDIR /app
 
-# Install dependencies
 COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the source code and build the app
 COPY . .
 RUN npm run build --prod
 
-# Serve the Angular app using nginx
+# Serve with Nginx
 FROM nginx:alpine
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/uks-ui /usr/share/nginx/html
+
 EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

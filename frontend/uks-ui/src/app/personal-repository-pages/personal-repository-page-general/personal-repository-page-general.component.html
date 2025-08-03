@@ -1,0 +1,155 @@
+<div class="top">
+  <div class="topleft">
+    <h2>
+      {{
+        repository?.organisation?.name
+          ? (repository?.organisation?.name | spaceToUnderscore | lowercase)
+          : (repository?.owner?.name | lowercase)
+      }}/{{ repository?.name }}
+
+      <i
+        class="fa fa-lock"
+        *ngIf="repository?.visibility === 'PRIVATE'"
+        matTooltip="Private repository"
+      ></i>
+      <div class="starDiv" matTooltip="Starred">
+        <i class="fa fa-star" aria-hidden="true"></i>
+        <p>{{ repository?.star }}</p>
+      </div>
+    </h2>
+    <p>Created {{ repository?.created | date : "mediumDate" }}</p>
+
+    <!-- EDITING DESCRIPTION START -->
+    <div class="descDiv">
+      <ng-container *ngIf="!isEditingDescription">
+        <span id="description">{{ repository?.description }}</span>
+        <i class="fa fa-pencil" (click)="toggleDescriptionEdit()"></i>
+      </ng-container>
+      <ng-container *ngIf="isEditingDescription">
+        <form>
+          <input
+            type="text"
+            [(ngModel)]="tempDescription"
+            name="tempDescription"
+            required
+            maxlength="200"
+          />
+          <button
+            class="redButton"
+            type="button"
+            (click)="cancelDescriptionEdit()"
+          >
+            Cancel
+          </button>
+          <button
+            class="blueButton"
+            type="submit"
+            (click)="updateShortDescription()"
+          >
+            Update
+          </button>
+        </form>
+      </ng-container>
+    </div>
+    <!--! EDITING DESCRIPTION END -->
+
+    <!-- EDITING CATEGORY START -->
+    <div class="categories">
+      <ng-container *ngIf="!isEditingCategory">
+        <span id="category">{{ repository?.categoryString }}</span>
+        <i class="fa fa-pencil" (click)="toggleCategoryEdit()"></i>
+      </ng-container>
+
+      <ng-container *ngIf="isEditingCategory">
+        <form>
+          <select [(ngModel)]="tempCategory" name="tempCategory">
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category.replaceAll("_", " ") }}
+            </option>
+          </select>
+          <button
+            class="redButton"
+            type="button"
+            (click)="cancelCategoryEdit()"
+          >
+            Cancel
+          </button>
+          <button class="blueButton" type="button" (click)="updateCategory()">
+            Update
+          </button>
+        </form>
+      </ng-container>
+    </div>
+    <!-- !EDITING CATEGORY END -->
+  </div>
+  <div class="topright">
+    <div style="display: flex; flex-direction: row">
+      <div>
+        <h3>Docker commands</h3>
+        <span>To push a new tag to this repository:</span>
+      </div>
+      <button class="outlinedButton">Public view</button>
+    </div>
+    <div class="terminal">
+      docker push Creator/repoName:tagname // or use the Web Application
+    </div>
+  </div>
+</div>
+<div class="middle">
+  <h3>Tags</h3>
+  <div class="tagholder" *ngFor="let tag of tags">
+    <a>{{ tag.name }}</a>
+  </div>
+</div>
+<!-- 
+<div class="bot">
+ <h3>Repository overview</h3>
+  <div class="repo-overview">
+    <ng-container *ngIf="!isEditingOverview">
+      <div style="display: flex; flex-direction: column">
+        <span id="overview">
+           <ng-container *ngIf="overview; else defaultOverview">{{
+            overview
+          }}</ng-container> 
+          <ng-template #defaultOverview>
+            <span class="no-overview"
+              >An overview describes what your image does and how to run it. It
+              displays in the public view of your repository once you have
+              pushed some content.</span
+            >
+          </ng-template>
+        </span>
+        <button class="outlinedButton" (click)="toggleOverviewEdit()">
+          Edit overview
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isEditingOverview">
+      <div style="display: flex; flex-direction: column">
+        <form>
+          <textarea
+            [(ngModel)]="tempOverview"
+            name="tempOverview"
+            rows="4"
+            required
+          >
+          </textarea>
+          <div>
+            <button
+              class="redButton"
+              type="button"
+              (click)="cancelOverviewEdit()"
+            >
+              Cancel
+            </button>
+            <button class="blueButton" type="button" (click)="updateOverview()">
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-container>
+  </div> 
+</div>
+-->

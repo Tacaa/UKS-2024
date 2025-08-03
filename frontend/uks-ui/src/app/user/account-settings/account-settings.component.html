@@ -6,12 +6,17 @@
     <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
       <!-- First Name -->
       <mat-form-field appearance="outline" class="full-width">
-        <input matInput formControlName="name" placeholder="First Name" />
+        <input matInput formControlName="firstName" placeholder="First Name" />
       </mat-form-field>
 
       <!-- Last Name -->
       <mat-form-field appearance="outline" class="full-width">
-        <input matInput formControlName="company" placeholder="Last Name" />
+        <input matInput formControlName="lastName" placeholder="Last Name" />
+      </mat-form-field>
+
+      <!-- Username -->
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput formControlName="username" placeholder="Username" />
       </mat-form-field>
 
       <!-- Email -->
@@ -22,27 +27,6 @@
           formControlName="email"
           placeholder="Email"
         />
-      </mat-form-field>
-
-      <!-- Organization -->
-      <mat-form-field appearance="outline" class="full-width">
-        <input matInput formControlName="location" placeholder="Location" />
-      </mat-form-field>
-
-      <!-- Password -->
-      <mat-form-field appearance="outline" class="full-width">
-        <input
-          matInput
-          type="password"
-          formControlName="password"
-          placeholder="New Password"
-        />
-        <mat-error *ngIf="accountForm.get('password')?.hasError('minlength')">
-          Password must be at least 6 characters long.
-        </mat-error>
-        <mat-error *ngIf="accountForm.get('password')?.hasError('required')">
-          Password is required.
-        </mat-error>
       </mat-form-field>
 
       <!-- Submit Button -->
@@ -59,7 +43,7 @@
   </mat-card-content>
 </mat-card>
 
-<mat-card>
+<!-- <mat-card>
   <mat-card-header>
     <h2>Deactivate user account</h2>
   </mat-card-header>
@@ -80,4 +64,4 @@
       </button>
     </div>
   </mat-card-content>
-</mat-card>
+</mat-card> -->

@@ -1,0 +1,30 @@
+<div class="component">
+  <div class="header">
+    <h1>Organizations</h1>
+    <button class="blueButton" routerLink="create">Create Organization</button>
+  </div>
+  <div class="tablediv">
+    <div *ngIf="loading">Loading...</div>
+    <table *ngIf="!loading">
+      <thead>
+        <th>Name</th>
+        <th>Owner</th>
+        <th>Number of teams</th>
+        <th>Number of members</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of organisationsWithOwners">
+          <td>
+            <a routerLink="{{ item.org.id }}">
+              <i class="fa fa-building-o" aria-hidden="true"></i>
+              {{ item.org.name }}
+            </a>
+          </td>
+          <td>{{ item.ownerUsername }}</td>
+          <td>{{ item.org.teams.length }}</td>
+          <td>{{ item.org.members.length }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

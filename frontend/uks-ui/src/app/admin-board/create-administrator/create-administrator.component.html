@@ -1,0 +1,94 @@
+<div class="admin-form-container">
+  <div class="register-box">
+    <h2>Create New Administrator</h2>
+
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      class="register-form"
+    >
+      <input
+        type="text"
+        formControlName="username"
+        placeholder="Username"
+        class="register-input"
+      />
+      <div
+        *ngIf="
+          registerForm.controls.username?.invalid &&
+          registerForm.controls.username?.touched
+        "
+      >
+        Username is required
+      </div>
+
+      <input
+        type="password"
+        formControlName="password"
+        placeholder="Password"
+        class="register-input"
+      />
+      <div
+        *ngIf="
+          registerForm.controls.password?.invalid &&
+          registerForm.controls.password?.touched
+        "
+      >
+        Password is required
+      </div>
+
+      <input
+        type="text"
+        formControlName="firstname"
+        placeholder="First Name"
+        class="register-input"
+      />
+      <div
+        *ngIf="
+          registerForm.controls.firstname?.invalid &&
+          registerForm.controls.firstname?.touched
+        "
+      >
+        First Name is required
+      </div>
+
+      <input
+        type="text"
+        formControlName="lastname"
+        placeholder="Last Name"
+        class="register-input"
+      />
+      <div
+        *ngIf="
+          registerForm.controls.lastname?.invalid &&
+          registerForm.controls.lastname?.touched
+        "
+      >
+        Last Name is required
+      </div>
+
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="Email"
+        class="register-input"
+      />
+      <div
+        *ngIf="
+          registerForm.controls.email?.invalid &&
+          registerForm.controls.email?.touched
+        "
+      >
+        Valid Email is required
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="registerForm.invalid"
+        class="register-button"
+      >
+        Register Admin
+      </button>
+    </form>
+  </div>
+</div>

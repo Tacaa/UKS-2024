@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,6 +10,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { UserAvatarComponent } from '../components/user-avatar/user-avatar.component';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { RoleEnum } from 'src/app/shared/enum/RoleEnum';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wrapper',
@@ -25,14 +28,78 @@ import { UserAvatarComponent } from '../components/user-avatar/user-avatar.compo
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDividerModule
-  ], 
+    MatDividerModule,
+  ],
   templateUrl: './wrapper.component.html',
-  styleUrls: ['./wrapper.component.css']
+  styleUrls: ['./wrapper.component.css'],
 })
-export class WrapperComponent {
+export class WrapperComponent implements OnInit, OnDestroy {
   selectedButton: string = 'dockerhub/repository';
+  userRoleEnum: RoleEnum | undefined | null = null;
+  RoleEnum = RoleEnum;
+
+  private userSubscription: Subscription | null = null;
+
+  searchTerm: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.userSubscription = this.authService.currentUser$.subscribe((user) => {
+      if (user) {
+        this.userRoleEnum =
+          user.roleEnum || this.authService.getCurrentUserRoleEnum();
+        console.log('User role updated:', this.userRoleEnum);
+      } else {
+        this.userRoleEnum = null;
+        console.log('No user logged in');
+      }
+    });
+
+    this.authService.restoreUser();
+    this.authService.getRoleUpdateTrigger().subscribe(() => {
+      this.userRoleEnum = this.authService.getCurrentUserRoleEnum();
+      console.log('Role manually updated:', this.userRoleEnum);
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Clean up subscription
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
   setActive(buttonName: string): void {
     this.selectedButton = buttonName;
+  }
+
+  hasRoleEnum(roleEnum: RoleEnum): boolean {
+    return this.userRoleEnum === roleEnum;
+  }
+
+  hasAtLeast(roleEnum: RoleEnum): boolean {
+    const roleEnumOrder: RoleEnum[] = [
+      RoleEnum.USER,
+      RoleEnum.ADMIN,
+      RoleEnum.SUPER_ADMIN,
+    ];
+    return (
+      this.userRoleEnum != null &&
+      roleEnumOrder.indexOf(this.userRoleEnum) >=
+        roleEnumOrder.indexOf(roleEnum)
+    );
+  }
+
+  onSearchSubmit(searchTerm: string): void {
+    if (searchTerm.trim()) {
+      this.router.navigate(['/dockerhub/search', searchTerm.trim()]);
+    } else {
+      this.router.navigate(['/dockerhub/search']);
+    }
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

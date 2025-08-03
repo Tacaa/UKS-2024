@@ -1,123 +1,71 @@
 <div class="component">
   <div class="header">
-    <span>Sort by</span>
-    <select name="sortBy" id="sortBy">
-      <option value="1">Newest</option>
-      <option value="2">Oldest</option>
-      <option value="3">A - Z</option>
-      <option value="4">Z - A</option>
-    </select>
-    <input type="text" placeholder="Filter tags..." />
-  </div>
-  <div class="tagCard" ng-repeat="n in 4">
-    <span>TAG</span>
-    <div class="top">
-      <div class="topleft">
-        <a>?1.4.7full?</a>
-        <span
-          >Last pushed <span class="boldSpan">a year ago </span> by
-          <a>whoPushedIt</a></span
-        >
-      </div>
-      <div class="topright">
-        <div class="terminal">
-          docker pull paketobuildpacks/build:full
-          <button>Copy</button>
-        </div>
-      </div>
-    </div>
-    <div class="table">
-      <table style="border-collapse: collapse; width: 100%">
-        <thead>
-          <tr>
-            <th>Digest</th>
-            <th>OS/ARCH</th>
-            <th>Compressed size</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><a>randomcode2869</a></td>
-            <td>linux/amd64</td>
-            <td>381.22 MB</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <input
+      type="text"
+      placeholder="Filter tags..."
+      [(ngModel)]="searchTerm"
+      (input)="applyFilter()"
+    />
+
+    <button
+      class="blueButton"
+      *ngIf="canAddTags && isUserLoggedIn"
+      (click)="openAddTagDialog()"
+    >
+      Push new tag
+    </button>
   </div>
 
-  <!--! DELETE FROM HERE -->
-  <div class="tagCard" ng-repeat="n in 4">
+  <div class="tagCard" *ngFor="let tag of filteredTags">
     <span>TAG</span>
     <div class="top">
       <div class="topleft">
-        <a>?1.4.7full?</a>
-        <span
-          >Last pushed <span class="boldSpan">a year ago </span> by
-          <a>whoPushedIt</a></span
-        >
+        <a>{{ tag.name }}</a>
+        <span>
+          Last pushed
+          <span class="boldSpan"
+            >{{ tag.pushed.replace("now", "a few seconds") }} ago</span
+          >
+          by
+          <a>{{ tag.author }}</a>
+        </span>
       </div>
       <div class="topright">
         <div class="terminal">
-          docker pull paketobuildpacks/build:full
-          <button>Copy</button>
+          {{ tag.dockerPullCommand }}
+          <button (click)="copyToClipboard(tag.dockerPullCommand)">Copy</button>
         </div>
+        <div class="toast" *ngIf="showToast">Copied to clipboard!</div>
       </div>
     </div>
+
     <div class="table">
       <table style="border-collapse: collapse; width: 100%">
         <thead>
           <tr>
             <th>Digest</th>
-            <th>OS/ARCH</th>
+            <th>Last pulled</th>
             <th>Compressed size</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><a>randomcode2869</a></td>
-            <td>linux/amd64</td>
-            <td>381.22 MB</td>
+            <td>
+              <a>{{ generateDigest(tag.id) }}</a>
+            </td>
+            <td *ngIf="tag.pulled">{{ tag.pulled }} ago</td>
+            <td *ngIf="!tag.pulled">Never</td>
+            <td>{{ getCompressedSize(tag.id) }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <button
+      class="redButton"
+      *ngIf="canAddTags && isUserLoggedIn"
+      (click)="deleteTag(tag.id)"
+    >
+      Delete tag
+    </button>
   </div>
-  <div class="tagCard" ng-repeat="n in 4">
-    <span>TAG</span>
-    <div class="top">
-      <div class="topleft">
-        <a>?1.4.7full?</a>
-        <span
-          >Last pushed <span class="boldSpan">a year ago </span> by
-          <a>whoPushedIt</a></span
-        >
-      </div>
-      <div class="topright">
-        <div class="terminal">
-          docker pull paketobuildpacks/build:full
-          <button>Copy</button>
-        </div>
-      </div>
-    </div>
-    <div class="table">
-      <table style="border-collapse: collapse; width: 100%">
-        <thead>
-          <tr>
-            <th>Digest</th>
-            <th>OS/ARCH</th>
-            <th>Compressed size</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><a>randomcode2869</a></td>
-            <td>linux/amd64</td>
-            <td>381.22 MB</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <!--! DELETE TO HERE -->
 </div>

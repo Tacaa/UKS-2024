@@ -1,0 +1,67 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { OrganisationCreateDTO } from 'src/app/shared/dto/organisation/organisation-create.dto';
+import { OrganisationUpdateDTO } from 'src/app/shared/dto/organisation/organisation-update.dto';
+import { OrganisationDTO } from 'src/app/shared/dto/organisation/organisation.dto';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class OrganisationService {
+  private baseUrl = 'http://localhost:8081/api/organisation';
+
+  constructor(private http: HttpClient) {}
+
+  getUserOrganisations(
+    userId: number
+  ): Observable<{ message: string; data: OrganisationDTO[] }> {
+    return this.http.get<{ message: string; data: OrganisationDTO[] }>(
+      `${this.baseUrl}/user/${userId}`
+    );
+  }
+
+  createOrganisation(
+    dto: OrganisationCreateDTO
+  ): Observable<{ message: string | null; data: OrganisationDTO }> {
+    return this.http.post<{ message: string | null; data: OrganisationDTO }>(
+      this.baseUrl,
+      dto
+    );
+  }
+
+  getOrganisationById(
+    id: number
+  ): Observable<{ message: string | null; data: OrganisationDTO }> {
+    return this.http.get<{ message: string | null; data: OrganisationDTO }>(
+      `${this.baseUrl}/${id}`
+    );
+  }
+
+  updateOrganisation(
+    orgId: number,
+    dto: OrganisationUpdateDTO
+  ): Observable<{ message: string | null; data: OrganisationDTO }> {
+    return this.http.put<{ message: string | null; data: OrganisationDTO }>(
+      `${this.baseUrl}/${orgId}`,
+      dto
+    );
+  }
+
+  deactivateOrganisation(orgId: number, ownerId: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.baseUrl}/${orgId}?ownerId=${ownerId}`
+    );
+  }
+
+  addMemberToOrganisation(
+    orgId: number,
+    ownerId: number,
+    memberId: number
+  ): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${orgId}/members`, {
+      ownerId,
+      memberId,
+    });
+  }
+}

@@ -157,3 +157,10 @@ input[type="radio"] {
   background-color: var(--blue-light);
   transition: 200ms;
 }
+.textInput {
+  width: 35rem;
+  padding-left: 0.5rem;
+  height: 2.5rem;
+  border-radius: 0.3rem;
+  border: 1.5px var(--gray3) solid;
+}

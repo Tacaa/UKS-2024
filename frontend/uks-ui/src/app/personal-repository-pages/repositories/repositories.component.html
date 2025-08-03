@@ -1,0 +1,78 @@
+<!-- TODO ADD VARIABLES TO THIS COMPONENT IN ORDER TO BE ABLE TO SHOW WHAT IS NEEDED -->
+<div class="component">
+  <div class="header">
+    <div class="filters">
+      <input
+        type="text"
+        placeholder="Search repositories by name"
+        [(ngModel)]="searchTerm"
+      />
+    </div>
+    <button class="blueButton" routerLink="/dockerhub/create">
+      Create a repository
+    </button>
+  </div>
+
+  <table style="border-collapse: collapse; width: 100%">
+    <thead>
+      <tr>
+        <th
+          class="sortableTh"
+          (click)="sortTable('name')"
+          style="cursor: pointer"
+        >
+          Name
+          <span *ngIf="sortField === 'name'">
+            {{ sortDirection === "asc" ? "▲" : "▼" }}
+          </span>
+        </th>
+        <th
+          class="sortableTh"
+          (click)="sortTable('updated')"
+          style="cursor: pointer"
+        >
+          Last Pushed
+          <span *ngIf="sortField === 'updated'">
+            {{ sortDirection === "asc" ? "▲" : "▼" }}
+          </span>
+        </th>
+        <th>Organisation</th>
+        <th>Visibility</th>
+        <th>Scout</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let repo of filteredRepos"
+        routerLink="/dockerhub/repository/{{ repo.id }}"
+        style="cursor: pointer; border-bottom: 1px solid #ddd"
+      >
+        <td>
+          {{
+            repo.organisation?.name
+              ? (repo.organisation?.name | spaceToUnderscore | lowercase)
+              : (repo.owner.name | lowercase)
+          }}/{{ repo.name }}
+        </td>
+
+        <td>
+          {{
+            repo.updated
+              ? (repo.updated | date : "mediumDate")
+              : (repo.created | date : "mediumDate")
+          }}
+        </td>
+        <td>{{ repo.organisation?.name }}</td>
+        <td>
+          <span *ngIf="isOfficial(repo.id)">
+            <span style="font-weight: bold">Official - </span></span
+          >
+          {{ repo.visibility | titlecase }}
+        </td>
+        <td>Inactive</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <span>Loaded {{ loadedRepos }} repositories</span>
+</div>
