@@ -114,6 +114,7 @@ export class AuthService {
       .post<{ accessToken: string }>(`${this.apiUrl}/super-admin-login`, {
         username,
         password,
+        newPassword
       })
       .pipe(
         tap((response) => {

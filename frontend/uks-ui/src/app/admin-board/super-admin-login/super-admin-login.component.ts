@@ -85,7 +85,7 @@ export class SuperAdminLoginComponent {
       this.authService
         .firstAdminLogin(
           this.loginForm.get('username')?.value as string,
-          this.loginForm.get('generatedPassword')?.value as string,
+          this.loginForm.get('password')?.value as string,
           this.loginForm.get('newPassword')?.value as string
         )
         //!! .subscribe OSTAJE, ON MENJA FLEG U SERVISU DA MOZE DA SE KORISTI OSTATAK APLIKACIJE
