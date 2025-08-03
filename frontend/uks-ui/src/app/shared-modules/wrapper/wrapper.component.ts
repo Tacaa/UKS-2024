@@ -40,7 +40,9 @@ export class WrapperComponent implements OnInit, OnDestroy {
 
   private userSubscription: Subscription | null = null;
 
-  constructor(private authService: AuthService, private r: Router) {}
+  searchTerm: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.userSubscription = this.authService.currentUser$.subscribe((user) => {
@@ -87,6 +89,14 @@ export class WrapperComponent implements OnInit, OnDestroy {
       roleEnumOrder.indexOf(this.userRoleEnum) >=
         roleEnumOrder.indexOf(roleEnum)
     );
+  }
+
+  onSearchSubmit(searchTerm: string): void {
+    if (searchTerm.trim()) {
+      this.router.navigate(['/dockerhub/search', searchTerm.trim()]);
+    } else {
+      this.router.navigate(['/dockerhub/search']);
+    }
   }
 
   logout() {

@@ -151,12 +151,19 @@
       <span class="spacer"></span>
 
       <div class="toolbar-actions">
+        <!-- Updated HTML template -->
         <div>
           <mat-form-field class="search">
             <mat-icon class="search-icn" matPrefix>search</mat-icon>
-            <input matInput placeholder="Type to search..." />
+            <input
+              #searchInput
+              matInput
+              placeholder="Type to search..."
+              (keydown.enter)="onSearchSubmit(searchInput.value)"
+            />
           </mat-form-field>
         </div>
+
         <app-user-avatar
           *ngIf="hasAtLeast(RoleEnum.USER)"
           (onAvatarClick)="rightDrawer.toggle()"
