@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class CreateFileOnDesktop {
 
@@ -26,9 +26,12 @@ public class CreateFileOnDesktop {
     }
 
     public static String createPassowordFile(){
-        String userHome = System.getProperty("user.home");
-        String desktopPath = userHome + File.separator + "Desktop";
-        File newFile = new File(desktopPath + File.separator + "uks-super-admin.txt");
+//        Za local Desktop
+//        String userHome = System.getProperty("user.home");
+//        String desktopPath = userHome + File.separator + "Desktop";
+//        File newFile = new File(desktopPath + File.separator + "uks-super-admin.txt");
+        File newFile = new File("uks-super-admin.txt");
+
         String firstPass = getRadnomString();
 
         try {
@@ -51,8 +54,8 @@ public class CreateFileOnDesktop {
             System.err.println("An error occurred while assigning password from file.");
             e.printStackTrace();
         }
-        return firstPass;
-       // return new BCryptPasswordEncoder().encode(firstPass);
+
+        return new BCryptPasswordEncoder().encode(firstPass);
     }
 
 
