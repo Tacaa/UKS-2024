@@ -109,16 +109,11 @@ export class AuthService {
   }
 
   firstAdminLogin(username: string, password: string, newPassword: string) {
-    //!!
-    //!! OVO JE SAMO KOPIJA OBICNE LOGIN METODE OD GORE
-    //!! POTREBNA JE ZATO STO VRACA RESPONSE - (zbog .subscribe())
-    //!! KAD SE NAPRAVI ENDPOINT NA BEKU, TREBA DA SE POVEZE SA OVOM FUNKCIJOM!!!! firstAdminLogin( usernname: string, password: string, newPassword: string )
-    //!!
-
+    password = newPassword;
     return this.http
       .post<{ accessToken: string }>(`${this.apiUrl}/super-admin-login`, {
         username,
-        newPassword,
+        password,
       })
       .pipe(
         tap((response) => {
@@ -148,7 +143,6 @@ export class AuthService {
       });
   }
 
-
   setSuperAdminInitialized(value: boolean): void {
     this.superAdminInitialized = value;
   }
@@ -168,7 +162,7 @@ export class AuthService {
   triggerRoleUpdate(): void {
     this.roleUpdated$.next();
   }
-  
+
   registerAdmin(user: UserRequest) {
     return this.http.post<Response>(`${this.apiUrl}/register-admin`, user);
   }
