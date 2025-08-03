@@ -33,6 +33,7 @@ import { RegisterComponent } from './auth-pages/register/register.component';
 import { Injectable, Component, OnInit } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
+import { SearchpageComponent } from './searchpage/searchpage.component';
 
 // Redirect Component to handle the authentication logic
 @Component({
@@ -204,6 +205,14 @@ const routes: Routes = [
         path: 'organizations/create',
         component: OrgsPageCreateOrgComponent,
         title: 'Create new organization',
+      },
+      {
+        path: 'search',
+        component: SearchpageComponent,
+      },
+      {
+        path: 'search/:name',
+        component: SearchpageComponent,
       },
       {
         path: 'organizations/:id',

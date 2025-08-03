@@ -2,26 +2,7 @@
   <h2>Usage</h2>
   <span>Discover insights into your Docker Hub pulls and usage metrics.</span>
   <div class="namespace">
-    <mat-form-field appearance="fill">
-      <mat-label>Select namespace</mat-label>
-      <mat-select
-        [formControl]="formControl"
-        (selectionChange)="onSelectionChange($event)"
-      >
-        <mat-optgroup
-          *ngFor="let group of namespaceGroups"
-          [label]="group.name"
-        >
-          <mat-option
-            *ngFor="let namespace of group.namespace"
-            [value]="namespace"
-          >
-            <i class="fa fa-building-o" aria-hidden="true"></i>
-            {{ namespace }}
-          </mat-option>
-        </mat-optgroup>
-      </mat-select>
-    </mat-form-field>
+    <h2 style="color: red">Under development! Not real data</h2>
   </div>
   <span>{{ selected }}</span>
   <div class="graph">

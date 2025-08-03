@@ -1,0 +1,54 @@
+<div class="component">
+  <div class="repository-table-container">
+    <table class="repository-table">
+      <thead>
+        <tr>
+          <th>Repository</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Organization</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let repo of repos" class="repository-row">
+          <td class="repo-name">
+            <span class="repo-full-name" *ngIf="isOfficialRepository(repo.id)">
+              {{ repo.name }}
+            </span>
+            <span class="repo-full-name" *ngIf="!isOfficialRepository(repo.id)">
+              {{
+                repo.organisation?.name
+                  ? (repo.organisation?.name | spaceToUnderscore | lowercase)
+                  : (repo.owner.name | lowercase)
+              }}/{{ repo.name }}
+            </span>
+
+            <span
+              *ngIf="!isOfficialRepository(repo.id)"
+              class="visibility-badge"
+              [class]="'visibility-' + repo.visibility.toLowerCase()"
+            >
+              {{ repo.visibility }}
+            </span>
+            <span
+              *ngIf="isOfficialRepository(repo.id)"
+              class="visibility-badge"
+              [class]="'visibility-' + repo.visibility.toLowerCase()"
+            >
+              Official
+            </span>
+          </td>
+          <td class="repo-description">
+            {{ repo.description || "No description available" }}
+          </td>
+          <td class="repo-category">
+            {{ repo.categoryString || "-" }}
+          </td>
+          <td class="repo-organisation">
+            {{ repo.organisation?.name || "-" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

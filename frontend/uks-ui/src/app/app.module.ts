@@ -52,6 +52,7 @@ import { LogSearchComponent } from './log-search/log-search.component';
 import { LoginComponent } from './auth-pages/login/login.component';
 import { RegisterComponent } from './auth-pages/register/register.component';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
+import { SearchpageComponent } from './searchpage/searchpage.component';
 
 
 @NgModule({
@@ -96,6 +97,7 @@ import { AuthInterceptor } from './services/auth/auth.interceptor';
     LogSearchComponent,
     LoginComponent,
     RegisterComponent,
+    SearchpageComponent,
   ],
   imports: [
     BrowserModule,
