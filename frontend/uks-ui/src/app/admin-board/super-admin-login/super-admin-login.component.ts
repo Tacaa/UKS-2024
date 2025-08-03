@@ -82,10 +82,11 @@ export class SuperAdminLoginComponent {
       console.log('First superadmin login data:', loginData);
 
       //!! ⬇⬇⬇ .firstAdminLogin() SHIFT CLICK --- PROCITAJ U SERVISU STA PISE!! ⬇⬇⬇
+      this.authService;
       this.authService
         .firstAdminLogin(
           this.loginForm.get('username')?.value as string,
-          this.loginForm.get('password')?.value as string,
+          this.loginForm.get('generatedPassword')?.value as string, // ✅ Fixed
           this.loginForm.get('newPassword')?.value as string
         )
         //!! .subscribe OSTAJE, ON MENJA FLEG U SERVISU DA MOZE DA SE KORISTI OSTATAK APLIKACIJE
