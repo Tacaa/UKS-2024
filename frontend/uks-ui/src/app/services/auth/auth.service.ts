@@ -12,7 +12,7 @@ import { CurrentUser } from 'src/app/shared/models/user.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private superAdminInitialized = false;
+  private superAdminInitialized = true;
 
   private tokenKey = 'authToken';
   private userIdKey = 'userId';

@@ -64,6 +64,15 @@ export class RepositoryService {
     );
   }
 
+  searchRepositories(name: string): Observable<PagedResponse<RepositoryDTO>> {
+    const params = new HttpParams().set('name', name);
+
+    return this.http.get<PagedResponse<RepositoryDTO>>(
+      `${this.baseUrl}/search`,
+      { params }
+    );
+  }
+
   getRepositoriesByOrganisation(
     organisationId: number
   ): Observable<PagedResponse<RepositoryDTO>> {
