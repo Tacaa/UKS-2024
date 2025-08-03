@@ -93,6 +93,8 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests(request -> {
             request.requestMatchers(new AntPathRequestMatcher("/api/auth/login")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/auth/register")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/auth/register-admin")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/auth/super-admin-login")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/auth/logout")).authenticated()
                 .requestMatchers(new AntPathRequestMatcher("/error")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/auth/current-user")).authenticated()
@@ -197,6 +199,7 @@ public class WebSecurityConfig {
         // Dozvoljena POST metoda na ruti /auth/login, za svaki drugi tip HTTP metode greska je 401 Unauthorized
         return (web) -> web.ignoring()
             .requestMatchers(HttpMethod.POST, "/auth/login")
+            //.requestMatchers(HttpMethod.POST, "/api/auth/super-admin-login")
             .requestMatchers(HttpMethod.GET, "/api/logs/search") // Add this line
             .requestMatchers(HttpMethod.GET, "/", "/webjars/*", "/*.html", "favicon.ico",
                 "/*/*.html", "/*/*.css", "/*/*.js");
