@@ -1,6 +1,7 @@
 package com.example.uks.controllers;
 
 import com.example.uks.dto.auth.JwtAuthenticationRequest;
+import com.example.uks.dto.auth.SuperAdminLoginRequest;
 import com.example.uks.dto.auth.UserRequest;
 import com.example.uks.dto.auth.UserTokenState;
 import com.example.uks.dto.user.UserDTO;
@@ -31,6 +32,8 @@ import com.example.uks.model.User;
 import com.example.uks.services.UserService;
 import com.example.uks.util.security.TokenUtils;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -80,9 +83,42 @@ public class AuthenticationController {
         return ResponseEntity.ok(token);
     }
 
+    private String readSuperAdmin() {
+        try {
+            return Files.readAllLines(Paths.get("/app/logs/uks-super-admin.txt")).get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @PostMapping("/super-admin-login")
     public ResponseEntity<UserTokenState> superAdminLogin(
-            @RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
+            @RequestBody SuperAdminLoginRequest superAdminLoginRequest, HttpServletResponse response) {
+
+        //provjeriti da li postoji
+        String generatedPassword = this.readSuperAdmin();
+        System.out.println("HALO");
+        System.out.println(generatedPassword);
+
+        if(generatedPassword == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        System.out.println("pisi");
+        System.out.println(generatedPassword);
+        System.out.println(superAdminLoginRequest.getPassword());
+        System.out.println(superAdminLoginRequest.getNewPassword());
+
+        if(!generatedPassword.equals(superAdminLoginRequest.getPassword())){
+            System.out.println("UPADAM");
+            return ResponseEntity.notFound().build();
+        }
+
+        JwtAuthenticationRequest authenticationRequest = JwtAuthenticationRequest.builder()
+                .username(superAdminLoginRequest.getUsername())
+                .password(superAdminLoginRequest.getNewPassword())
+                .build();
 
         User user = this.userService.findByUsername(authenticationRequest.getUsername());
         user.setPassword(passwordEncoder.encode(authenticationRequest.getPassword()));

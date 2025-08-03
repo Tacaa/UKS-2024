@@ -30,7 +30,7 @@ public class CreateFileOnDesktop {
 //        String userHome = System.getProperty("user.home");
 //        String desktopPath = userHome + File.separator + "Desktop";
 //        File newFile = new File(desktopPath + File.separator + "uks-super-admin.txt");
-        File newFile = new File("uks-super-admin.txt");
+        File newFile = new File("/app/logs/uks-super-admin.txt");
 
         String firstPass = getRadnomString();
 

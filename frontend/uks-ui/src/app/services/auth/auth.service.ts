@@ -109,11 +109,11 @@ export class AuthService {
   }
 
   firstAdminLogin(username: string, password: string, newPassword: string) {
-    password = newPassword;
     return this.http
       .post<{ accessToken: string }>(`${this.apiUrl}/super-admin-login`, {
         username,
         password,
+        newPassword,
       })
       .pipe(
         tap((response) => {
