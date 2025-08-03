@@ -18,6 +18,10 @@ public class LogQueryParser {
         Deque<Criteria> criteriaStack = new ArrayDeque<>();
         Deque<String> operatorStack = new ArrayDeque<>();
 
+        if (tokens.isEmpty()) {
+            throw new IllegalArgumentException("Empty query is not allowed.");
+        }
+
         for (String token : tokens) {
             switch (token) {
                 case "AND", "OR", "NOT" -> {
@@ -31,6 +35,11 @@ public class LogQueryParser {
                     while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")) {
                         applyOperator(criteriaStack, operatorStack.pop());
                     }
+
+                    if (operatorStack.isEmpty()) {
+                        throw new IllegalArgumentException("Mismatched parentheses in query.");
+                    }
+
                     operatorStack.pop(); // remove '('
                 }
                 default -> criteriaStack.push(parseSimpleExpression(token));
@@ -39,6 +48,10 @@ public class LogQueryParser {
 
         while (!operatorStack.isEmpty()) {
             applyOperator(criteriaStack, operatorStack.pop());
+        }
+
+        if (criteriaStack.isEmpty()) {
+            throw new IllegalArgumentException("Query did not produce any valid search criteria.");
         }
 
         Criteria finalCriteria = criteriaStack.isEmpty() ? new Criteria() : criteriaStack.pop();
@@ -84,16 +97,21 @@ public class LogQueryParser {
     }
 
 
+    private static final Set<String> VALIDNA_POLJA = Set.of("level", "message");
+
     private Criteria parseSimpleExpression(String token) {
 
         if (!token.contains(":")) {
-            // fallback kriterijum ako neko unese neispravnu sintaksu
-            return new Criteria("message").contains(token);
+            throw new IllegalArgumentException("Invalid token: '" + token + "'. Expected format field:value");
         }
 
         String[] parts = token.split(":", 2);
-        String field = parts[0];
-        String value = parts[1].replaceAll("^\"|\"$", ""); // remove quotes if any
+        String field = parts[0].trim();
+        String value = parts[1].trim().replaceAll("^\"|\"$", ""); // remove quotes if any
+
+        if (!VALIDNA_POLJA.contains(field)) {
+            throw new IllegalArgumentException("Unknown field: '" + field + "'. Allowed fields are: " + VALIDNA_POLJA);
+        }
 
         if (field.equals("message")) {
             return new Criteria(field).contains(value);
