@@ -75,17 +75,32 @@ export class AuthGuard implements CanActivate {
   }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
+export class SuperAdminGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivate(): boolean {
+    if (!this.authService.isSuperAdminInitialized()) {
+      this.router.navigate(['/superadminLogin']);
+      return false;
+    }
+    return true;
+  }
+}
+
 const routes: Routes = [
   { path: '', redirectTo: 'dockerhub', pathMatch: 'full' },
   { path: 'superadminLogin', component: SuperAdminLoginComponent },
-  // TODO: Podesiti rutu LogSearchComponent-e!
   {
     path: 'dockerhub',
+    title: 'Home',
     loadComponent: () =>
       import('./shared-modules/wrapper/wrapper.component').then(
         (c) => c.WrapperComponent
       ),
-    title: 'Home',
+    canActivate: [SuperAdminGuard],
     children: [
       {
         path: '',

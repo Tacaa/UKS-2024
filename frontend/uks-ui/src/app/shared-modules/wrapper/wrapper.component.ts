@@ -55,6 +55,10 @@ export class WrapperComponent implements OnInit, OnDestroy {
     });
 
     this.authService.restoreUser();
+    this.authService.getRoleUpdateTrigger().subscribe(() => {
+      this.userRoleEnum = this.authService.getCurrentUserRoleEnum();
+      console.log('Role manually updated:', this.userRoleEnum);
+    });
   }
 
   ngOnDestroy(): void {

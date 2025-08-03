@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UserDTO } from 'src/app/shared/dto/user/user.dto';
 import { RoleEnum } from 'src/app/shared/enum/RoleEnum';
@@ -12,18 +12,21 @@ import { CurrentUser } from 'src/app/shared/models/user.model';
   providedIn: 'root',
 })
 export class AuthService {
+  private superAdminInitialized = false;
+
   private tokenKey = 'authToken';
   private userIdKey = 'userId';
   private userRoleEnumKey = 'userRoleEnum';
   private apiUrl = 'http://localhost:8081/api/auth';
   private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
+  private roleUpdated$ = new Subject<void>();
 
   constructor(private http: HttpClient, private router: Router) {
     this.clearAllStorageOnStartup();
   }
 
-  private clearAllStorageOnStartup() {
+  public clearAllStorageOnStartup() {
     console.log('🧹 Clearing localStorage on application startup');
     localStorage.clear();
   }
@@ -105,6 +108,27 @@ export class AuthService {
       });
   }
 
+  firstAdminLogin(username: string, password: string, newPassword: string) {
+    //!!
+    //!! OVO JE SAMO KOPIJA OBICNE LOGIN METODE OD GORE
+    //!! POTREBNA JE ZATO STO VRACA RESPONSE - (zbog .subscribe())
+    //!! KAD SE NAPRAVI ENDPOINT NA BEKU, TREBA DA SE POVEZE SA OVOM FUNKCIJOM!!!! firstAdminLogin( usernname: string, password: string, newPassword: string )
+    //!!
+
+    return this.http
+      .post<{ accessToken: string }>(`${this.apiUrl}/login`, {
+        username,
+        password,
+      })
+      .pipe(
+        tap((response) => {
+          this.setToken(response.accessToken);
+          this.restoreUser(); // ✅ Fetch and set user immediately after login
+          this.router.navigate(['/dockerhub/repository']);
+        })
+      );
+  }
+
   logout() {
     this.http.post(`${this.apiUrl}/logout`, {}).subscribe(() => {
       localStorage.removeItem(this.tokenKey);
@@ -122,5 +146,30 @@ export class AuthService {
         this.restoreUser(); // ✅ Fetch and set user immediately after register
         this.router.navigate(['']);
       });
+  }
+
+
+  setSuperAdminInitialized(value: boolean): void {
+    this.superAdminInitialized = value;
+  }
+
+  isSuperAdminInitialized(): boolean {
+    return this.superAdminInitialized;
+  }
+
+  resetSuperAdminFlag(): void {
+    this.superAdminInitialized = false;
+  }
+
+  getRoleUpdateTrigger() {
+    return this.roleUpdated$.asObservable();
+  }
+
+  triggerRoleUpdate(): void {
+    this.roleUpdated$.next();
+  }
+  
+  registerAdmin(user: UserRequest) {
+    return this.http.post<Response>(`${this.apiUrl}/register-admin`, user);
   }
 }
