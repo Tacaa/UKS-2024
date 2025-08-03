@@ -93,6 +93,7 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests(request -> {
             request.requestMatchers(new AntPathRequestMatcher("/api/auth/login")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/auth/register")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/auth/register-admin")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/auth/super-admin-login")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/auth/logout")).authenticated()
                 .requestMatchers(new AntPathRequestMatcher("/error")).permitAll()
